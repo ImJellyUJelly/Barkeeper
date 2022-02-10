@@ -8,6 +8,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped<BarkeeperContext>();
+
 // Services
 builder.Services.AddScoped<IOrderService, OrderService>()
     .AddScoped<IUnitOfWork, UnitOfWork>();

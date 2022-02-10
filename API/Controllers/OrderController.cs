@@ -1,5 +1,4 @@
 ﻿using API.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -24,8 +23,8 @@ public class OrderController : ControllerBase
             return BadRequest();
         }
 
-        var createdOrder = _orderservice.CreateOrder(order);
-        return Ok(createdOrder);
+        order.Id = _orderservice.CreateOrder(order);
+        return Ok(order);
     }
 
     [HttpGet]

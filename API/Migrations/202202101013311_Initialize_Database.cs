@@ -15,7 +15,7 @@
                         ProductId = c.Long(nullable: false),
                     })
                 .PrimaryKey(t => new { t.OrderId, t.ProductId })
-                .ForeignKey("dbo.Orders", t => t.OrderId, cascadeDelete: true)
+                .ForeignKey("dbo.Orders", t => t.OrderId)
                 .ForeignKey("dbo.Products", t => t.ProductId, cascadeDelete: true)
                 .Index(t => t.OrderId)
                 .Index(t => t.ProductId);

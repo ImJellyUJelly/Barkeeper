@@ -21,5 +21,8 @@ public class BarkeeperContext : DbContext
         modelBuilder.Entity<Product>().HasKey(product => product.Id);
 
         modelBuilder.Entity<OrderDetail>().HasKey(od => new { od.OrderId, od.ProductId });
+
+        modelBuilder.Entity<OrderDetail>().HasRequired(od => od.Product);
+        modelBuilder.Entity<OrderDetail>().HasRequired(od => od.Order).WithMany(o => o.OrderDetails).WillCascadeOnDelete(false);
     }
 }
