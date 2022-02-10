@@ -1,0 +1,24 @@
+﻿using API.Repositories;
+using Models;
+
+namespace API.Services;
+
+public class OrderService : IOrderService
+{
+    private IOrderRepository _orderRepository;
+
+    public OrderService(IUnitOfWork unitOfWork)
+    {
+        _orderRepository = unitOfWork.getOrderRepository();
+    }
+
+    public long CreateOrder(Order order)
+    {
+        return _orderRepository.CreateOrder(order);
+    }
+
+    public Order GetOrderById(int orderId)
+    {
+        return _orderRepository.GetOrder(orderId);
+    }
+}

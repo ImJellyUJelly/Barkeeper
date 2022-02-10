@@ -112,11 +112,24 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btKoffie = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lbInvoiceNr = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button18 = new System.Windows.Forms.Button();
+            this.button64 = new System.Windows.Forms.Button();
+            this.button65 = new System.Windows.Forms.Button();
+            this.button66 = new System.Windows.Forms.Button();
+            this.button67 = new System.Windows.Forms.Button();
+            this.button68 = new System.Windows.Forms.Button();
+            this.button69 = new System.Windows.Forms.Button();
+            this.button70 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.tcProducts.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -137,7 +150,6 @@
             this.lvOrders.Size = new System.Drawing.Size(972, 93);
             this.lvOrders.TabIndex = 0;
             this.lvOrders.UseCompatibleStateImageBehavior = false;
-            this.lvOrders.SelectedIndexChanged += new System.EventHandler(this.lvOrders_SelectedIndexChanged);
             this.lvOrders.Click += new System.EventHandler(this.lvOrders_Click);
             // 
             // groupBox2
@@ -149,11 +161,12 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.lbName);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Location = new System.Drawing.Point(12, 27);
+            this.groupBox2.Location = new System.Drawing.Point(12, 112);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(295, 563);
+            this.groupBox2.Size = new System.Drawing.Size(295, 478);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Bestelling info";
             // 
             // btPay
             // 
@@ -183,7 +196,7 @@
             this.columnHeader2});
             this.lvProducts.Location = new System.Drawing.Point(6, 121);
             this.lvProducts.Name = "lvProducts";
-            this.lvProducts.Size = new System.Drawing.Size(283, 434);
+            this.lvProducts.Size = new System.Drawing.Size(283, 351);
             this.lvProducts.TabIndex = 6;
             this.lvProducts.UseCompatibleStateImageBehavior = false;
             this.lvProducts.View = System.Windows.Forms.View.Details;
@@ -241,7 +254,7 @@
             // 
             this.lbDate.AutoSize = true;
             this.lbDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbDate.Location = new System.Drawing.Point(826, 27);
+            this.lbDate.Location = new System.Drawing.Point(92, 19);
             this.lbDate.Name = "lbDate";
             this.lbDate.Size = new System.Drawing.Size(55, 21);
             this.lbDate.TabIndex = 0;
@@ -281,7 +294,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(760, 27);
+            this.label1.Location = new System.Drawing.Point(6, 19);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 21);
             this.label1.TabIndex = 1;
@@ -292,14 +305,23 @@
             this.tcProducts.Controls.Add(this.tabPage1);
             this.tcProducts.Controls.Add(this.tabPage2);
             this.tcProducts.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tcProducts.Location = new System.Drawing.Point(310, 82);
+            this.tcProducts.Location = new System.Drawing.Point(313, 27);
             this.tcProducts.Name = "tcProducts";
             this.tcProducts.SelectedIndex = 0;
-            this.tcProducts.Size = new System.Drawing.Size(686, 508);
+            this.tcProducts.Size = new System.Drawing.Size(686, 573);
             this.tcProducts.TabIndex = 6;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button3);
+            this.tabPage1.Controls.Add(this.button18);
+            this.tabPage1.Controls.Add(this.button64);
+            this.tabPage1.Controls.Add(this.button65);
+            this.tabPage1.Controls.Add(this.button66);
+            this.tabPage1.Controls.Add(this.button67);
+            this.tabPage1.Controls.Add(this.button68);
+            this.tabPage1.Controls.Add(this.button69);
+            this.tabPage1.Controls.Add(this.button70);
             this.tabPage1.Controls.Add(this.button55);
             this.tabPage1.Controls.Add(this.button56);
             this.tabPage1.Controls.Add(this.button57);
@@ -366,7 +388,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 30);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(678, 474);
+            this.tabPage1.Size = new System.Drawing.Size(678, 539);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Leden";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -375,7 +397,7 @@
             // 
             this.button55.Location = new System.Drawing.Point(607, 400);
             this.button55.Name = "button55";
-            this.button55.Size = new System.Drawing.Size(71, 70);
+            this.button55.Size = new System.Drawing.Size(71, 74);
             this.button55.TabIndex = 65;
             this.button55.Text = "button55";
             this.button55.UseVisualStyleBackColor = true;
@@ -384,7 +406,7 @@
             // 
             this.button56.Location = new System.Drawing.Point(532, 400);
             this.button56.Name = "button56";
-            this.button56.Size = new System.Drawing.Size(79, 70);
+            this.button56.Size = new System.Drawing.Size(79, 74);
             this.button56.TabIndex = 64;
             this.button56.Text = "button56";
             this.button56.UseVisualStyleBackColor = true;
@@ -393,7 +415,7 @@
             // 
             this.button57.Location = new System.Drawing.Point(456, 400);
             this.button57.Name = "button57";
-            this.button57.Size = new System.Drawing.Size(79, 70);
+            this.button57.Size = new System.Drawing.Size(79, 74);
             this.button57.TabIndex = 63;
             this.button57.Text = "button57";
             this.button57.UseVisualStyleBackColor = true;
@@ -402,7 +424,7 @@
             // 
             this.button58.Location = new System.Drawing.Point(380, 400);
             this.button58.Name = "button58";
-            this.button58.Size = new System.Drawing.Size(79, 70);
+            this.button58.Size = new System.Drawing.Size(79, 74);
             this.button58.TabIndex = 62;
             this.button58.Text = "button58";
             this.button58.UseVisualStyleBackColor = true;
@@ -411,7 +433,7 @@
             // 
             this.button59.Location = new System.Drawing.Point(304, 400);
             this.button59.Name = "button59";
-            this.button59.Size = new System.Drawing.Size(79, 70);
+            this.button59.Size = new System.Drawing.Size(79, 74);
             this.button59.TabIndex = 61;
             this.button59.Text = "button59";
             this.button59.UseVisualStyleBackColor = true;
@@ -420,7 +442,7 @@
             // 
             this.button60.Location = new System.Drawing.Point(228, 400);
             this.button60.Name = "button60";
-            this.button60.Size = new System.Drawing.Size(79, 70);
+            this.button60.Size = new System.Drawing.Size(79, 74);
             this.button60.TabIndex = 60;
             this.button60.Text = "button60";
             this.button60.UseVisualStyleBackColor = true;
@@ -429,7 +451,7 @@
             // 
             this.button61.Location = new System.Drawing.Point(152, 400);
             this.button61.Name = "button61";
-            this.button61.Size = new System.Drawing.Size(79, 70);
+            this.button61.Size = new System.Drawing.Size(79, 74);
             this.button61.TabIndex = 59;
             this.button61.Text = "button61";
             this.button61.UseVisualStyleBackColor = true;
@@ -438,7 +460,7 @@
             // 
             this.button62.Location = new System.Drawing.Point(76, 400);
             this.button62.Name = "button62";
-            this.button62.Size = new System.Drawing.Size(79, 70);
+            this.button62.Size = new System.Drawing.Size(79, 74);
             this.button62.TabIndex = 58;
             this.button62.Text = "button62";
             this.button62.UseVisualStyleBackColor = true;
@@ -447,7 +469,7 @@
             // 
             this.button63.Location = new System.Drawing.Point(0, 400);
             this.button63.Name = "button63";
-            this.button63.Size = new System.Drawing.Size(79, 70);
+            this.button63.Size = new System.Drawing.Size(79, 74);
             this.button63.TabIndex = 57;
             this.button63.Text = "button63";
             this.button63.UseVisualStyleBackColor = true;
@@ -949,20 +971,132 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 30);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(678, 474);
+            this.tabPage2.Size = new System.Drawing.Size(678, 517);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Gasten";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(6, 40);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(79, 21);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "Factuurnr:";
+            // 
+            // lbInvoiceNr
+            // 
+            this.lbInvoiceNr.AutoSize = true;
+            this.lbInvoiceNr.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbInvoiceNr.Location = new System.Drawing.Point(92, 40);
+            this.lbInvoiceNr.Name = "lbInvoiceNr";
+            this.lbInvoiceNr.Size = new System.Drawing.Size(94, 21);
+            this.lbInvoiceNr.TabIndex = 7;
+            this.lbInvoiceNr.Text = "lbInvoiceNR";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.lbDate);
+            this.groupBox3.Controls.Add(this.lbInvoiceNr);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Location = new System.Drawing.Point(12, 27);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(295, 79);
+            this.groupBox3.TabIndex = 9;
+            this.groupBox3.TabStop = false;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(607, 467);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(71, 74);
+            this.button3.TabIndex = 74;
+            this.button3.Text = "button3";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(532, 467);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(79, 74);
+            this.button18.TabIndex = 73;
+            this.button18.Text = "button18";
+            this.button18.UseVisualStyleBackColor = true;
+            // 
+            // button64
+            // 
+            this.button64.Location = new System.Drawing.Point(456, 467);
+            this.button64.Name = "button64";
+            this.button64.Size = new System.Drawing.Size(79, 74);
+            this.button64.TabIndex = 72;
+            this.button64.Text = "button64";
+            this.button64.UseVisualStyleBackColor = true;
+            // 
+            // button65
+            // 
+            this.button65.Location = new System.Drawing.Point(380, 467);
+            this.button65.Name = "button65";
+            this.button65.Size = new System.Drawing.Size(79, 74);
+            this.button65.TabIndex = 71;
+            this.button65.Text = "button65";
+            this.button65.UseVisualStyleBackColor = true;
+            // 
+            // button66
+            // 
+            this.button66.Location = new System.Drawing.Point(304, 467);
+            this.button66.Name = "button66";
+            this.button66.Size = new System.Drawing.Size(79, 74);
+            this.button66.TabIndex = 70;
+            this.button66.Text = "button66";
+            this.button66.UseVisualStyleBackColor = true;
+            // 
+            // button67
+            // 
+            this.button67.Location = new System.Drawing.Point(228, 467);
+            this.button67.Name = "button67";
+            this.button67.Size = new System.Drawing.Size(79, 74);
+            this.button67.TabIndex = 69;
+            this.button67.Text = "button67";
+            this.button67.UseVisualStyleBackColor = true;
+            // 
+            // button68
+            // 
+            this.button68.Location = new System.Drawing.Point(152, 467);
+            this.button68.Name = "button68";
+            this.button68.Size = new System.Drawing.Size(79, 74);
+            this.button68.TabIndex = 68;
+            this.button68.Text = "button68";
+            this.button68.UseVisualStyleBackColor = true;
+            // 
+            // button69
+            // 
+            this.button69.Location = new System.Drawing.Point(76, 467);
+            this.button69.Name = "button69";
+            this.button69.Size = new System.Drawing.Size(79, 74);
+            this.button69.TabIndex = 67;
+            this.button69.Text = "button69";
+            this.button69.UseVisualStyleBackColor = true;
+            // 
+            // button70
+            // 
+            this.button70.Location = new System.Drawing.Point(0, 467);
+            this.button70.Name = "button70";
+            this.button70.Size = new System.Drawing.Size(79, 74);
+            this.button70.TabIndex = 66;
+            this.button70.Text = "button70";
+            this.button70.UseVisualStyleBackColor = true;
             // 
             // OrderOverviewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 729);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.tcProducts);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.lbDate);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -975,6 +1109,8 @@
             this.menuStrip1.PerformLayout();
             this.tcProducts.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1066,5 +1202,17 @@
         private Button button1;
         private Button btKoffie;
         private TabPage tabPage2;
+        private Label label4;
+        private Label lbInvoiceNr;
+        private GroupBox groupBox3;
+        private Button button3;
+        private Button button18;
+        private Button button64;
+        private Button button65;
+        private Button button66;
+        private Button button67;
+        private Button button68;
+        private Button button69;
+        private Button button70;
     }
 }

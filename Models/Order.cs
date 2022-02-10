@@ -2,17 +2,18 @@
 
 public class Order
 {
-    public int Id { get; }
+    public long Id { get; set; }
     public string CustomerName { get; set; }
     public DateTime OrderDate { get; set; }
-    public List<Product> Products { get; set; }
+    public decimal Price { get; set; }
+    public List<OrderDetail> OrderDetails { get; set; }
 
     public Order()
     {
-        Products = new List<Product>();
+        OrderDetails = new List<OrderDetail>();
     }
 
-    public Order(int id, string customeName) : this()
+    public Order(long id, string customeName) : this()
     {
         Id = id;
         CustomerName = customeName;
