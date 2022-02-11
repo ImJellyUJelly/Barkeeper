@@ -1,5 +1,6 @@
 using App.Agents;
 using App.Forms;
+using App.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace App;
@@ -18,7 +19,7 @@ internal static class Program
 
         using (ServiceProvider serviceProvider = services.BuildServiceProvider())
         {
-            var form = serviceProvider.GetRequiredService<OrderOverviewForm>();
+            var form = serviceProvider.GetRequiredService<KassaOverzichtForm>();
 
             Application.Run(form);
         }
@@ -27,11 +28,12 @@ internal static class Program
     static void ConfigureServices(ServiceCollection services)
     {
         // Forms
-        services.AddScoped<OrderOverviewForm>();
+        services.AddScoped<KassaOverzichtForm>();
 
         // Agents
         services.AddScoped<IOrderAgent, OrderAgent>();
-        
+
         // Services
+        services.AddScoped<IOrderService, OrderService>();
     }
 }
