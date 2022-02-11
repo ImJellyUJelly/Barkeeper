@@ -43,7 +43,7 @@ public class OrderService : IOrderService
 
     public List<Order> GetOrders()
     {
-        return _orderAgent.GetOrders();
+        return _orderAgent.GetOrders().OrderBy(order => order.CustomerName).ToList();
     }
 
     public void UpdateOrder(Order order)

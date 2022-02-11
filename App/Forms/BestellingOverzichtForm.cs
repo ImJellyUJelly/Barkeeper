@@ -19,7 +19,11 @@ namespace App.Forms
         private void InitializeLoadOrders()
         {
             lvOrders.Items.Clear();
-            List<Order> orders = _orderService.GetOrders();
+            List<Order> orders = _orderService.GetOrders()
+                .OrderBy(order => order.IsPaid)
+                .ThenBy(order => order.OrderDate)
+                .ToList();
+
             foreach (Order order in orders)
             {
                 var item = new ListViewItem();

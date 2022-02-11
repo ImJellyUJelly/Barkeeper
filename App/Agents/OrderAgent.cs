@@ -47,9 +47,7 @@ public class OrderAgent : IOrderAgent
 
     public List<Order> GetOrders()
     {
-        return _orders.OrderBy(order => order.IsPaid)
-            .ThenBy(order => order.OrderDate)
-            .ToList();
+        return _orders;
     }
 
     public void UpdateOrder(Order order)

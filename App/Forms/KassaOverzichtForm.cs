@@ -1,5 +1,4 @@
-﻿using App.Agents;
-using App.Services;
+﻿using App.Services;
 using Models;
 using System.Globalization;
 
@@ -270,7 +269,7 @@ public partial class KassaOverzichtForm : Form
             Button button = new Button();
             button.Top = 10;
             button.Left = 10;
-            button.Size = new Size(97, 97);
+            button.Size = new Size(85, 85);
             button.Text = product.Name;
             button.Tag = product;
             button.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);
@@ -319,5 +318,10 @@ public partial class KassaOverzichtForm : Form
     {
         var orderForm = new BestellingOverzichtForm(_orderService);
         orderForm.ShowDialog();
+
+        _selectedOrder = null;
+        ToggleOrderInfo();
+        RefreshProductsInOrder();
+        RefreshCustomerComboBox();
     }
 }
