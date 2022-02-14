@@ -35,9 +35,10 @@ public class OrderAgent : IOrderAgent
         };
     }
 
-    public void CreateOrder(Order order)
+    public Order CreateOrder(Order order)
     {
         _orders.Add(order);
+        return order;
     }
 
     public Order? GetOrderByName(string name)

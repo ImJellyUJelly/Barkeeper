@@ -4,6 +4,7 @@ namespace API.Repositories;
 
 public interface IOrderRepository
 {
-    long CreateOrder(Order order);
-    Order GetOrder(int orderId);
+    Order CreateOrder(Order order);
+    Order GetOrderById(int orderId);
+    Order GetOrderByName(string customerName);
 }
