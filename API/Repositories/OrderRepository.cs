@@ -12,15 +12,22 @@ public class OrderRepository : IOrderRepository
         _dbContext = dbContext;
     }
 
-    public long CreateOrder(Order order)
+    public Order CreateOrder(Order order)
     {
         _dbContext.Orders.Add(order);
         _dbContext.SaveChanges();
-        return order.Id;
+        return order;
     }
 
-    public Order GetOrder(int orderId)
+    public Order GetOrderById(int orderId)
     {
         return _dbContext.Orders.First(order => order.Id == orderId);
+    }
+
+    public Order GetOrderByName(string customerName)
+    {
+        return _dbContext.Orders
+            .Where(order => order.IsPaid == false)
+            .First(order => order.CustomerName == customerName);
     }
 }

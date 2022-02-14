@@ -39,10 +39,10 @@ public class OrderAgent : IOrderAgent
         };
     }
 
-    public async Task CreateOrder(Order order)
+    public async Task<Order> CreateOrder(Order order)
     {
-        //_orders.Add(order);
-        var result = await _url.PostJsonAsync(order);
+        Order createdOrder = await _url.PostJsonAsync(order).ReceiveJson<Order>();
+        return createdOrder;
     }
 
     public async Task<Order?> GetOrderByName(string name)
@@ -57,12 +57,16 @@ public class OrderAgent : IOrderAgent
         return _orders;
     }
 
-    public async Task UpdateOrder(Order order)
+    public async Task<Order> UpdateOrder(Order order)
     {
         var foundOrder = _orders.FirstOrDefault(order => order.Id == order.Id);
         if (foundOrder != null)
         {
             foundOrder = order;
         }
+
+        // Make request to API
+
+        return foundOrder;
     }
 }

@@ -4,6 +4,7 @@ namespace API.Services;
 
 public interface IOrderService
 {
-    long CreateOrder(Order order);
+    Order CreateOrder(Order order);
     Order GetOrderById(int orderId);
+    Order GetOrderByName(string customerName);
 }

@@ -12,13 +12,18 @@ public class OrderService : IOrderService
         _orderRepository = unitOfWork.getOrderRepository();
     }
 
-    public long CreateOrder(Order order)
+    public Order CreateOrder(Order order)
     {
         return _orderRepository.CreateOrder(order);
     }
 
     public Order GetOrderById(int orderId)
     {
-        return _orderRepository.GetOrder(orderId);
+        return _orderRepository.GetOrderById(orderId);
+    }
+
+    public Order GetOrderByName(string customerName)
+    {
+        return _orderRepository.GetOrderByName(customerName);
     }
 }

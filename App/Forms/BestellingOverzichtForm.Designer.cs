@@ -35,6 +35,8 @@
             this.chOrderDate = new System.Windows.Forms.ColumnHeader();
             this.chIsPaid = new System.Windows.Forms.ColumnHeader();
             this.chProducts = new System.Windows.Forms.ColumnHeader();
+            this.btMergeOrders = new System.Windows.Forms.Button();
+            this.btSplitOrder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lvOrders
@@ -46,12 +48,17 @@
             this.chOrderDate,
             this.chIsPaid,
             this.chProducts});
-            this.lvOrders.Location = new System.Drawing.Point(12, 80);
+            this.lvOrders.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lvOrders.FullRowSelect = true;
+            this.lvOrders.Location = new System.Drawing.Point(14, 107);
+            this.lvOrders.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lvOrders.Name = "lvOrders";
-            this.lvOrders.Size = new System.Drawing.Size(619, 637);
+            this.lvOrders.Size = new System.Drawing.Size(707, 848);
             this.lvOrders.TabIndex = 0;
             this.lvOrders.UseCompatibleStateImageBehavior = false;
             this.lvOrders.View = System.Windows.Forms.View.Details;
+            this.lvOrders.SelectedIndexChanged += new System.EventHandler(this.lvOrders_SelectedIndexChanged);
+            this.lvOrders.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvOrders_KeyDown);
             // 
             // chID
             // 
@@ -60,11 +67,12 @@
             // chCustomerName
             // 
             this.chCustomerName.Text = "Klantnaam";
-            this.chCustomerName.Width = 150;
+            this.chCustomerName.Width = 180;
             // 
             // chIsMember
             // 
             this.chIsMember.Text = "Is lid?";
+            this.chIsMember.Width = 80;
             // 
             // chOrderDate
             // 
@@ -74,18 +82,42 @@
             // chIsPaid
             // 
             this.chIsPaid.Text = "Betaald?";
+            this.chIsPaid.Width = 100;
             // 
             // chProducts
             // 
             this.chProducts.Text = "Aantal producten";
-            this.chProducts.Width = 100;
+            this.chProducts.Width = 130;
+            // 
+            // btMergeOrders
+            // 
+            this.btMergeOrders.Location = new System.Drawing.Point(14, 5);
+            this.btMergeOrders.Name = "btMergeOrders";
+            this.btMergeOrders.Size = new System.Drawing.Size(112, 95);
+            this.btMergeOrders.TabIndex = 1;
+            this.btMergeOrders.Text = "Bestellingen samenvoegen";
+            this.btMergeOrders.UseVisualStyleBackColor = true;
+            this.btMergeOrders.Click += new System.EventHandler(this.btMergeOrders_Click);
+            // 
+            // btSplitOrder
+            // 
+            this.btSplitOrder.Location = new System.Drawing.Point(132, 5);
+            this.btSplitOrder.Name = "btSplitOrder";
+            this.btSplitOrder.Size = new System.Drawing.Size(112, 95);
+            this.btSplitOrder.TabIndex = 2;
+            this.btSplitOrder.Text = "Bestelling splitsen";
+            this.btSplitOrder.UseVisualStyleBackColor = true;
+            this.btSplitOrder.Click += new System.EventHandler(this.btSplitOrder_Click);
             // 
             // BestellingOverzichtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(643, 729);
+            this.ClientSize = new System.Drawing.Size(735, 972);
+            this.Controls.Add(this.btSplitOrder);
+            this.Controls.Add(this.btMergeOrders);
             this.Controls.Add(this.lvOrders);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "BestellingOverzichtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BestellingOverzichtForm";
@@ -102,5 +134,7 @@
         private ColumnHeader chOrderDate;
         private ColumnHeader chProducts;
         private ColumnHeader chIsPaid;
+        private Button btMergeOrders;
+        private Button btSplitOrder;
     }
 }

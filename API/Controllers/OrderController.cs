@@ -8,11 +8,11 @@ namespace API.Controllers;
 [ApiController]
 public class OrderController : ControllerBase
 {
-    private IOrderService _orderservice;
+    private IOrderService _orderService;
 
     public OrderController(IOrderService orderService)
     {
-        _orderservice = orderService;
+        _orderService = orderService;
     }
 
     [HttpPost]
@@ -23,7 +23,7 @@ public class OrderController : ControllerBase
             return BadRequest();
         }
 
-        order.Id = _orderservice.CreateOrder(order);
+        order = _orderService.CreateOrder(order);
         return Ok(order);
     }
 
@@ -42,7 +42,7 @@ public class OrderController : ControllerBase
     [HttpGet(Name = "GetByName")]
     public ActionResult<Order> GetOrderByName(string customerName)
     { 
-        var order = _orderservice.GetOrderByName(customerName);
+        var order = _orderService.GetOrderByName(customerName);
         if (order == null)
         {
             return NotFound($"Order with customername: {customerName} could not tbe found.");
