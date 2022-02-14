@@ -38,12 +38,12 @@ public class OrderService : IOrderService
 
     public Order GetOrderByCustomerName(string customerName)
     {
-        return _orderAgent.GetOrderByName(customerName);
+        return _orderAgent.GetOrderByName(customerName).Result;
     }
 
     public List<Order> GetOrders()
     {
-        return _orderAgent.GetOrders().OrderBy(order => order.CustomerName).ToList();
+        return _orderAgent.GetOrders().Result.OrderBy(order => order.CustomerName).ToList();
     }
 
     public void UpdateOrder(Order order)

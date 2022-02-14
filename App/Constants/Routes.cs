@@ -2,6 +2,6 @@
 {
     public class Routes
     {
-        public const string BASE_URL = "https://localhost:7251";
+        public const string BASE_URL = "https://localhost:7067";
     }
 }

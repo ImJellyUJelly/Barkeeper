@@ -6,7 +6,7 @@ namespace App.Forms;
 
 public partial class KassaOverzichtForm : Form
 {
-    private CultureInfo cultureInfo;
+    private CultureInfo _cultureInfo;
     private List<Product> _products;
     private Order? _selectedOrder;
 
@@ -23,8 +23,8 @@ public partial class KassaOverzichtForm : Form
 
     private void InitializeGeneralInformation()
     {
-        cultureInfo = CultureInfo.GetCultureInfo("nl-NL");
-        lbDate.Text = $"{cultureInfo.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek)} {DateTime.Now.ToString("dd/MM/yyyy")}";
+        _cultureInfo = CultureInfo.GetCultureInfo("nl-NL");
+        lbDate.Text = $"{_cultureInfo.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek)} {DateTime.Now.ToString("dd/MM/yyyy")}";
         _selectedOrder = null;
         btDeleteProduct.Visible = false;
         btPay.Enabled = false;
