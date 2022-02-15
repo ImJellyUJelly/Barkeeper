@@ -41,6 +41,7 @@ public partial class KassaOverzichtForm : Form
         {
             cbCustomerName.Items.Add(order.CustomerName);
         }
+        cbCustomerName.Text = "";
     }
 
     private void RefreshProductsInOrder()
@@ -110,7 +111,8 @@ public partial class KassaOverzichtForm : Form
             return;
         }
 
-        _orderService.AddProductToOrder(_selectedOrder, product);
+
+
         ToggleOrderInfo();
         RefreshProductsInOrder();
     }
@@ -141,7 +143,16 @@ public partial class KassaOverzichtForm : Form
 
     private void btDeleteProduct_Click(object sender, EventArgs e)
     {
-        // To be implemented
+        OrderDetail orderDetail = (OrderDetail)lvProducts.SelectedItems[0].Tag;
+        if (orderDetail == null) { return; }
+
+        if (_selectedOrder == null)
+        {
+            lvProducts.Items.Remove(lvProducts.SelectedItems[0]);
+            return;
+        }
+
+        _orderService.DeleteProductFromOrder(_selectedOrder, orderDetail);
     }
 
     private void btSelectCustomer_Click(object sender, EventArgs e)
@@ -173,7 +184,7 @@ public partial class KassaOverzichtForm : Form
             Order order = _orderService.GetOrderByCustomerName(customerName);
             if (order == null)
             {
-                order = new Order() { CustomerName = customerName, OrderDate = DateTime.Now };
+                order = new Order() { CustomerName = customerName };
                 DialogResult dialogResult = MessageBox.Show($"Is {customerName} een lid van de club?", "Nieuwe klant", MessageBoxButtons.YesNoCancel);
 
                 if (dialogResult == DialogResult.Cancel)
@@ -212,7 +223,6 @@ public partial class KassaOverzichtForm : Form
         RefreshCustomerComboBox();
         RefreshProductsInOrder();
         ToggleOrderInfo();
-        cbCustomerName.Text = "";
     }
 
     private void lvProducts_SelectedIndexChanged(object sender, EventArgs e)
@@ -242,6 +252,7 @@ public partial class KassaOverzichtForm : Form
             button.Text = product.Name;
             button.Tag = product;
             button.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);
+            button.BackColor = ButtonBackColor(product);
             button.Click += new EventHandler(ProductClick);
 
             int buttonWidth = factor * button.Size.Width;
@@ -261,6 +272,35 @@ public partial class KassaOverzichtForm : Form
 
             button.Location = new Point(a, b);
             pProducts.Controls.Add(button);
+        }
+    }
+
+    private Color ButtonBackColor(Product product)
+    {
+        switch (product.Category)
+        {
+            case ProductCategory.Warme_Dranken:
+                return Color.LightSalmon;
+            case ProductCategory.Frisdranken:
+                return Color.LightGreen;
+            case ProductCategory.Bieren:
+                return Color.LightBlue;
+            case ProductCategory.Wijnen:
+                return Color.LightGreen;
+            case ProductCategory.Gedestilleerd:
+                return Color.LightSlateGray;
+            case ProductCategory.Specials:
+                return Color.LightYellow;
+            case ProductCategory.Snacks:
+                return Color.LightCyan;
+            case ProductCategory.Broodjes:
+                return Color.LightSkyBlue;
+            case ProductCategory.Chips:
+                return Color.LightCoral;
+            case ProductCategory.Snoep:
+                return Color.LightGoldenrodYellow;
+            default: 
+                return Color.Gray;
         }
     }
 

@@ -8,6 +8,7 @@ public class Order
     public decimal Price { get; set; }
     public bool IsMember { get; set; }
     public bool IsPaid { get; set; }
+    public bool IsFinished { get; set; }
     public string Comment { get; set; }
 
     public List<OrderDetail> OrderDetails { get; set; }

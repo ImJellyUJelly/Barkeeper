@@ -8,7 +8,9 @@ public interface IOrderService
     Order GetOrderByCustomerName(string customerName);
     List<Order> GetOrders();
     Order CreateOrder(Order order);
+    void DeleteProductFromOrder(Order order, OrderDetail product);
     void UpdateOrder(Order order);
-    void AddProductToOrder(Order order, Product product);
+    OrderDetail AddProductToOrder(Order order, Product product);
     void MergeOrders(List<Order> orderList, string customerName);
+    void SplitOrder(Order order, int numberOfCustomers, List<Order> newOrders);
 }

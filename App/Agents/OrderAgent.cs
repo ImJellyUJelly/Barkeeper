@@ -21,41 +21,43 @@ public class OrderAgent : IOrderAgent
 
         _orders = new List<Order>() {
             new Order()
-            {   Id = 0,
+            {   Id = 1,
                 CustomerName = "Jon Doe",
                 OrderDate = new DateTime(2022, 10, 5),
                 OrderDetails = new List<OrderDetail> {
-                    new OrderDetail() { OrderId = 0, Product = _agent.GetProductByName("Koffie").Result, TimeAdded = DateTime.Now  },
-                    new OrderDetail() { OrderId = 0, Product = _agent.GetProductByName("Koffie").Result, TimeAdded = DateTime.Now  },
-                    new OrderDetail() { OrderId = 0, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = DateTime.Now  },
-                    new OrderDetail() { OrderId = 0, Product = _agent.GetProductByName("Chocomel").Result, TimeAdded = DateTime.Now  } },
+                    new OrderDetail() { Id = 0, Product = _agent.GetProductByName("Koffie").Result, TimeAdded = DateTime.Now  },
+                    new OrderDetail() { Id = 0, Product = _agent.GetProductByName("Koffie").Result, TimeAdded = DateTime.Now  },
+                    new OrderDetail() { Id = 0, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = DateTime.Now  },
+                    new OrderDetail() { Id = 0, Product = _agent.GetProductByName("Chocomel").Result, TimeAdded = DateTime.Now  } },
                 IsMember = true
             },
             new Order() {
-                Id = 1,
+                Id = 2,
                 CustomerName = "Captain Jack Sparrow",
                 OrderDate = new DateTime(2021, 1, 2),
                 IsMember = true
             },
             new Order() {
-                Id = 2,
+                Id = 3,
                 CustomerName = "Baan 5",
                 OrderDate = new DateTime(2022, 2, 14),
                 IsMember = true,
                 OrderDetails = new List<OrderDetail> {
-                    new OrderDetail() { OrderId = 2, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 56) },
-                    new OrderDetail() { OrderId = 2,Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 57) },
-                    new OrderDetail() { OrderId = 2,Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 58) },
-                    new OrderDetail() { OrderId = 2,Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 59) },
-                    new OrderDetail() { OrderId = 2,Product = _agent.GetProductByName("Radler Alcoholvrij").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 21, 23) }},
+                    new OrderDetail() { Id = 2, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 56) },
+                    new OrderDetail() { Id = 2, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 57) },
+                    new OrderDetail() { Id = 2, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 58) },
+                    new OrderDetail() { Id = 2, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 59) },
+                    new OrderDetail() { Id = 2, Product = _agent.GetProductByName("Radler Alcoholvrij").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 21, 23) }},
             }
         };
     }
 
     public async Task<Order> CreateOrder(Order order)
     {
-        Order createdOrder = await _url.PostJsonAsync(order).ReceiveJson<Order>();
-        return createdOrder;
+        //Order createdOrder = await _url.PostJsonAsync(order).ReceiveJson<Order>();
+        order.Id = _orders.Count;
+        _orders.Add(order);
+        return order;
     }
 
     public async Task<Order> GetOrderByName(string name)
@@ -79,9 +81,9 @@ public class OrderAgent : IOrderAgent
             foundOrder = order;
         }
 
+        return foundOrder;
+
         //var updateOrder = await _url.PostJsonAsync(order);
         //return order;
-
-        return foundOrder;
     }
 }
