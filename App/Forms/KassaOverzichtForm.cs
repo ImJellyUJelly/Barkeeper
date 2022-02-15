@@ -7,14 +7,15 @@ namespace App.Forms;
 public partial class KassaOverzichtForm : Form
 {
     private CultureInfo _cultureInfo;
-    private List<Product> _products;
     private Order? _selectedOrder;
 
     private readonly IOrderService _orderService;
+    private readonly IProductService _productService;
 
-    public KassaOverzichtForm(IOrderService orderService)
+    public KassaOverzichtForm(IOrderService orderService, IProductService productService)
     {
         _orderService = orderService;
+        _productService = productService;
 
         InitializeComponent();
         InitializeGeneralInformation();
@@ -28,40 +29,6 @@ public partial class KassaOverzichtForm : Form
         _selectedOrder = null;
         btDeleteProduct.Visible = false;
         btPay.Enabled = false;
-
-        #region TestProducts
-        _products = new List<Product>();
-        _products.Add(new Product() { Id = 0, Name = "Koffie", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 1, Name = "Thee", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 2, Name = "Bier", MemberPrice = 1.80M, Price = 2.20M });
-        _products.Add(new Product() { Id = 3, Name = "Cola", MemberPrice = 1.80M, Price = 2.20M });
-        _products.Add(new Product() { Id = 4, Name = "Chocomel", MemberPrice = 1.80M, Price = 2.20M });
-        _products.Add(new Product() { Id = 5, Name = "Ice Tea", MemberPrice = 1.80M, Price = 2.20M });
-        _products.Add(new Product() { Id = 6, Name = "Cappuccino", MemberPrice = 1.80M, Price = 2.20M });
-        _products.Add(new Product() { Id = 7, Name = "Chips", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 8, Name = "Mars", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 9, Name = "Whiskey", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 10, Name = "1", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 11, Name = "2", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 12, Name = "3", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 13, Name = "4", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 14, Name = "4", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 15, Name = "5", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 16, Name = "6", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 17, Name = "7", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 18, Name = "8", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 19, Name = "9", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 20, Name = "10", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 21, Name = "11", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 22, Name = "12", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 23, Name = "13", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 24, Name = "14", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 25, Name = "15", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 26, Name = "16", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 27, Name = "17", MemberPrice = 1.00M, Price = 1.75M });
-        _products.Add(new Product() { Id = 28, Name = "18", MemberPrice = 1.20M, Price = 1.75M });
-        _products.Add(new Product() { Id = 29, Name = "19", MemberPrice = 1.00M, Price = 1.75M });
-        #endregion
 
         RefreshCustomerComboBox();
         InitializeProductButtons();
@@ -131,6 +98,7 @@ public partial class KassaOverzichtForm : Form
             item.Tag = product;
             item.Text = product.Name;
             item.SubItems.Add($"€ {product.Price}");
+            item.SubItems.Add($"{DateTime.Now.ToShortDateString()} - {DateTime.Now.ToShortTimeString()}");
             lvProducts.Items.Add(item);
             CalculateTotalPrice(null);
             return;
@@ -265,12 +233,12 @@ public partial class KassaOverzichtForm : Form
         int b = 0;
         int factor = 0;
         int j = 1;
-        foreach (var product in _products)
+        foreach (var product in _productService.GetProducts())
         {
             Button button = new Button();
             button.Top = 10;
             button.Left = 10;
-            button.Size = new Size(85, 85);
+            button.Size = new Size(116, 85);
             button.Text = product.Name;
             button.Tag = product;
             button.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);

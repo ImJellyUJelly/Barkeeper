@@ -56,6 +56,7 @@
             this.cbCustomerName = new System.Windows.Forms.ComboBox();
             this.btSelectCustomer = new System.Windows.Forms.Button();
             this.pProducts = new System.Windows.Forms.Panel();
+            this.bestellingenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -85,7 +86,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(160, 731);
+            this.label5.Location = new System.Drawing.Point(191, 740);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(94, 37);
             this.label5.TabIndex = 10;
@@ -120,7 +121,7 @@
             // 
             this.lbOrderPrice.AutoSize = true;
             this.lbOrderPrice.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbOrderPrice.Location = new System.Drawing.Point(260, 728);
+            this.lbOrderPrice.Location = new System.Drawing.Point(291, 737);
             this.lbOrderPrice.Name = "lbOrderPrice";
             this.lbOrderPrice.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lbOrderPrice.Size = new System.Drawing.Size(97, 41);
@@ -245,7 +246,8 @@
             // bestellingenToolStripMenuItem
             // 
             this.bestellingenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bestellingOverzichtToolStripMenuItem});
+            this.bestellingOverzichtToolStripMenuItem,
+            this.bestellingenToolStripMenuItem1});
             this.bestellingenToolStripMenuItem.Name = "bestellingenToolStripMenuItem";
             this.bestellingenToolStripMenuItem.Size = new System.Drawing.Size(104, 24);
             this.bestellingenToolStripMenuItem.Text = "Bestellingen";
@@ -253,7 +255,7 @@
             // bestellingOverzichtToolStripMenuItem
             // 
             this.bestellingOverzichtToolStripMenuItem.Name = "bestellingOverzichtToolStripMenuItem";
-            this.bestellingOverzichtToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.bestellingOverzichtToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.bestellingOverzichtToolStripMenuItem.Text = "Overzicht";
             this.bestellingOverzichtToolStripMenuItem.Click += new System.EventHandler(this.bestellingOverzichtToolStripMenuItem_Click);
             // 
@@ -337,8 +339,14 @@
             this.pProducts.Location = new System.Drawing.Point(444, 69);
             this.pProducts.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.pProducts.Name = "pProducts";
-            this.pProducts.Size = new System.Drawing.Size(696, 888);
+            this.pProducts.Size = new System.Drawing.Size(700, 888);
             this.pProducts.TabIndex = 16;
+            // 
+            // bestellingenToolStripMenuItem1
+            // 
+            this.bestellingenToolStripMenuItem1.Name = "bestellingenToolStripMenuItem1";
+            this.bestellingenToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.bestellingenToolStripMenuItem1.Text = "Bestellingen";
             // 
             // KassaOverzichtForm
             // 
@@ -397,5 +405,6 @@
         private CheckBox cbIsMember;
         private Label label5;
         private ColumnHeader columnHeader3;
+        private ToolStripMenuItem bestellingenToolStripMenuItem1;
     }
 }

@@ -15,8 +15,8 @@ public class OrderController : ControllerBase
         _orderService = orderService;
     }
 
-    [HttpPost]
-    public IActionResult CreateOrder(Order order)
+    [HttpPost("CreateOrder")]
+    public IActionResult CreateOrder([FromBody] Order order)
     {
         if (order == null)
         {
@@ -27,20 +27,20 @@ public class OrderController : ControllerBase
         return Ok(order);
     }
 
-    //[HttpGet(Name = "GetById")]
-    //public IActionResult GetOrderById(int orderId)
-    //{
-    //    var order = _orderservice.GetOrderById(orderId);
-    //    if (order == null)
-    //    {
-    //        return NotFound($"Order with ID: {orderId} could not tbe found.");
-    //    }
+    [HttpGet("GetOrderById")]
+    public IActionResult GetOrderById(int orderId)
+    {
+        var order = _orderService.GetOrderById(orderId);
+        if (order == null)
+        {
+            return NotFound($"Order with ID: {orderId} could not tbe found.");
+        }
 
-    //    return Ok(order);
-    //}
+        return Ok(order);
+    }
 
-    [HttpGet(Name = "GetByName")]
-    public ActionResult<Order> GetOrderByName(string customerName)
+    [HttpGet("GetOrderByName")]
+    public IActionResult GetOrderByName(string customerName)
     { 
         var order = _orderService.GetOrderByName(customerName);
         if (order == null)

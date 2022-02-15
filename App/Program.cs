@@ -32,8 +32,10 @@ internal static class Program
 
         // Agents
         services.AddScoped<IOrderAgent, OrderAgent>();
+        services.AddScoped<IProductAgent, ProductAgent>();
 
         // Services
         services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<IProductService, ProductService>();
     }
 }

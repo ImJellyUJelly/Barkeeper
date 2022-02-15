@@ -10,32 +10,45 @@ public class OrderAgent : IOrderAgent
     private List<Order> _orders;
     private readonly Url _url;
 
-    public OrderAgent()
+    // Has to be deleted later, for testing only
+    private readonly IProductAgent _agent;
+
+    public OrderAgent(IProductAgent productAgent)
     {
+        _agent = productAgent;
+
         _url = new Url($"{Routes.BASE_URL}/api/Order");
 
         _orders = new List<Order>() {
-                new Order()
-                {   Id = 0,
-                    CustomerName = "Jelle Schrader",
-                    OrderDate = new DateTime(2022, 10, 5),
-                    OrderDetails = new List<OrderDetail> {
-                        new OrderDetail() { Product = new Product() { Id = 0, Name = "Koffie", MemberPrice = 1.20M, Price = 1.75M }, TimeAdded = DateTime.Now },
-                        new OrderDetail() { Product = new Product() { Id = 1, Name = "Thee", MemberPrice = 1.20M, Price = 1.75M }, TimeAdded = DateTime.Now } },
-                    IsMember = true
-                },
-                new Order() {
-                    Id = 1,
-                    CustomerName = "Tom van Grinsven",
-                    OrderDate = new DateTime(2021, 1, 2),
-                    IsMember = true
-                },
-                new Order() {
-                    Id = 2,
-                    CustomerName = "Danielle van den Bosch-Schwanen",
-                    OrderDate = new DateTime(2022, 5, 20),
-                    IsMember = true
-                }
+            new Order()
+            {   Id = 0,
+                CustomerName = "Jon Doe",
+                OrderDate = new DateTime(2022, 10, 5),
+                OrderDetails = new List<OrderDetail> {
+                    new OrderDetail() { OrderId = 0, Product = _agent.GetProductByName("Koffie").Result, TimeAdded = DateTime.Now  },
+                    new OrderDetail() { OrderId = 0, Product = _agent.GetProductByName("Koffie").Result, TimeAdded = DateTime.Now  },
+                    new OrderDetail() { OrderId = 0, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = DateTime.Now  },
+                    new OrderDetail() { OrderId = 0, Product = _agent.GetProductByName("Chocomel").Result, TimeAdded = DateTime.Now  } },
+                IsMember = true
+            },
+            new Order() {
+                Id = 1,
+                CustomerName = "Captain Jack Sparrow",
+                OrderDate = new DateTime(2021, 1, 2),
+                IsMember = true
+            },
+            new Order() {
+                Id = 2,
+                CustomerName = "Baan 5",
+                OrderDate = new DateTime(2022, 2, 14),
+                IsMember = true,
+                OrderDetails = new List<OrderDetail> {
+                    new OrderDetail() { OrderId = 2, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 56) },
+                    new OrderDetail() { OrderId = 2,Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 57) },
+                    new OrderDetail() { OrderId = 2,Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 58) },
+                    new OrderDetail() { OrderId = 2,Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 59) },
+                    new OrderDetail() { OrderId = 2,Product = _agent.GetProductByName("Radler Alcoholvrij").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 21, 23) }},
+            }
         };
     }
 
@@ -45,11 +58,12 @@ public class OrderAgent : IOrderAgent
         return createdOrder;
     }
 
-    public async Task<Order?> GetOrderByName(string name)
+    public async Task<Order> GetOrderByName(string name)
     {
-        _url.SetQueryParams(new { customerName = name });
-        var order = await _url.GetJsonAsync<Order>();
-        return order;
+        //_url.SetQueryParams(new { customerName = name });
+        //var order = await _url.GetJsonAsync<Order>();
+        //return order;
+        return _orders.FirstOrDefault(order => order.CustomerName == name);
     }
 
     public async Task<List<Order>> GetOrders()
@@ -65,7 +79,8 @@ public class OrderAgent : IOrderAgent
             foundOrder = order;
         }
 
-        // Make request to API
+        //var updateOrder = await _url.PostJsonAsync(order);
+        //return order;
 
         return foundOrder;
     }
