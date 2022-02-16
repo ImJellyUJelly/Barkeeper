@@ -16,7 +16,6 @@ public class OrderService : IOrderService
     {
         var orderDetail = new OrderDetail() { Order = order, Product = product, TimeAdded = DateTime.Now };
         order.OrderDetails.Add(orderDetail);
-        order.Price = CalculateOrderPrice(order);
         UpdateOrder(order);
         return orderDetail;
     }
@@ -33,6 +32,11 @@ public class OrderService : IOrderService
         order.OrderDate = DateTime.Now;
         order.Price = CalculateOrderPrice(order);
         return _orderAgent.CreateOrder(order).Result;
+    }
+
+    public SplitOrder CreateSplitOrder(SplitOrder splitOrder)
+    {
+        return _orderAgent.CreateSplitOrder(splitOrder).Result;
     }
 
     public void DeleteProductFromOrder(Order order, OrderDetail orderDetail)
@@ -86,9 +90,22 @@ public class OrderService : IOrderService
     {
         order.Comment += $"Bestelling is opgesplitst in {numberOfCustomers} bestellingen.\n";
         order.IsFinished = true;
-        foreach(var newOrder in newOrders)
+        foreach (var newOrder in newOrders)
         {
-            CreateOrder(newOrder);
+            SplitOrder splitOrder = new SplitOrder()
+            {
+                Id = newOrder.Id,
+                CustomerName = newOrder.CustomerName,
+                IsFinished = newOrder.IsFinished,
+                IsPaid = newOrder.IsPaid,
+                IsMember = newOrder.IsMember,
+                OrderDate = newOrder.OrderDate,
+                OrderDetails = newOrder.OrderDetails,
+                Price = newOrder.Price,
+                Order = newOrder
+            };
+            splitOrder.Comment += $"Dit is een gesplitste bestelling van {order.CustomerName}.\n";
+            CreateSplitOrder(splitOrder);
         }
 
         UpdateOrder(order);

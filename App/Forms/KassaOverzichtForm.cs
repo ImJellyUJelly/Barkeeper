@@ -93,6 +93,12 @@ public partial class KassaOverzichtForm : Form
 
     private void AddProductToOrder(Product product)
     {
+        if (product == null)
+        {
+            MessageBox.Show("Product is niet gevonden.");
+            return;
+        }
+
         if (_selectedOrder == null)
         {
             var item = new ListViewItem();
@@ -104,14 +110,10 @@ public partial class KassaOverzichtForm : Form
             CalculateTotalPrice(null);
             return;
         }
-
-        if (product == null)
+        else
         {
-            MessageBox.Show("Product is niet gevonden.");
-            return;
+            _orderService.AddProductToOrder(_selectedOrder, product);
         }
-
-
 
         ToggleOrderInfo();
         RefreshProductsInOrder();

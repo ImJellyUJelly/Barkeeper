@@ -26,4 +26,14 @@ public class OrderService : IOrderService
     {
         return _orderRepository.GetOrderByName(customerName);
     }
+
+    public List<Order> GetOrders()
+    {
+        return _orderRepository.GetOrders();
+    }
+
+    public Order UpdateOrder(Order order)
+    {
+        return _orderRepository.UpdateOrder(order);
+    }
 }

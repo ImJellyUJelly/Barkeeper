@@ -50,4 +50,17 @@ public class OrderController : ControllerBase
 
         return Ok(order);
     }
+
+    [HttpGet("GetOrders")]
+    public IActionResult GetOrders()
+    {
+        var orders = _orderService.GetOrders();
+        return Ok(orders);
+    }
+
+    [HttpPut]
+    public IActionResult UpdateOrder([FromBody] Order updatedOrder)
+    {
+        var order = _orderService.UpdateOrder(updatedOrder);
+    }
 }

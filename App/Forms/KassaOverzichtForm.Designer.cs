@@ -56,7 +56,6 @@
             this.cbCustomerName = new System.Windows.Forms.ComboBox();
             this.btSelectCustomer = new System.Windows.Forms.Button();
             this.pProducts = new System.Windows.Forms.Panel();
-            this.bestellingenToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -246,8 +245,7 @@
             // bestellingenToolStripMenuItem
             // 
             this.bestellingenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.bestellingOverzichtToolStripMenuItem,
-            this.bestellingenToolStripMenuItem1});
+            this.bestellingOverzichtToolStripMenuItem});
             this.bestellingenToolStripMenuItem.Name = "bestellingenToolStripMenuItem";
             this.bestellingenToolStripMenuItem.Size = new System.Drawing.Size(104, 24);
             this.bestellingenToolStripMenuItem.Text = "Bestellingen";
@@ -271,7 +269,7 @@
             // 
             this.overzichtToolStripMenuItem1.Enabled = false;
             this.overzichtToolStripMenuItem1.Name = "overzichtToolStripMenuItem1";
-            this.overzichtToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.overzichtToolStripMenuItem1.Size = new System.Drawing.Size(154, 26);
             this.overzichtToolStripMenuItem1.Text = "Overzicht";
             // 
             // productenToolStripMenuItem
@@ -286,7 +284,7 @@
             // 
             this.overzichtToolStripMenuItem.Enabled = false;
             this.overzichtToolStripMenuItem.Name = "overzichtToolStripMenuItem";
-            this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.overzichtToolStripMenuItem.Text = "Overzicht";
             // 
             // label1
@@ -341,12 +339,6 @@
             this.pProducts.Name = "pProducts";
             this.pProducts.Size = new System.Drawing.Size(700, 888);
             this.pProducts.TabIndex = 16;
-            // 
-            // bestellingenToolStripMenuItem1
-            // 
-            this.bestellingenToolStripMenuItem1.Name = "bestellingenToolStripMenuItem1";
-            this.bestellingenToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
-            this.bestellingenToolStripMenuItem1.Text = "Bestellingen";
             // 
             // KassaOverzichtForm
             // 
@@ -405,6 +397,5 @@
         private CheckBox cbIsMember;
         private Label label5;
         private ColumnHeader columnHeader3;
-        private ToolStripMenuItem bestellingenToolStripMenuItem1;
     }
 }

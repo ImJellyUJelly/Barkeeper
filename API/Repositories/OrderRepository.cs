@@ -30,4 +30,17 @@ public class OrderRepository : IOrderRepository
             .Where(order => order.IsPaid == false)
             .First(order => order.CustomerName == customerName);
     }
+
+    public List<Order> GetOrders()
+    {
+        return _dbContext.Orders.ToList();
+    }
+
+    public Order UpdateOrder(Order order)
+    {
+        var foundOrder = _dbContext.Orders.First(o => o.Id == order.Id);
+        foundOrder = order;
+        _dbContext.SaveChanges();
+        return foundOrder;
+    }
 }

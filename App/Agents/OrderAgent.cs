@@ -35,7 +35,7 @@ public class OrderAgent : IOrderAgent
                 Id = 2,
                 CustomerName = "Captain Jack Sparrow",
                 OrderDate = new DateTime(2021, 1, 2),
-                IsMember = true
+                IsMember = false
             },
             new Order() {
                 Id = 3,
@@ -48,8 +48,15 @@ public class OrderAgent : IOrderAgent
                     new OrderDetail() { Id = 2, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 58) },
                     new OrderDetail() { Id = 2, Product = _agent.GetProductByName("Hertog-Jan").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 20, 59) },
                     new OrderDetail() { Id = 2, Product = _agent.GetProductByName("Radler Alcoholvrij").Result, TimeAdded = new DateTime(2022, 2, 14, 21, 21, 23) }},
+                Comment = "Op Baan 5 staan Will Smith, De Koning Van Spanje en Rapper Sjors.\n"
             }
         };
+        foreach(var order in _orders)
+        {
+            decimal totalPrice = 0.00M;
+            order.OrderDetails.ForEach(od => totalPrice += (order.IsMember ? od.Product.MemberPrice : od.Product.Price));
+            order.Price = totalPrice;
+        }
     }
 
     public async Task<Order> CreateOrder(Order order)
@@ -85,5 +92,11 @@ public class OrderAgent : IOrderAgent
 
         //var updateOrder = await _url.PostJsonAsync(order);
         //return order;
+    }
+
+    public async Task<SplitOrder> CreateSplitOrder(SplitOrder splitOrder)
+    {
+        _orders.Add(splitOrder);
+        return splitOrder;
     }
 }
