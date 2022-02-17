@@ -1,29 +1,29 @@
-﻿using App.Agents;
-using Models;
+﻿using App.Models;
+using App.Repositories;
 
 namespace App.Services;
 
 public class ProductService : IProductService
 {
-    private readonly IProductAgent _productAgent;
+    private readonly IProductRepository _productRepository;
 
-    public ProductService(IProductAgent productAgent)
+    public ProductService(IUnitOfWork unitOfWork)
     {
-        _productAgent = productAgent;
+        _productRepository = unitOfWork.GetProductRepository();
     }
 
     public Product GetProductById(int productId)
     {
-        return _productAgent.GetProductById(productId).Result;
+        return _productRepository.GetProductById(productId);
     }
 
     public Product GetProductByName(string productName)
     {
-        return _productAgent.GetProductByName(productName).Result;
+        return _productRepository.GetProductByName(productName);
     }
 
     public List<Product> GetProducts()
     {
-        return _productAgent.GetProducts().Result;
+        return _productRepository.GetProducts();
     }
 }

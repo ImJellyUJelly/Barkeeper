@@ -1,15 +1,15 @@
-﻿using App.Agents;
-using Models;
+﻿using App.Models;
+using App.Repositories;
 
 namespace App.Services;
 
 public class OrderService : IOrderService
 {
-    private readonly IOrderAgent _orderAgent;
+    private readonly IOrderRepository _orderRepository;
 
-    public OrderService(IOrderAgent orderAgent)
+    public OrderService(IUnitOfWork unitOfWork)
     {
-        _orderAgent = orderAgent;
+        _orderRepository = unitOfWork.getOrderRepository();
     }
 
     public OrderDetail AddProductToOrder(Order order, Product product)
@@ -31,12 +31,12 @@ public class OrderService : IOrderService
     {
         order.OrderDate = DateTime.Now;
         order.Price = CalculateOrderPrice(order);
-        return _orderAgent.CreateOrder(order).Result;
+        return _orderRepository.CreateOrder(order);
     }
 
     public SplitOrder CreateSplitOrder(SplitOrder splitOrder)
     {
-        return _orderAgent.CreateSplitOrder(splitOrder).Result;
+        throw new NotImplementedException();
     }
 
     public void DeleteProductFromOrder(Order order, OrderDetail orderDetail)
@@ -48,12 +48,12 @@ public class OrderService : IOrderService
 
     public Order GetOrderByCustomerName(string customerName)
     {
-        return _orderAgent.GetOrderByName(customerName).Result;
+        return _orderRepository.GetOrderByName(customerName);
     }
 
     public List<Order> GetOrders()
     {
-        return _orderAgent.GetOrders().Result.OrderBy(order => order.CustomerName).ToList();
+        return _orderRepository.GetOrders().OrderBy(order => order.CustomerName).ToList();
     }
 
     public void MergeOrders(List<Order> orderList, string customerName)
@@ -114,6 +114,6 @@ public class OrderService : IOrderService
     public void UpdateOrder(Order order)
     {
         order.Price = CalculateOrderPrice(order);
-        _orderAgent.UpdateOrder(order);
+        _orderRepository.UpdateOrder(order);
     }
 }

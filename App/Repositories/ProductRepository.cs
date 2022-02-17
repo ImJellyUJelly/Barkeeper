@@ -1,15 +1,18 @@
-﻿using Flurl;
-using Models;
+﻿using App.Contexts;
+using App.Models;
 
-namespace App.Agents;
+namespace App.Repositories;
 
-public class ProductAgent : IProductAgent
+public class ProductRepository : IProductRepository
 {
-    private readonly List<Product> _products;
-    private readonly Url _url;
+    private readonly BarkeeperContext _context;
 
-    public ProductAgent()
+    // For testing only
+    private readonly List<Product> _products;
+
+    public ProductRepository(BarkeeperContext context)
     {
+        _context = context;
         _products = new List<Product>() {
             new Product() { Id = 0, Name = "Koffie", MemberPrice = 1.40M, Price = 1.80M, Category = ProductCategory.Warme_Dranken },
             new Product() { Id = 1, Name = "Thee", MemberPrice = 1.40M, Price = 1.80M, Category = ProductCategory.Warme_Dranken },
@@ -35,17 +38,17 @@ public class ProductAgent : IProductAgent
         };
     }
 
-    public async Task<Product> GetProductById(int productId)
+    public Product GetProductById(int productId)
     {
         return _products.FirstOrDefault(product => product.Id == productId);
     }
 
-    public async Task<Product> GetProductByName(string productName)
+    public Product GetProductByName(string productName)
     {
         return _products.FirstOrDefault(product => product.Name == productName);
     }
 
-    public async Task<List<Product>> GetProducts()
+    public List<Product> GetProducts()
     {
         return _products;
     }

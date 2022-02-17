@@ -1,5 +1,6 @@
-using App.Agents;
+using App.Contexts;
 using App.Forms;
+using App.Repositories;
 using App.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,9 +31,11 @@ internal static class Program
         // Forms
         services.AddScoped<KassaOverzichtForm>();
 
-        // Agents
-        services.AddScoped<IOrderAgent, OrderAgent>();
-        services.AddScoped<IProductAgent, ProductAgent>();
+        // Database
+        services.AddScoped<BarkeeperContext>();
+
+        // Unit Of Work
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         // Services
         services.AddScoped<IOrderService, OrderService>();

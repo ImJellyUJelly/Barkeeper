@@ -1,8 +1,8 @@
-﻿using Models;
+﻿using App.Models;
 
-namespace API.Services;
+namespace App.Repositories;
 
-public interface IOrderService
+public interface IOrderRepository
 {
     Order CreateOrder(Order order);
     Order GetOrderById(int orderId);

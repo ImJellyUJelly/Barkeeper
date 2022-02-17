@@ -1,5 +1,5 @@
 ﻿using App.Services;
-using Models;
+using App.Models;
 
 namespace App.Forms
 {
@@ -37,32 +37,34 @@ namespace App.Forms
 
         private void btAddCustomer_Click(object sender, EventArgs e)
         {
+            int heightdivider = tbCustomer2.Location.Y - (tbCustomer1.Location.Y + tbCustomer1.Height);
+
             Label lbCustomerName = new Label();
             lbCustomerName.Text = "Naam:";
             lbCustomerName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lbCustomerName.Size = new Size(68, 28);
-            lbCustomerName.Location = new Point(18, (232 + (_toolsNewOrders.Count * 40)));
+            lbCustomerName.Size = new Size(lbCustomer1.Width, lbCustomer1.Height);
+            lbCustomerName.Location = new Point(lbCustomer1.Location.X, (lbCustomer1.Location.Y + (_toolsNewOrders.Count * (tbCustomer1.Height + heightdivider))));
             this.Controls.Add(lbCustomerName);
 
             TextBox tbCustomerName = new TextBox();
             tbCustomerName.TabIndex = _toolsNewOrders.Count + 1;
             tbCustomerName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            tbCustomerName.Size = new Size(528, 34);
-            tbCustomerName.Location = new Point(92, (229 + (_toolsNewOrders.Count * 40)));
+            tbCustomerName.Size = new Size(tbCustomer1.Width, tbCustomer1.Height);
+            tbCustomerName.Location = new Point(tbCustomer1.Location.X, (tbCustomer1.Location.Y + (_toolsNewOrders.Count * (tbCustomer1.Height + heightdivider))));
             this.Controls.Add(tbCustomerName);
 
             Label lbPrice = new Label();
             lbPrice.Text = "Prijs:";
             lbPrice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lbPrice.Size = new Size(52, 28);
-            lbPrice.Location = new Point(653, (232 + (_toolsNewOrders.Count * 40)));
+            lbPrice.Size = new Size(lbPrice1.Width, lbPrice1.Height);
+            lbPrice.Location = new Point(lbPrice1.Location.X, (lbPrice1.Location.Y + (_toolsNewOrders.Count * (tbCustomer1.Height + heightdivider))));
             this.Controls.Add(lbPrice);
 
             Label lbEuroSign = new Label();
             lbEuroSign.Text = "€";
             lbEuroSign.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lbEuroSign.Size = new Size(23, 28);
-            lbEuroSign.Location = new Point(711, (232 + (_toolsNewOrders.Count * 40)));
+            lbEuroSign.Size = new Size(lbEuro1.Width, lbEuro1.Height);
+            lbEuroSign.Location = new Point(lbEuro1.Location.X, (lbEuro1.Location.Y + (_toolsNewOrders.Count * (tbCustomer1.Height + heightdivider))));
             this.Controls.Add(lbEuroSign);
 
             NumericUpDown nudPrice = new NumericUpDown();
@@ -70,15 +72,15 @@ namespace App.Forms
             nudPrice.Maximum = 99999999999;
             nudPrice.DecimalPlaces = 2;
             nudPrice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            nudPrice.Size = new Size(100, 34);
-            nudPrice.Location = new Point(738, (232 + (_toolsNewOrders.Count * 40)));
+            nudPrice.Size = new Size(nudCustomer1.Width, nudCustomer1.Height);
+            nudPrice.Location = new Point(nudCustomer1.Location.X, (nudCustomer1.Location.Y + (_toolsNewOrders.Count * (tbCustomer1.Height + heightdivider))));
             this.Controls.Add(nudPrice);
 
             _toolsNewOrders.Add(tbCustomerName, nudPrice);
             _numberOfNewOrders++;
             SetPriceForNewOrders();
 
-            if(Height <= (tbCustomerName.Location.Y + tbCustomerName.Height + 34))
+            if (Height <= (tbCustomerName.Location.Y + tbCustomerName.Height + 34))
             {
                 Height += tbCustomerName.Height;
             }
@@ -87,7 +89,7 @@ namespace App.Forms
         private void SetPriceForNewOrders()
         {
             decimal price = _order.Price / _numberOfNewOrders;
-            foreach(var dict in _toolsNewOrders)
+            foreach (var dict in _toolsNewOrders)
             {
                 dict.Value.Value = price;
             }

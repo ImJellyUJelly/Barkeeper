@@ -1,7 +1,7 @@
-﻿using Models;
+﻿using App.Models;
 using System.Data.Entity;
 
-namespace API.Contexts;
+namespace App.Contexts;
 
 public class BarkeeperContext : DbContext
 {

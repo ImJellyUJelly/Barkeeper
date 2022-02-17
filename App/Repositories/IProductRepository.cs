@@ -1,10 +1,10 @@
 ﻿using App.Models;
 
-namespace App.Services;
+namespace App.Repositories;
 
-public interface IProductService
+public interface IProductRepository
 {
-    List<Product> GetProducts();
     Product GetProductById(int productId);
     Product GetProductByName(string productName);
+    List<Product> GetProducts();
 }
