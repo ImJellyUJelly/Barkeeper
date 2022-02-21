@@ -56,7 +56,7 @@ public partial class KassaOverzichtForm : Form
         foreach (OrderDetail detail in _selectedOrder.OrderDetails)
         {
             var item = new ListViewItem();
-            item.Tag = detail.Product;
+            item.Tag = detail;
             item.Text = detail.Product.Name;
             if (_selectedOrder.IsMember)
             {
@@ -80,14 +80,15 @@ public partial class KassaOverzichtForm : Form
         {
             foreach (ListViewItem item in lvProducts.Items)
             {
-                Product product = (Product)item.Tag;
-                totalPrice += product.Price;
+                OrderDetail detail = (OrderDetail)item.Tag;
+                totalPrice += detail.Product.Price;
             }
         }
         else
         {
             totalPrice = _orderService.CalculateOrderPrice(order);
         }
+
         lbOrderPrice.Text = $"€ {totalPrice}";
     }
 
@@ -101,8 +102,9 @@ public partial class KassaOverzichtForm : Form
 
         if (_selectedOrder == null)
         {
+            OrderDetail detail = new OrderDetail() { Product = product };
             var item = new ListViewItem();
-            item.Tag = product;
+            item.Tag = detail;
             item.Text = product.Name;
             item.SubItems.Add($"€ {product.Price}");
             item.SubItems.Add($"{DateTime.Now.ToShortDateString()} - {DateTime.Now.ToShortTimeString()}");
@@ -145,8 +147,8 @@ public partial class KassaOverzichtForm : Form
 
     private void btDeleteProduct_Click(object sender, EventArgs e)
     {
-        OrderDetail orderDetail = (OrderDetail)lvProducts.SelectedItems[0].Tag;
-        if (orderDetail == null) { return; }
+        OrderDetail detail = (OrderDetail)lvProducts.SelectedItems[0].Tag;
+        if (detail == null) { return; }
 
         if (_selectedOrder == null)
         {
@@ -154,7 +156,8 @@ public partial class KassaOverzichtForm : Form
             return;
         }
 
-        _orderService.DeleteProductFromOrder(_selectedOrder, orderDetail);
+        _orderService.DeleteProductFromOrder(_selectedOrder, detail);
+        RefreshProductsInOrder();
     }
 
     private void btSelectCustomer_Click(object sender, EventArgs e)
@@ -201,7 +204,10 @@ public partial class KassaOverzichtForm : Form
 
                 foreach (ListViewItem item in lvProducts.Items)
                 {
-                    order.OrderDetails.Add(new OrderDetail() { Order = order, Product = (Product)item.Tag, TimeAdded = DateTime.Now });
+                    var detail = (OrderDetail)item.Tag;
+                    detail.Order = order;
+                    detail.TimeAdded = DateTime.Now;
+                    order.OrderDetails.Add(detail);
                 }
 
                 _orderService.CreateOrder(order);
@@ -212,7 +218,10 @@ public partial class KassaOverzichtForm : Form
                 _selectedOrder = order;
                 foreach (ListViewItem item in lvProducts.Items)
                 {
-                    order.OrderDetails.Add(new OrderDetail() { Order = order, Product = (Product)item.Tag, TimeAdded = DateTime.Now });
+                    var detail = (OrderDetail)item.Tag;
+                    detail.Order = order;
+                    detail.TimeAdded = DateTime.Now;
+                    order.OrderDetails.Add(detail);
                 }
             }
         }
@@ -235,7 +244,7 @@ public partial class KassaOverzichtForm : Form
             return;
         }
 
-        Product product = (Product)lvProducts.SelectedItems[0].Tag;
+        OrderDetail detail = (OrderDetail)lvProducts.SelectedItems[0].Tag;
         btDeleteProduct.Visible = true;
     }
 
@@ -301,7 +310,7 @@ public partial class KassaOverzichtForm : Form
                 return Color.LightCoral;
             case ProductCategory.Snoep:
                 return Color.LightGoldenrodYellow;
-            default: 
+            default:
                 return Color.Gray;
         }
     }
@@ -342,5 +351,20 @@ public partial class KassaOverzichtForm : Form
         {
             btSelectCustomer.PerformClick();
         }
+    }
+
+    private void btPay_Click(object sender, EventArgs e)
+    {
+        if (_selectedOrder == null)
+        {
+            return;
+        }
+
+        var form = new AfrekenForm(_orderService, _selectedOrder);
+        form.ShowDialog();
+
+        _selectedOrder = null;
+        ToggleOrderInfo();
+        RefreshProductsInOrder();
     }
 }

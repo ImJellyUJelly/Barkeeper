@@ -86,7 +86,7 @@ public class OrderService : IOrderService
         newOrder = CreateOrder(newOrder);
         foreach (var order in orderList)
         {
-            order.Comment = $"Bestelling is samengevoegd in de bestelling van {newOrder.CustomerName} met ID: {newOrder.Id}.\n";
+            order.Comment += $"Bestelling is samengevoegd in de bestelling van {newOrder.CustomerName} met ID: {newOrder.Id}.\n";
             order.IsFinished = true;
             UpdateOrder(order);
         }

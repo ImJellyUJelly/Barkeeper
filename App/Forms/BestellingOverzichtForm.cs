@@ -19,6 +19,7 @@ public partial class BestellingOverzichtForm : Form
     {
         btMergeOrders.Enabled = false;
         btSplitOrder.Enabled = false;
+        btPay.Enabled = false;
 
         lvOrders.Items.Clear();
         List<Order> orders = _orderService.GetOrders()
@@ -60,6 +61,15 @@ public partial class BestellingOverzichtForm : Form
         else
         {
             btMergeOrders.Enabled = false;
+        }
+
+        if (lvOrders.SelectedItems.Count == 1)
+        {
+            btPay.Enabled = true;
+        }
+        else
+        {
+            btPay.Enabled = false;
         }
     }
 
@@ -104,5 +114,16 @@ public partial class BestellingOverzichtForm : Form
             return "Ja";
         }
         return "Nee";
+    }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+        Order order = (Order)lvOrders.SelectedItems[0].Tag;
+        if (order == null) { return; }
+
+        var form = new AfrekenForm(_orderService, order);
+        form.ShowDialog();
+
+        LoadOrders();
     }
 }

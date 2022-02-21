@@ -39,6 +39,7 @@
             this.chComments = new System.Windows.Forms.ColumnHeader();
             this.btMergeOrders = new System.Windows.Forms.Button();
             this.btSplitOrder = new System.Windows.Forms.Button();
+            this.btPay = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lvOrders
@@ -101,40 +102,54 @@
             // chComments
             // 
             this.chComments.Text = "Opmerkingen";
-            this.chComments.Width = 220;
+            this.chComments.Width = 310;
             // 
             // btMergeOrders
             // 
-            this.btMergeOrders.Location = new System.Drawing.Point(14, 5);
+            this.btMergeOrders.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btMergeOrders.Location = new System.Drawing.Point(250, 5);
             this.btMergeOrders.Name = "btMergeOrders";
             this.btMergeOrders.Size = new System.Drawing.Size(112, 95);
             this.btMergeOrders.TabIndex = 1;
-            this.btMergeOrders.Text = "Bestellingen samenvoegen";
+            this.btMergeOrders.Text = "Samen- voegen";
             this.btMergeOrders.UseVisualStyleBackColor = true;
             this.btMergeOrders.Click += new System.EventHandler(this.btMergeOrders_Click);
             // 
             // btSplitOrder
             // 
+            this.btSplitOrder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btSplitOrder.Location = new System.Drawing.Point(132, 5);
             this.btSplitOrder.Name = "btSplitOrder";
             this.btSplitOrder.Size = new System.Drawing.Size(112, 95);
             this.btSplitOrder.TabIndex = 2;
-            this.btSplitOrder.Text = "Bestelling splitsen";
+            this.btSplitOrder.Text = "Splitsen";
             this.btSplitOrder.UseVisualStyleBackColor = true;
             this.btSplitOrder.Click += new System.EventHandler(this.btSplitOrder_Click);
+            // 
+            // btPay
+            // 
+            this.btPay.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btPay.Location = new System.Drawing.Point(14, 5);
+            this.btPay.Name = "btPay";
+            this.btPay.Size = new System.Drawing.Size(112, 95);
+            this.btPay.TabIndex = 3;
+            this.btPay.Text = "Afrekenen";
+            this.btPay.UseVisualStyleBackColor = true;
+            this.btPay.Click += new System.EventHandler(this.button1_Click);
             // 
             // BestellingOverzichtForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 972);
+            this.Controls.Add(this.btPay);
             this.Controls.Add(this.btSplitOrder);
             this.Controls.Add(this.btMergeOrders);
             this.Controls.Add(this.lvOrders);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "BestellingOverzichtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "BestellingOverzichtForm";
+            this.Text = "Overzicht bestellingen";
             this.ResumeLayout(false);
 
         }
@@ -152,5 +167,6 @@
         private Button btSplitOrder;
         private ColumnHeader chComments;
         private ColumnHeader chIsFinished;
+        private Button btPay;
     }
 }

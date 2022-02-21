@@ -137,6 +137,7 @@
             this.btPay.TabIndex = 5;
             this.btPay.Text = "Afrekenen";
             this.btPay.UseVisualStyleBackColor = true;
+            this.btPay.Click += new System.EventHandler(this.btPay_Click);
             // 
             // lvProducts
             // 
@@ -253,7 +254,7 @@
             // bestellingOverzichtToolStripMenuItem
             // 
             this.bestellingOverzichtToolStripMenuItem.Name = "bestellingOverzichtToolStripMenuItem";
-            this.bestellingOverzichtToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.bestellingOverzichtToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.bestellingOverzichtToolStripMenuItem.Text = "Overzicht";
             this.bestellingOverzichtToolStripMenuItem.Click += new System.EventHandler(this.bestellingOverzichtToolStripMenuItem_Click);
             // 
