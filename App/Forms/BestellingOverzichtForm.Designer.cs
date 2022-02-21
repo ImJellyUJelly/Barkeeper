@@ -34,7 +34,9 @@
             this.chIsMember = new System.Windows.Forms.ColumnHeader();
             this.chOrderDate = new System.Windows.Forms.ColumnHeader();
             this.chIsPaid = new System.Windows.Forms.ColumnHeader();
+            this.chIsFinished = new System.Windows.Forms.ColumnHeader();
             this.chProducts = new System.Windows.Forms.ColumnHeader();
+            this.chComments = new System.Windows.Forms.ColumnHeader();
             this.btMergeOrders = new System.Windows.Forms.Button();
             this.btSplitOrder = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -47,13 +49,15 @@
             this.chIsMember,
             this.chOrderDate,
             this.chIsPaid,
-            this.chProducts});
+            this.chIsFinished,
+            this.chProducts,
+            this.chComments});
             this.lvOrders.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lvOrders.FullRowSelect = true;
             this.lvOrders.Location = new System.Drawing.Point(14, 107);
             this.lvOrders.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.lvOrders.Name = "lvOrders";
-            this.lvOrders.Size = new System.Drawing.Size(707, 848);
+            this.lvOrders.Size = new System.Drawing.Size(1126, 848);
             this.lvOrders.TabIndex = 0;
             this.lvOrders.UseCompatibleStateImageBehavior = false;
             this.lvOrders.View = System.Windows.Forms.View.Details;
@@ -84,10 +88,20 @@
             this.chIsPaid.Text = "Betaald?";
             this.chIsPaid.Width = 100;
             // 
+            // chIsFinished
+            // 
+            this.chIsFinished.Text = "Afgerond?";
+            this.chIsFinished.Width = 110;
+            // 
             // chProducts
             // 
             this.chProducts.Text = "Aantal producten";
             this.chProducts.Width = 130;
+            // 
+            // chComments
+            // 
+            this.chComments.Text = "Opmerkingen";
+            this.chComments.Width = 220;
             // 
             // btMergeOrders
             // 
@@ -113,7 +127,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(735, 972);
+            this.ClientSize = new System.Drawing.Size(1152, 972);
             this.Controls.Add(this.btSplitOrder);
             this.Controls.Add(this.btMergeOrders);
             this.Controls.Add(this.lvOrders);
@@ -136,5 +150,7 @@
         private ColumnHeader chIsPaid;
         private Button btMergeOrders;
         private Button btSplitOrder;
+        private ColumnHeader chComments;
+        private ColumnHeader chIsFinished;
     }
 }

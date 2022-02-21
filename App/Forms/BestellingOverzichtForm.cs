@@ -32,24 +32,12 @@ public partial class BestellingOverzichtForm : Form
             item.Tag = order;
             item.Text = order.Id.ToString();
             item.SubItems.Add(order.CustomerName);
-            if (order.IsMember)
-            {
-                item.SubItems.Add("Ja");
-            }
-            else
-            {
-                item.SubItems.Add("Nee");
-            }
+            item.SubItems.Add(GetTextFromBool(order.IsMember));
             item.SubItems.Add($"{order.OrderDate.ToString("dd/MM/yyyy")} - {order.OrderDate.ToShortTimeString()}");
-            if (order.IsPaid)
-            {
-                item.SubItems.Add("Ja");
-            }
-            else
-            {
-                item.SubItems.Add("Nee");
-            }
+            item.SubItems.Add(GetTextFromBool(order.IsPaid));
+            item.SubItems.Add(GetTextFromBool(order.IsFinished));
             item.SubItems.Add(order.OrderDetails.Count.ToString());
+            item.SubItems.Add(order.Comment);
             lvOrders.Items.Add(item);
         }
     }
@@ -78,7 +66,7 @@ public partial class BestellingOverzichtForm : Form
     private void btMergeOrders_Click(object sender, EventArgs e)
     {
         List<Order> orders = new List<Order>();
-        foreach (ListViewItem item in lvOrders.Items)
+        foreach (ListViewItem item in lvOrders.SelectedItems)
         {
             orders.Add((Order)item.Tag);
         }
@@ -91,7 +79,7 @@ public partial class BestellingOverzichtForm : Form
     private void btSplitOrder_Click(object sender, EventArgs e)
     {
         Order order = (Order)lvOrders.SelectedItems[0].Tag;
-        if(order == null) { return; }
+        if (order == null) { return; }
 
         var form = new SplitBestellingForm(_orderService, order);
         form.ShowDialog();
@@ -107,5 +95,14 @@ public partial class BestellingOverzichtForm : Form
                 item.Selected = true;
             }
         }
+    }
+
+    private string GetTextFromBool(bool value)
+    {
+        if (value)
+        {
+            return "Ja";
+        }
+        return "Nee";
     }
 }

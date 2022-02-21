@@ -17,4 +17,9 @@ public class Order
     {
         OrderDetails = new List<OrderDetail>();
     }
+
+    public override string ToString()
+    {
+        return CustomerName;
+    }
 }

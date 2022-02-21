@@ -56,9 +56,15 @@ public class OrderService : IOrderService
         return _orderRepository.GetOrders().OrderBy(order => order.CustomerName).ToList();
     }
 
+    public List<Order> GetUnFinishedAndUnPaidOrders()
+    {
+        return _orderRepository.GetOrders().Where(order => order.IsFinished == false && order.IsPaid == false).ToList(); ;
+    }
+
     public void MergeOrders(List<Order> orderList, string customerName)
     {
         var newOrder = new Order() { CustomerName = customerName, OrderDate = DateTime.Now, IsMember = true };
+        newOrder.Comment += "Deze bestelling is samengevoegd uit ID's: ";
         foreach (var order in orderList)
         {
             newOrder.Comment += $"{order.Id} ";

@@ -37,7 +37,7 @@ public partial class KassaOverzichtForm : Form
     private void RefreshCustomerComboBox()
     {
         cbCustomerName.Items.Clear();
-        foreach (Order order in _orderService.GetOrders())
+        foreach (Order order in _orderService.GetUnFinishedAndUnPaidOrders())
         {
             cbCustomerName.Items.Add(order.CustomerName);
         }
@@ -288,7 +288,7 @@ public partial class KassaOverzichtForm : Form
             case ProductCategory.Bieren:
                 return Color.LightBlue;
             case ProductCategory.Wijnen:
-                return Color.LightGreen;
+                return Color.LightPink;
             case ProductCategory.Gedestilleerd:
                 return Color.LightSlateGray;
             case ProductCategory.Specials:
