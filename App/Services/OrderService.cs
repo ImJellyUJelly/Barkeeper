@@ -16,6 +16,7 @@ public class OrderService : IOrderService
     {
         var orderDetail = new OrderDetail() { Order = order, Product = product, TimeAdded = DateTime.Now };
         order.OrderDetails.Add(orderDetail);
+        order.Price = CalculateOrderPrice(order);
         UpdateOrder(order);
         return orderDetail;
     }
@@ -32,11 +33,6 @@ public class OrderService : IOrderService
         order.OrderDate = DateTime.Now;
         order.Price = CalculateOrderPrice(order);
         return _orderRepository.CreateOrder(order);
-    }
-
-    public SplitOrder CreateSplitOrder(SplitOrder splitOrder)
-    {
-        throw new NotImplementedException();
     }
 
     public void DeleteProductFromOrder(Order order, OrderDetail orderDetail)
@@ -70,20 +66,12 @@ public class OrderService : IOrderService
             newOrder.Comment += $"{order.Id} ";
             foreach (var orderDetail in order.OrderDetails)
             {
-                var od = new OrderDetail() { Order = newOrder, Product = orderDetail.Product, TimeAdded = DateTime.Now };
-                newOrder.OrderDetails.Add(od);
-                if (order.IsMember)
-                {
-                    order.Price += orderDetail.Product.MemberPrice;
-                }
-                else
-                {
-                    order.Price += orderDetail.Product.Price;
-                }
+                AddProductToOrder(newOrder, orderDetail.Product);
             }
         }
 
         newOrder = CreateOrder(newOrder);
+        newOrder.Price = CalculateOrderPrice(newOrder);
         foreach (var order in orderList)
         {
             order.Comment += $"Bestelling is samengevoegd in de bestelling van {newOrder.CustomerName} met ID: {newOrder.Id}.\n";
@@ -92,26 +80,15 @@ public class OrderService : IOrderService
         }
     }
 
-    public void SplitOrder(Order order, int numberOfCustomers, List<Order> newOrders)
+    public void SplitOrder(Order order, List<Order> newOrders)
     {
-        order.Comment += $"Bestelling is opgesplitst in {numberOfCustomers} bestellingen.\n";
+        order.Comment += $"Bestelling is opgesplitst in {newOrders.Count} bestellingen.\n";
         order.IsFinished = true;
         foreach (var newOrder in newOrders)
         {
-            SplitOrder splitOrder = new SplitOrder()
-            {
-                Id = newOrder.Id,
-                CustomerName = newOrder.CustomerName,
-                IsFinished = newOrder.IsFinished,
-                IsPaid = newOrder.IsPaid,
-                IsMember = newOrder.IsMember,
-                OrderDate = newOrder.OrderDate,
-                OrderDetails = newOrder.OrderDetails,
-                Price = newOrder.Price,
-                Order = newOrder
-            };
-            splitOrder.Comment += $"Dit is een gesplitste bestelling van {order.CustomerName}.\n";
-            CreateSplitOrder(splitOrder);
+            newOrder.Comment += $"Dit is een gesplitste bestelling van {order.CustomerName}.\n";
+            newOrder.ParentOrder = order;
+            CreateOrder(newOrder);
         }
 
         UpdateOrder(order);
@@ -119,7 +96,13 @@ public class OrderService : IOrderService
 
     public void UpdateOrder(Order order)
     {
-        order.Price = CalculateOrderPrice(order);
+        _orderRepository.UpdateOrder(order);
+    }
+
+    public void PayOrder(Order order, decimal amount)
+    {
+        order.IsPaid = true;
+        order.IsFinished = true;
         _orderRepository.UpdateOrder(order);
     }
 }

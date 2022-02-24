@@ -43,6 +43,12 @@
             this.lbCustomerName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btFive = new System.Windows.Forms.Button();
+            this.btTen = new System.Windows.Forms.Button();
+            this.btTwenty = new System.Windows.Forms.Button();
+            this.btFifty = new System.Windows.Forms.Button();
+            this.btCash = new System.Windows.Forms.Button();
+            this.btPin = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,7 +68,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(594, 703);
+            this.groupBox1.Size = new System.Drawing.Size(579, 703);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -102,7 +108,7 @@
             this.columnHeader3});
             this.lvProducts.Location = new System.Drawing.Point(6, 300);
             this.lvProducts.Name = "lvProducts";
-            this.lvProducts.Size = new System.Drawing.Size(582, 397);
+            this.lvProducts.Size = new System.Drawing.Size(566, 397);
             this.lvProducts.TabIndex = 15;
             this.lvProducts.UseCompatibleStateImageBehavior = false;
             this.lvProducts.View = System.Windows.Forms.View.Details;
@@ -110,7 +116,7 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Product";
-            this.columnHeader1.Width = 250;
+            this.columnHeader1.Width = 230;
             // 
             // columnHeader2
             // 
@@ -139,7 +145,7 @@
             this.tbComments.Location = new System.Drawing.Point(6, 148);
             this.tbComments.Multiline = true;
             this.tbComments.Name = "tbComments";
-            this.tbComments.Size = new System.Drawing.Size(582, 78);
+            this.tbComments.Size = new System.Drawing.Size(566, 78);
             this.tbComments.TabIndex = 5;
             // 
             // label3
@@ -188,11 +194,83 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Klantnaam:";
             // 
+            // btFive
+            // 
+            this.btFive.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btFive.Location = new System.Drawing.Point(873, 12);
+            this.btFive.Name = "btFive";
+            this.btFive.Size = new System.Drawing.Size(267, 107);
+            this.btFive.TabIndex = 1;
+            this.btFive.Text = "€ 5,-";
+            this.btFive.UseVisualStyleBackColor = true;
+            this.btFive.Click += new System.EventHandler(this.btFive_Click);
+            // 
+            // btTen
+            // 
+            this.btTen.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btTen.Location = new System.Drawing.Point(873, 125);
+            this.btTen.Name = "btTen";
+            this.btTen.Size = new System.Drawing.Size(267, 107);
+            this.btTen.TabIndex = 2;
+            this.btTen.Text = "€ 10,-";
+            this.btTen.UseVisualStyleBackColor = true;
+            this.btTen.Click += new System.EventHandler(this.btTen_Click);
+            // 
+            // btTwenty
+            // 
+            this.btTwenty.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btTwenty.Location = new System.Drawing.Point(873, 238);
+            this.btTwenty.Name = "btTwenty";
+            this.btTwenty.Size = new System.Drawing.Size(267, 107);
+            this.btTwenty.TabIndex = 3;
+            this.btTwenty.Text = "€ 20,-";
+            this.btTwenty.UseVisualStyleBackColor = true;
+            this.btTwenty.Click += new System.EventHandler(this.btTwenty_Click);
+            // 
+            // btFifty
+            // 
+            this.btFifty.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btFifty.Location = new System.Drawing.Point(873, 351);
+            this.btFifty.Name = "btFifty";
+            this.btFifty.Size = new System.Drawing.Size(267, 107);
+            this.btFifty.TabIndex = 4;
+            this.btFifty.Text = "€ 50,-";
+            this.btFifty.UseVisualStyleBackColor = true;
+            this.btFifty.Click += new System.EventHandler(this.btFifty_Click);
+            // 
+            // btCash
+            // 
+            this.btCash.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btCash.Location = new System.Drawing.Point(873, 464);
+            this.btCash.Name = "btCash";
+            this.btCash.Size = new System.Drawing.Size(267, 107);
+            this.btCash.TabIndex = 5;
+            this.btCash.Text = "Contant";
+            this.btCash.UseVisualStyleBackColor = true;
+            this.btCash.Click += new System.EventHandler(this.btCash_Click);
+            // 
+            // btPin
+            // 
+            this.btPin.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btPin.Location = new System.Drawing.Point(873, 577);
+            this.btPin.Name = "btPin";
+            this.btPin.Size = new System.Drawing.Size(267, 107);
+            this.btPin.TabIndex = 6;
+            this.btPin.Text = "Pinnen";
+            this.btPin.UseVisualStyleBackColor = true;
+            this.btPin.Click += new System.EventHandler(this.btPin_Click);
+            // 
             // AfrekenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 727);
+            this.Controls.Add(this.btPin);
+            this.Controls.Add(this.btCash);
+            this.Controls.Add(this.btFifty);
+            this.Controls.Add(this.btTwenty);
+            this.Controls.Add(this.btTen);
+            this.Controls.Add(this.btFive);
             this.Controls.Add(this.groupBox1);
             this.Name = "AfrekenForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -220,5 +298,11 @@
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
         private CheckBox cbIsMember;
+        private Button btFive;
+        private Button btTen;
+        private Button btTwenty;
+        private Button btFifty;
+        private Button btCash;
+        private Button btPin;
     }
 }

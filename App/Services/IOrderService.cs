@@ -11,11 +11,11 @@ public interface IOrderService
 
     Order GetOrderByCustomerName(string customerName);
     Order CreateOrder(Order order);
-    SplitOrder CreateSplitOrder(SplitOrder splitOrder);
     void DeleteProductFromOrder(Order order, OrderDetail product);
     void UpdateOrder(Order order);
     OrderDetail AddProductToOrder(Order order, Product product);
 
     void MergeOrders(List<Order> orderList, string customerName);
-    void SplitOrder(Order order, int numberOfCustomers, List<Order> newOrders);
+    void SplitOrder(Order order, List<Order> newOrders);
+    void PayOrder(Order order, decimal amount);
 }

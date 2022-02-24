@@ -101,6 +101,12 @@ public partial class SplitBestellingForm : Form
         {
             comboBox.Items.Add(order);
         }
+
+        comboBox.Items.Add("----------------");
+        foreach (var name in _memberService.GetMembers())
+        {
+            comboBox.Items.Add(name);
+        }
     }
 
     private void SetPriceForNewOrders()
@@ -118,17 +124,28 @@ public partial class SplitBestellingForm : Form
         {
             return;
         }
+
+        var orders = new List<Order>();
+        foreach (var pair in _toolsNewOrders)
+        {
+            var order = (Order)pair.Key.Tag;
+            if () { }
+        }
+
+        _orderService.SplitOrder(_order, orders);
+        Close();
     }
 
     private bool CheckIfAllNamesAreFilled()
     {
         foreach (var item in _toolsNewOrders)
         {
-            if (item.Key.SelectedItem == null)
+            if (item.Key.Text == "" || item.Key.Text == "----------------")
             {
                 return false;
             }
         }
+
         return true;
     }
 }

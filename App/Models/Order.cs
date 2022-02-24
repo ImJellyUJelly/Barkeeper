@@ -10,6 +10,7 @@ public class Order
     public bool IsPaid { get; set; }
     public bool IsFinished { get; set; }
     public string Comment { get; set; }
+    public Order ParentOrder { get; set; }
 
     public List<OrderDetail> OrderDetails { get; set; }
 

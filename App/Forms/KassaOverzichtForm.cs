@@ -46,13 +46,12 @@ public partial class KassaOverzichtForm : Form
 
     private void RefreshProductsInOrder()
     {
+        lvProducts.Items.Clear();
         if (_selectedOrder == null)
         {
-            lvProducts.Items.Clear();
             return;
         }
 
-        lvProducts.Items.Clear();
         foreach (OrderDetail detail in _selectedOrder.OrderDetails)
         {
             var item = new ListViewItem();
@@ -219,9 +218,7 @@ public partial class KassaOverzichtForm : Form
                 foreach (ListViewItem item in lvProducts.Items)
                 {
                     var detail = (OrderDetail)item.Tag;
-                    detail.Order = order;
-                    detail.TimeAdded = DateTime.Now;
-                    order.OrderDetails.Add(detail);
+                    _orderService.AddProductToOrder(_selectedOrder, detail.Product);
                 }
             }
         }
@@ -366,5 +363,6 @@ public partial class KassaOverzichtForm : Form
         _selectedOrder = null;
         ToggleOrderInfo();
         RefreshProductsInOrder();
+        RefreshCustomerComboBox();
     }
 }
