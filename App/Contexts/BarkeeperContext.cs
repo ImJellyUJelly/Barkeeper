@@ -12,7 +12,7 @@ public class BarkeeperContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<Customer> Customers { get; set; }
 
-    public BarkeeperContext(): base("Server=localhost;Database=Barkeeper_Development;Port=5432;uid=root;Password=Password01!")
+    public BarkeeperContext(): base("server=localhost;port=3306;database=Barkeeper_Development;uid=root;password=Password01!")
     {
         Database.SetInitializer(new CreateDatabaseIfNotExists<BarkeeperContext>());
     }
@@ -20,6 +20,7 @@ public class BarkeeperContext : DbContext
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Order>().HasKey(order => order.Id);
+        modelBuilder.Entity<Order>().HasOptional(order => order.ParentOrder);
 
         modelBuilder.Entity<Product>().HasKey(product => product.Id);
 
