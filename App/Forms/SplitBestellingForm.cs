@@ -6,15 +6,18 @@ namespace App.Forms;
 public partial class SplitBestellingForm : Form
 {
     private readonly IOrderService _orderService;
+    private readonly IMemberService _memberService;
+
     private readonly Order _order;
     private List<Order> _orders;
 
     private int _numberOfNewOrders = 2;
     private Dictionary<ComboBox, NumericUpDown> _toolsNewOrders = new Dictionary<ComboBox, NumericUpDown>();
 
-    public SplitBestellingForm(IOrderService orderService, Order order)
+    public SplitBestellingForm(IOrderService orderService, IMemberService memberService, Order order)
     {
         _orderService = orderService;
+        _memberService = memberService;
         _order = order;
         _orders = _orderService.GetOrders();
         _orders.Remove(_order);
@@ -129,7 +132,7 @@ public partial class SplitBestellingForm : Form
         foreach (var pair in _toolsNewOrders)
         {
             var order = (Order)pair.Key.Tag;
-            if () { }
+            //if () { }
         }
 
         _orderService.SplitOrder(_order, orders);

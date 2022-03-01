@@ -4,6 +4,7 @@ namespace App.Services;
 
 public interface IUnitOfWork
 {
-    public IOrderRepository getOrderRepository();
+    public IOrderRepository GetOrderRepository();
     public IProductRepository GetProductRepository();
+    public IMemberRepository GetMemberRepository();
 }

@@ -9,7 +9,7 @@ public class OrderService : IOrderService
 
     public OrderService(IUnitOfWork unitOfWork)
     {
-        _orderRepository = unitOfWork.getOrderRepository();
+        _orderRepository = unitOfWork.GetOrderRepository();
     }
 
     public OrderDetail AddProductToOrder(Order order, Product product)

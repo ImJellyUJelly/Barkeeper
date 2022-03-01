@@ -6,10 +6,12 @@ namespace App.Forms;
 public partial class BestellingOverzichtForm : Form
 {
     private readonly IOrderService _orderService;
+    private readonly IMemberService _memberService;
 
-    public BestellingOverzichtForm(IOrderService orderService)
+    public BestellingOverzichtForm(IOrderService orderService, IMemberService memberService)
     {
         _orderService = orderService;
+        _memberService = memberService;
 
         InitializeComponent();
         LoadOrders();
@@ -91,7 +93,7 @@ public partial class BestellingOverzichtForm : Form
         Order order = (Order)lvOrders.SelectedItems[0].Tag;
         if (order == null) { return; }
 
-        var form = new SplitBestellingForm(_orderService, order);
+        var form = new SplitBestellingForm(_orderService, _memberService, order);
         form.ShowDialog();
         LoadOrders();
     }

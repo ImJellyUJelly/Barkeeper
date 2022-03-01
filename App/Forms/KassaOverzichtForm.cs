@@ -11,11 +11,13 @@ public partial class KassaOverzichtForm : Form
 
     private readonly IOrderService _orderService;
     private readonly IProductService _productService;
+    private readonly IMemberService _memberService;
 
-    public KassaOverzichtForm(IOrderService orderService, IProductService productService)
+    public KassaOverzichtForm(IOrderService orderService, IProductService productService, IMemberService memberService)
     {
         _orderService = orderService;
         _productService = productService;
+        _memberService = memberService;
 
         InitializeComponent();
         InitializeGeneralInformation();
@@ -333,7 +335,7 @@ public partial class KassaOverzichtForm : Form
 
     private void bestellingOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var orderForm = new BestellingOverzichtForm(_orderService);
+        var orderForm = new BestellingOverzichtForm(_orderService, _memberService);
         orderForm.ShowDialog();
 
         _selectedOrder = null;

@@ -7,9 +7,10 @@ public class BarkeeperContext : DbContext
 {
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderDetail> OrderDetails { get; set; }
-    public DbSet<Product> Product { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Member> Members { get; set; }
 
-    public BarkeeperContext(): base("Host=localhost;Database=Barkeeper_Development;Port=5432;User ID=postgres;Password=Password01!")
+    public BarkeeperContext(): base("Server=localhost;Database=Barkeeper_Development;Port=5432;User ID=postgres;Password=Password01!")
     {
         Database.SetInitializer(new CreateDatabaseIfNotExists<BarkeeperContext>());
     }

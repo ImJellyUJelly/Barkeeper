@@ -1,6 +1,5 @@
 using App.Contexts;
 using App.Forms;
-using App.Repositories;
 using App.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -40,5 +39,6 @@ internal static class Program
         // Services
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IMemberService, MemberService>();
     }
 }

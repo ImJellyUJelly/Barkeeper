@@ -12,7 +12,7 @@ public class UnitOfWork : IUnitOfWork
         _context = context;
     }
 
-    public IOrderRepository getOrderRepository()
+    public IOrderRepository GetOrderRepository()
     {
         return new OrderRepository(_context, GetProductRepository());
     }
@@ -20,5 +20,10 @@ public class UnitOfWork : IUnitOfWork
     public IProductRepository GetProductRepository()
     {
         return new ProductRepository(_context);
+    }
+
+    public IMemberRepository GetMemberRepository()
+    {
+        return new MemberRepository(_context);
     }
 }
