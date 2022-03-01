@@ -11,13 +11,15 @@ public partial class KassaOverzichtForm : Form
 
     private readonly IOrderService _orderService;
     private readonly IProductService _productService;
-    private readonly IMemberService _memberService;
+    private readonly ICustomerService _customerService;
 
-    public KassaOverzichtForm(IOrderService orderService, IProductService productService, IMemberService memberService)
+    public KassaOverzichtForm(IOrderService orderService, 
+        IProductService productService, 
+        ICustomerService customerService)
     {
         _orderService = orderService;
         _productService = productService;
-        _memberService = memberService;
+        _customerService = customerService;
 
         InitializeComponent();
         InitializeGeneralInformation();
@@ -41,7 +43,7 @@ public partial class KassaOverzichtForm : Form
         cbCustomerName.Items.Clear();
         foreach (Order order in _orderService.GetUnFinishedAndUnPaidOrders())
         {
-            cbCustomerName.Items.Add(order.CustomerName);
+            cbCustomerName.Items.Add(order.Customer.Name);
         }
         cbCustomerName.Text = "";
     }
@@ -135,7 +137,7 @@ public partial class KassaOverzichtForm : Form
         }
         else
         {
-            lbName.Text = _selectedOrder.CustomerName;
+            lbName.Text = _selectedOrder.Customer.Name;
             lbOrderDate.Text = $"{_selectedOrder.OrderDate.ToShortDateString()} - {_selectedOrder.OrderDate.ToShortTimeString()}";
             CalculateTotalPrice(_selectedOrder);
             cbIsMember.Checked = _selectedOrder.IsMember;
@@ -190,7 +192,8 @@ public partial class KassaOverzichtForm : Form
             Order order = _orderService.GetOrderByCustomerName(customerName);
             if (order == null)
             {
-                order = new Order() { CustomerName = customerName };
+
+                order = new Order() { Customer = _customerService.FindOrCreateCustomer(customerName) };
                 DialogResult dialogResult = MessageBox.Show($"Is {customerName} een lid van de club?", "Nieuwe klant", MessageBoxButtons.YesNoCancel);
 
                 if (dialogResult == DialogResult.Cancel)
@@ -335,7 +338,7 @@ public partial class KassaOverzichtForm : Form
 
     private void bestellingOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var orderForm = new BestellingOverzichtForm(_orderService, _memberService);
+        var orderForm = new BestellingOverzichtForm(_orderService, _customerService);
         orderForm.ShowDialog();
 
         _selectedOrder = null;

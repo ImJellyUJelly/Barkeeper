@@ -45,11 +45,11 @@ public partial class BestellingenSamenvoegenForm : Form
                     totalPrice += od.Product.Price;
                 }
                 item.SubItems.Add($"{od.TimeAdded.ToShortDateString()} - {od.TimeAdded.ToShortTimeString()}");
-                item.SubItems.Add(order.CustomerName);
+                item.SubItems.Add(order.Customer.Name);
                 lvProducts.Items.Add(item);
             }
 
-            lbOrderCustomerNames.Text += $" {order.CustomerName}";
+            lbOrderCustomerNames.Text += $" {order.Customer.Name}";
             if(lbOrderCustomerNames.Width > 610)
             {
                 lbOrderCustomerNames.Width = 610;

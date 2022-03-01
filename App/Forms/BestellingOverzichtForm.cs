@@ -6,9 +6,9 @@ namespace App.Forms;
 public partial class BestellingOverzichtForm : Form
 {
     private readonly IOrderService _orderService;
-    private readonly IMemberService _memberService;
+    private readonly ICustomerService _memberService;
 
-    public BestellingOverzichtForm(IOrderService orderService, IMemberService memberService)
+    public BestellingOverzichtForm(IOrderService orderService, ICustomerService memberService)
     {
         _orderService = orderService;
         _memberService = memberService;
@@ -34,7 +34,7 @@ public partial class BestellingOverzichtForm : Form
             var item = new ListViewItem();
             item.Tag = order;
             item.Text = order.Id.ToString();
-            item.SubItems.Add(order.CustomerName);
+            item.SubItems.Add(order.Customer.Name);
             item.SubItems.Add(GetTextFromBool(order.IsMember));
             item.SubItems.Add($"{order.OrderDate.ToString("dd/MM/yyyy")} - {order.OrderDate.ToShortTimeString()}");
             item.SubItems.Add(GetTextFromBool(order.IsPaid));

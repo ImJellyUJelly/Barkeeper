@@ -6,10 +6,12 @@ namespace App.Services;
 public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
+    private readonly ICustomerService _customerService;
 
-    public OrderService(IUnitOfWork unitOfWork)
+    public OrderService(IUnitOfWork unitOfWork, ICustomerService customerService)
     {
         _orderRepository = unitOfWork.GetOrderRepository();
+        _customerService = customerService;
     }
 
     public OrderDetail AddProductToOrder(Order order, Product product)
@@ -49,7 +51,7 @@ public class OrderService : IOrderService
 
     public List<Order> GetOrders()
     {
-        return _orderRepository.GetOrders().OrderBy(order => order.CustomerName).ToList();
+        return _orderRepository.GetOrders().OrderBy(order => order.Customer.Name).ToList();
     }
 
     public List<Order> GetUnFinishedAndUnPaidOrders()
@@ -59,7 +61,8 @@ public class OrderService : IOrderService
 
     public void MergeOrders(List<Order> orderList, string customerName)
     {
-        var newOrder = new Order() { CustomerName = customerName, OrderDate = DateTime.Now, IsMember = true };
+        Customer customer = _customerService.FindOrCreateCustomer(customerName);
+        var newOrder = new Order() { Customer = customer, OrderDate = DateTime.Now, IsMember = true };
         newOrder.Comment += "Deze bestelling is samengevoegd uit ID's: ";
         foreach (var order in orderList)
         {
@@ -69,12 +72,13 @@ public class OrderService : IOrderService
                 AddProductToOrder(newOrder, orderDetail.Product);
             }
         }
+        newOrder.Comment += "\n";
 
         newOrder = CreateOrder(newOrder);
         newOrder.Price = CalculateOrderPrice(newOrder);
         foreach (var order in orderList)
         {
-            order.Comment += $"Bestelling is samengevoegd in de bestelling van {newOrder.CustomerName} met ID: {newOrder.Id}.\n";
+            order.Comment += $"Bestelling is samengevoegd in de bestelling van {newOrder.Customer.Name} met ID: {newOrder.Id}.\n";
             order.IsFinished = true;
             UpdateOrder(order);
         }
@@ -86,7 +90,7 @@ public class OrderService : IOrderService
         order.IsFinished = true;
         foreach (var newOrder in newOrders)
         {
-            newOrder.Comment += $"Dit is een gesplitste bestelling van {order.CustomerName}.\n";
+            newOrder.Comment += $"Dit is een gesplitste bestelling van {order.Customer.Name}.\n";
             newOrder.ParentOrder = order;
             CreateOrder(newOrder);
         }

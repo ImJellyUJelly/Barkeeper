@@ -1,6 +1,7 @@
 ﻿namespace App.Models;
 
-public class Member
+public class Customer
 {
-
+    public int Id { get; set; }
+    public string Name { get; set; }
 }

@@ -39,6 +39,6 @@ internal static class Program
         // Services
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IProductService, ProductService>();
-        services.AddScoped<IMemberService, MemberService>();
+        services.AddScoped<ICustomerService, CustomerService>();
     }
 }

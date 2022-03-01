@@ -22,8 +22,8 @@ public class UnitOfWork : IUnitOfWork
         return new ProductRepository(_context);
     }
 
-    public IMemberRepository GetMemberRepository()
+    public ICustomerRepository GetMemberRepository()
     {
-        return new MemberRepository(_context);
+        return new CustomerRepository(_context);
     }
 }

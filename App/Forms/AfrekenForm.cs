@@ -19,7 +19,7 @@ public partial class AfrekenForm : Form
 
     private void InitialLoad()
     {
-        lbCustomerName.Text = _order.CustomerName;
+        lbCustomerName.Text = _order.Customer.Name;
         lbOrderDate.Text = $"{_order.OrderDate.ToShortTimeString()} - {_order.OrderDate.ToShortDateString()}";
         cbIsMember.Checked = _order.IsMember;
         tbComments.Text = _order.Comment;

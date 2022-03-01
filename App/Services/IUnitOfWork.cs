@@ -6,5 +6,5 @@ public interface IUnitOfWork
 {
     public IOrderRepository GetOrderRepository();
     public IProductRepository GetProductRepository();
-    public IMemberRepository GetMemberRepository();
+    public ICustomerRepository GetMemberRepository();
 }

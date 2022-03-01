@@ -3,7 +3,7 @@
 public class Order
 {
     public long Id { get; set; }
-    public string CustomerName { get; set; }
+    public Customer Customer { get; set; }
     public DateTime OrderDate { get; set; }
     public decimal Price { get; set; }
     public bool IsMember { get; set; }
@@ -21,6 +21,6 @@ public class Order
 
     public override string ToString()
     {
-        return CustomerName;
+        return Customer.Name;
     }
 }

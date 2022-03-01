@@ -6,7 +6,7 @@ namespace App.Forms;
 public partial class SplitBestellingForm : Form
 {
     private readonly IOrderService _orderService;
-    private readonly IMemberService _memberService;
+    private readonly ICustomerService _memberService;
 
     private readonly Order _order;
     private List<Order> _orders;
@@ -14,7 +14,7 @@ public partial class SplitBestellingForm : Form
     private int _numberOfNewOrders = 2;
     private Dictionary<ComboBox, NumericUpDown> _toolsNewOrders = new Dictionary<ComboBox, NumericUpDown>();
 
-    public SplitBestellingForm(IOrderService orderService, IMemberService memberService, Order order)
+    public SplitBestellingForm(IOrderService orderService, ICustomerService memberService, Order order)
     {
         _orderService = orderService;
         _memberService = memberService;
@@ -29,7 +29,7 @@ public partial class SplitBestellingForm : Form
     private void InitializeForm()
     {
         lbId.Text = _order.Id.ToString();
-        lbCustomerName.Text = _order.CustomerName;
+        lbCustomerName.Text = _order.Customer.Name;
         lbOrderDate.Text = $"{_order.OrderDate.ToShortTimeString()} - {_order.OrderDate.ToShortDateString()}";
         lbPrice.Text = $"€ {_order.Price}";
         cbIsMember.Checked = _order.IsMember;
@@ -106,7 +106,7 @@ public partial class SplitBestellingForm : Form
         }
 
         comboBox.Items.Add("----------------");
-        foreach (var name in _memberService.GetMembers())
+        foreach (var name in _memberService.GetCustomers())
         {
             comboBox.Items.Add(name);
         }

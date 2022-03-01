@@ -1,16 +1,18 @@
 ﻿using App.Models;
+using MySql.Data.EntityFramework;
 using System.Data.Entity;
 
 namespace App.Contexts;
 
+[DbConfigurationType(typeof(MySqlEFConfiguration))]
 public class BarkeeperContext : DbContext
 {
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderDetail> OrderDetails { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<Member> Members { get; set; }
+    public DbSet<Customer> Customers { get; set; }
 
-    public BarkeeperContext(): base("Server=localhost;Database=Barkeeper_Development;Port=5432;User ID=postgres;Password=Password01!")
+    public BarkeeperContext(): base("Server=localhost;Database=Barkeeper_Development;Port=5432;uid=root;Password=Password01!")
     {
         Database.SetInitializer(new CreateDatabaseIfNotExists<BarkeeperContext>());
     }
