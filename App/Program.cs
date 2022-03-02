@@ -40,5 +40,6 @@ internal static class Program
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ICustomerService, CustomerService>();
+        services.AddScoped<IOrderDetailService, OrderDetailService>();
     }
 }

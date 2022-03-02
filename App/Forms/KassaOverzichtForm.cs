@@ -45,6 +45,7 @@ public partial class KassaOverzichtForm : Form
         {
             cbCustomerName.Items.Add(order.Customer.Name);
         }
+
         cbCustomerName.Text = "";
     }
 
@@ -69,6 +70,7 @@ public partial class KassaOverzichtForm : Form
             {
                 item.SubItems.Add($"€ {detail.Product.Price}");
             }
+
             item.SubItems.Add($"{detail.TimeAdded.ToShortTimeString()} - {detail.TimeAdded.ToShortDateString()}");
             lvProducts.Items.Add(item);
         }

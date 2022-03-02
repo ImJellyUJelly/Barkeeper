@@ -72,11 +72,9 @@
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.lbName);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Location = new System.Drawing.Point(14, 171);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.groupBox2.Location = new System.Drawing.Point(12, 128);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.groupBox2.Size = new System.Drawing.Size(424, 785);
+            this.groupBox2.Size = new System.Drawing.Size(371, 589);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Bestelling info";
@@ -85,9 +83,9 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(191, 740);
+            this.label5.Location = new System.Drawing.Point(167, 555);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(94, 37);
+            this.label5.Size = new System.Drawing.Size(75, 30);
             this.label5.TabIndex = 10;
             this.label5.Text = "Totaal:";
             // 
@@ -95,10 +93,9 @@
             // 
             this.cbIsMember.AutoSize = true;
             this.cbIsMember.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cbIsMember.Location = new System.Drawing.Point(13, 134);
-            this.cbIsMember.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cbIsMember.Location = new System.Drawing.Point(11, 100);
             this.cbIsMember.Name = "cbIsMember";
-            this.cbIsMember.Size = new System.Drawing.Size(117, 32);
+            this.cbIsMember.Size = new System.Drawing.Size(96, 25);
             this.cbIsMember.TabIndex = 9;
             this.cbIsMember.Text = "VZOD Lid";
             this.cbIsMember.UseVisualStyleBackColor = true;
@@ -107,10 +104,9 @@
             // btDeleteProduct
             // 
             this.btDeleteProduct.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btDeleteProduct.Location = new System.Drawing.Point(7, 728);
-            this.btDeleteProduct.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btDeleteProduct.Location = new System.Drawing.Point(6, 546);
             this.btDeleteProduct.Name = "btDeleteProduct";
-            this.btDeleteProduct.Size = new System.Drawing.Size(42, 49);
+            this.btDeleteProduct.Size = new System.Drawing.Size(37, 37);
             this.btDeleteProduct.TabIndex = 8;
             this.btDeleteProduct.Text = "-";
             this.btDeleteProduct.UseVisualStyleBackColor = true;
@@ -120,20 +116,19 @@
             // 
             this.lbOrderPrice.AutoSize = true;
             this.lbOrderPrice.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbOrderPrice.Location = new System.Drawing.Point(291, 737);
+            this.lbOrderPrice.Location = new System.Drawing.Point(255, 553);
             this.lbOrderPrice.Name = "lbOrderPrice";
             this.lbOrderPrice.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lbOrderPrice.Size = new System.Drawing.Size(97, 41);
+            this.lbOrderPrice.Size = new System.Drawing.Size(78, 32);
             this.lbOrderPrice.TabIndex = 7;
             this.lbOrderPrice.Text = "€ 0,00";
             // 
             // btPay
             // 
             this.btPay.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btPay.Location = new System.Drawing.Point(304, 150);
-            this.btPay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btPay.Location = new System.Drawing.Point(266, 112);
             this.btPay.Name = "btPay";
-            this.btPay.Size = new System.Drawing.Size(114, 49);
+            this.btPay.Size = new System.Drawing.Size(100, 37);
             this.btPay.TabIndex = 5;
             this.btPay.Text = "Afrekenen";
             this.btPay.UseVisualStyleBackColor = true;
@@ -146,11 +141,10 @@
             this.columnHeader2,
             this.columnHeader3});
             this.lvProducts.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lvProducts.Location = new System.Drawing.Point(7, 207);
-            this.lvProducts.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.lvProducts.Location = new System.Drawing.Point(6, 155);
             this.lvProducts.MultiSelect = false;
             this.lvProducts.Name = "lvProducts";
-            this.lvProducts.Size = new System.Drawing.Size(411, 512);
+            this.lvProducts.Size = new System.Drawing.Size(360, 385);
             this.lvProducts.TabIndex = 6;
             this.lvProducts.UseCompatibleStateImageBehavior = false;
             this.lvProducts.View = System.Windows.Forms.View.Details;
@@ -159,7 +153,7 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Product";
-            this.columnHeader1.Width = 150;
+            this.columnHeader1.Width = 140;
             // 
             // columnHeader2
             // 
@@ -169,15 +163,15 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Datum";
-            this.columnHeader3.Width = 175;
+            this.columnHeader3.Width = 135;
             // 
             // lbOrderDate
             // 
             this.lbOrderDate.AutoSize = true;
             this.lbOrderDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbOrderDate.Location = new System.Drawing.Point(142, 92);
+            this.lbOrderDate.Location = new System.Drawing.Point(124, 69);
             this.lbOrderDate.Name = "lbOrderDate";
-            this.lbOrderDate.Size = new System.Drawing.Size(121, 28);
+            this.lbOrderDate.Size = new System.Drawing.Size(96, 21);
             this.lbOrderDate.TabIndex = 5;
             this.lbOrderDate.Text = "lbOrderDate";
             // 
@@ -185,9 +179,9 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(7, 92);
+            this.label3.Location = new System.Drawing.Point(6, 69);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(129, 28);
+            this.label3.Size = new System.Drawing.Size(103, 21);
             this.label3.TabIndex = 4;
             this.label3.Text = "Bestel datum:";
             // 
@@ -195,9 +189,9 @@
             // 
             this.lbName.AutoSize = true;
             this.lbName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbName.Location = new System.Drawing.Point(7, 53);
+            this.lbName.Location = new System.Drawing.Point(6, 40);
             this.lbName.Name = "lbName";
-            this.lbName.Size = new System.Drawing.Size(176, 28);
+            this.lbName.Size = new System.Drawing.Size(144, 21);
             this.lbName.TabIndex = 3;
             this.lbName.Text = "lbCustomerName";
             // 
@@ -205,9 +199,9 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(7, 25);
+            this.label2.Location = new System.Drawing.Point(6, 19);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 28);
+            this.label2.Size = new System.Drawing.Size(55, 21);
             this.label2.TabIndex = 2;
             this.label2.Text = "Naam:";
             // 
@@ -215,9 +209,9 @@
             // 
             this.lbDate.AutoSize = true;
             this.lbDate.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbDate.Location = new System.Drawing.Point(888, 37);
+            this.lbDate.Location = new System.Drawing.Point(777, 28);
             this.lbDate.Name = "lbDate";
-            this.lbDate.Size = new System.Drawing.Size(70, 28);
+            this.lbDate.Size = new System.Drawing.Size(55, 21);
             this.lbDate.TabIndex = 0;
             this.lbDate.Text = "lbDate";
             this.lbDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -232,15 +226,14 @@
             this.productenToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(7, 3, 0, 3);
-            this.menuStrip1.Size = new System.Drawing.Size(1152, 30);
+            this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(76, 24);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.fileToolStripMenuItem.Text = "Bestand";
             // 
             // bestellingenToolStripMenuItem
@@ -248,13 +241,13 @@
             this.bestellingenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bestellingOverzichtToolStripMenuItem});
             this.bestellingenToolStripMenuItem.Name = "bestellingenToolStripMenuItem";
-            this.bestellingenToolStripMenuItem.Size = new System.Drawing.Size(104, 24);
+            this.bestellingenToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.bestellingenToolStripMenuItem.Text = "Bestellingen";
             // 
             // bestellingOverzichtToolStripMenuItem
             // 
             this.bestellingOverzichtToolStripMenuItem.Name = "bestellingOverzichtToolStripMenuItem";
-            this.bestellingOverzichtToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.bestellingOverzichtToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.bestellingOverzichtToolStripMenuItem.Text = "Overzicht";
             this.bestellingOverzichtToolStripMenuItem.Click += new System.EventHandler(this.bestellingOverzichtToolStripMenuItem_Click);
             // 
@@ -263,14 +256,14 @@
             this.klantenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.overzichtToolStripMenuItem1});
             this.klantenToolStripMenuItem.Name = "klantenToolStripMenuItem";
-            this.klantenToolStripMenuItem.Size = new System.Drawing.Size(73, 24);
+            this.klantenToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.klantenToolStripMenuItem.Text = "Klanten";
             // 
             // overzichtToolStripMenuItem1
             // 
             this.overzichtToolStripMenuItem1.Enabled = false;
             this.overzichtToolStripMenuItem1.Name = "overzichtToolStripMenuItem1";
-            this.overzichtToolStripMenuItem1.Size = new System.Drawing.Size(154, 26);
+            this.overzichtToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.overzichtToolStripMenuItem1.Text = "Overzicht";
             // 
             // productenToolStripMenuItem
@@ -278,23 +271,23 @@
             this.productenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.overzichtToolStripMenuItem});
             this.productenToolStripMenuItem.Name = "productenToolStripMenuItem";
-            this.productenToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
+            this.productenToolStripMenuItem.Size = new System.Drawing.Size(74, 20);
             this.productenToolStripMenuItem.Text = "Producten";
             // 
             // overzichtToolStripMenuItem
             // 
             this.overzichtToolStripMenuItem.Enabled = false;
             this.overzichtToolStripMenuItem.Name = "overzichtToolStripMenuItem";
-            this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.overzichtToolStripMenuItem.Text = "Overzicht";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(813, 37);
+            this.label1.Location = new System.Drawing.Point(711, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 28);
+            this.label1.Size = new System.Drawing.Size(60, 21);
             this.label1.TabIndex = 1;
             this.label1.Text = "Datum:";
             // 
@@ -302,9 +295,9 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(14, 37);
+            this.label4.Location = new System.Drawing.Point(12, 28);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(218, 28);
+            this.label4.Size = new System.Drawing.Size(174, 21);
             this.label4.TabIndex = 13;
             this.label4.Text = "Zoek klant of maak aan:";
             // 
@@ -314,20 +307,18 @@
             this.cbCustomerName.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbCustomerName.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cbCustomerName.FormattingEnabled = true;
-            this.cbCustomerName.Location = new System.Drawing.Point(14, 68);
-            this.cbCustomerName.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.cbCustomerName.Location = new System.Drawing.Point(12, 51);
             this.cbCustomerName.Name = "cbCustomerName";
-            this.cbCustomerName.Size = new System.Drawing.Size(424, 36);
+            this.cbCustomerName.Size = new System.Drawing.Size(372, 29);
             this.cbCustomerName.TabIndex = 14;
             this.cbCustomerName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cbCustomerName_KeyDown);
             // 
             // btSelectCustomer
             // 
             this.btSelectCustomer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btSelectCustomer.Location = new System.Drawing.Point(318, 112);
-            this.btSelectCustomer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.btSelectCustomer.Location = new System.Drawing.Point(278, 84);
             this.btSelectCustomer.Name = "btSelectCustomer";
-            this.btSelectCustomer.Size = new System.Drawing.Size(114, 48);
+            this.btSelectCustomer.Size = new System.Drawing.Size(100, 36);
             this.btSelectCustomer.TabIndex = 15;
             this.btSelectCustomer.Text = "Selecteer";
             this.btSelectCustomer.UseVisualStyleBackColor = true;
@@ -335,17 +326,16 @@
             // 
             // pProducts
             // 
-            this.pProducts.Location = new System.Drawing.Point(444, 69);
-            this.pProducts.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.pProducts.Location = new System.Drawing.Point(388, 52);
             this.pProducts.Name = "pProducts";
-            this.pProducts.Size = new System.Drawing.Size(700, 888);
+            this.pProducts.Size = new System.Drawing.Size(612, 666);
             this.pProducts.TabIndex = 16;
             // 
             // KassaOverzichtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1152, 972);
+            this.ClientSize = new System.Drawing.Size(1008, 729);
             this.Controls.Add(this.pProducts);
             this.Controls.Add(this.btSelectCustomer);
             this.Controls.Add(this.lbDate);
@@ -356,7 +346,6 @@
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "KassaOverzichtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Kassa";

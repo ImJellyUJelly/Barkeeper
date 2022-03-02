@@ -1,5 +1,6 @@
 ﻿using App.Contexts;
 using App.Models;
+using System.Data.Entity;
 
 namespace App.Repositories;
 
@@ -61,48 +62,36 @@ public class OrderRepository : IOrderRepository
         _dbContext.Orders.Add(order);
         _dbContext.SaveChanges();
         return order;
-        //order.Id = _orders.Count;
-        //_orders.Add(order);
-        //return order;
     }
 
     public Order GetOrderById(int orderId)
     {
-        return _dbContext.Orders.First(order => order.Id == orderId);
-        //return _orders.FirstOrDefault(order => order.Id == orderId);
+        return _dbContext.Orders
+            .Include(order => order.Customer)
+            .Include(order => order.OrderDetails)
+            .First(order => order.Id == orderId);
     }
 
     public Order GetOrderByName(string customerName)
     {
         return _dbContext.Orders
             .Where(order => order.IsPaid == false)
-            .First(order => order.Customer.Name == customerName);
-        //return _orders.FirstOrDefault(order => order.Customer.Name == customerName);
+            .Include(order => order.Customer)
+            .Include(order => order.OrderDetails)
+            .FirstOrDefault(order => order.Customer.Name == customerName);
     }
 
     public List<Order> GetOrders()
     {
-        return _dbContext.Orders.ToList();
-        //return _orders;
+        return _dbContext.Orders
+            .Include(order => order.Customer)
+            .Include(order => order.OrderDetails)
+            .ToList();
     }
 
     public Order UpdateOrder(Order order)
     {
-        var foundOrder = _dbContext.Orders.First(o => o.Id == order.Id);
-        if(foundOrder == null)
-        {
-            return null;
-        }    
-
-        foundOrder = order;
         _dbContext.SaveChanges();
-        return foundOrder;
-        //var foundOrder = _orders.FirstOrDefault(order => order.Id == order.Id);
-        //if (foundOrder != null)
-        //{
-        //    foundOrder = order;
-        //}
-
-        //return foundOrder;
+        return order;
     }
 }

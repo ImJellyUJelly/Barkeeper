@@ -22,7 +22,6 @@ public class BarkeeperContext : DbContext
     {
         modelBuilder.Entity<Order>().HasKey(order => order.Id);
         modelBuilder.Entity<Order>().Property(order => order.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
         modelBuilder.Entity<Order>().HasOptional(order => order.ParentOrder);
 
         modelBuilder.Entity<Product>().HasKey(product => product.Id);
@@ -31,7 +30,7 @@ public class BarkeeperContext : DbContext
         modelBuilder.Entity<OrderDetail>().HasKey(od => od.Id);
         modelBuilder.Entity<OrderDetail>().Property(od => od.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         modelBuilder.Entity<OrderDetail>().HasRequired(od => od.Product);
-        modelBuilder.Entity<OrderDetail>().HasRequired(od => od.Order).WithMany(o => o.OrderDetails).WillCascadeOnDelete(false);
+        modelBuilder.Entity<OrderDetail>().HasRequired(od => od.Order).WithMany(o => o.OrderDetails).WillCascadeOnDelete(true);
 
         modelBuilder.Entity<Customer>().HasKey(customer => customer.Id);
         modelBuilder.Entity<Customer>().Property(customer => customer.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);

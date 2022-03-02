@@ -7,11 +7,15 @@ public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
     private readonly ICustomerService _customerService;
+    private readonly IOrderDetailService _orderDetailService;
 
-    public OrderService(IUnitOfWork unitOfWork, ICustomerService customerService)
+    public OrderService(IUnitOfWork unitOfWork, 
+        ICustomerService customerService,
+        IOrderDetailService orderDetailService)
     {
         _orderRepository = unitOfWork.GetOrderRepository();
         _customerService = customerService;
+        _orderDetailService = orderDetailService;
     }
 
     public OrderDetail AddProductToOrder(Order order, Product product)
@@ -39,7 +43,7 @@ public class OrderService : IOrderService
 
     public void DeleteProductFromOrder(Order order, OrderDetail orderDetail)
     {
-        order.OrderDetails.Remove(orderDetail);
+        _orderDetailService.RemoveOrderDetail(orderDetail);
         order.Price = CalculateOrderPrice(order);
         UpdateOrder(order);
     }
