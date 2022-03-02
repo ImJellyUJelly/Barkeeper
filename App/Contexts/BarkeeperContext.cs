@@ -15,7 +15,7 @@ public class BarkeeperContext : DbContext
 
     public BarkeeperContext(): base("server=localhost;port=3306;database=Barkeeper_Development;uid=root;password=Password01!")
     {
-        Database.SetInitializer(new DatabaseInitializer());
+        Database.SetInitializer(new CreateDatabaseIfNotExists<BarkeeperContext>());
     }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
