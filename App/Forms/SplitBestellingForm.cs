@@ -128,14 +128,14 @@ public partial class SplitBestellingForm : Form
             return;
         }
 
-        var orders = new List<Order>();
+        var newOrder = new Dictionary<string, decimal>();
         foreach (var pair in _toolsNewOrders)
         {
-            var order = (Order)pair.Key.Tag;
-            //if () { }
+            decimal price = Math.Round(pair.Value.Value, 2);
+            newOrder.Add(pair.Key.Text, price);
         }
 
-        _orderService.SplitOrder(_order, orders);
+        _orderService.SplitOrder(_order, newOrder);
         Close();
     }
 

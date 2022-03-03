@@ -263,7 +263,8 @@ public partial class KassaOverzichtForm : Form
             Button button = new Button();
             button.Top = 10;
             button.Left = 10;
-            button.Size = new Size(116, 85);
+            //button.Size = new Size(116, 85);
+            button.Size = new Size(85, 85);
             button.Text = product.Name;
             button.Tag = product;
             button.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);

@@ -83,7 +83,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(167, 555);
+            this.label5.Location = new System.Drawing.Point(167, 548);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(75, 30);
             this.label5.TabIndex = 10;
@@ -116,7 +116,7 @@
             // 
             this.lbOrderPrice.AutoSize = true;
             this.lbOrderPrice.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbOrderPrice.Location = new System.Drawing.Point(255, 553);
+            this.lbOrderPrice.Location = new System.Drawing.Point(248, 546);
             this.lbOrderPrice.Name = "lbOrderPrice";
             this.lbOrderPrice.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lbOrderPrice.Size = new System.Drawing.Size(78, 32);

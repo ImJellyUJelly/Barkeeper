@@ -68,7 +68,7 @@ internal sealed class Configuration : DbMigrationsConfiguration<BarkeeperContext
         context.Products.AddOrUpdate(new Product() { Name = "Apfelkorn", Category = ProductCategory.Gedestilleerd, Price = 2.40M, MemberPrice = 2.25M });
 
         // Speciaal
-        context.Products.AddOrUpdate(new Product() { Name = "Diverse Mixdranken", Category = ProductCategory.Bieren, Price = 4.25M, MemberPrice = 3.95M });
+        context.Products.AddOrUpdate(new Product() { Name = "Diverse Mixdranken", Category = ProductCategory.Specials, Price = 4.25M, MemberPrice = 3.95M });
 
         // Snacks
         context.Products.AddOrUpdate(new Product() { Name = "Kroket", Category = ProductCategory.Snacks, Price = 1.85M, MemberPrice = 1.50M });
@@ -78,7 +78,7 @@ internal sealed class Configuration : DbMigrationsConfiguration<BarkeeperContext
         context.Products.AddOrUpdate(new Product() { Name = "Vegetarische snacks (10st)", Category = ProductCategory.Snacks, Price = 6.50M, MemberPrice = 5.50M });
         context.Products.AddOrUpdate(new Product() { Name = "Bitterballen (25st)", Category = ProductCategory.Snacks, Price = 12.00M, MemberPrice = 10.95M });
         context.Products.AddOrUpdate(new Product() { Name = "Minisnacks (25st)", Category = ProductCategory.Snacks, Price = 12.00M, MemberPrice = 10.95M });
-        context.Products.AddOrUpdate(new Product() { Name = "Vegetarische snacks (25st)", Category = ProductCategory.Bieren, Price = 12.00M, MemberPrice = 10.95M });
+        context.Products.AddOrUpdate(new Product() { Name = "Vegetarische snacks (25st)", Category = ProductCategory.Snacks, Price = 12.00M, MemberPrice = 10.95M });
 
         // Broodjes
         context.Products.AddOrUpdate(new Product() { Name = "Broodje Frikandel", Category = ProductCategory.Broodjes, Price = 1.90M, MemberPrice = 1.90M });

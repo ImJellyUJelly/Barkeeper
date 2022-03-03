@@ -16,6 +16,6 @@ public interface IOrderService
     OrderDetail AddProductToOrder(Order order, Product product);
 
     void MergeOrders(List<Order> orderList, string customerName);
-    void SplitOrder(Order order, List<Order> newOrders);
+    void SplitOrder(Order order, Dictionary<string, decimal> newOrders);
     void PayOrder(Order order, decimal amount);
 }

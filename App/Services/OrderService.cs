@@ -9,7 +9,7 @@ public class OrderService : IOrderService
     private readonly ICustomerService _customerService;
     private readonly IOrderDetailService _orderDetailService;
 
-    public OrderService(IUnitOfWork unitOfWork, 
+    public OrderService(IUnitOfWork unitOfWork,
         ICustomerService customerService,
         IOrderDetailService orderDetailService)
     {
@@ -31,6 +31,7 @@ public class OrderService : IOrderService
     {
         decimal totalPrice = 0.00M;
         order.OrderDetails.ForEach(od => totalPrice += (order.IsMember ? od.Product.MemberPrice : od.Product.Price));
+        totalPrice += order.SplitPrice;
         return totalPrice;
     }
 
@@ -88,17 +89,28 @@ public class OrderService : IOrderService
         }
     }
 
-    public void SplitOrder(Order order, List<Order> newOrders)
+    public void SplitOrder(Order order, Dictionary<string, decimal> newCustomers)
     {
-        order.Comment += $"Bestelling is opgesplitst in {newOrders.Count} bestellingen.\n";
-        order.IsFinished = true;
-        foreach (var newOrder in newOrders)
+        foreach (var item in newCustomers)
         {
+            Order newOrder = GetOrderByCustomerName(item.Key);
+            if (newOrder == null)
+            {
+                newOrder = new Order() 
+                { 
+                    OrderDate = DateTime.Now, 
+                    Customer = _customerService.FindOrCreateCustomer(item.Key), 
+                    SplitPrice = item.Value 
+                };
+            }
+
             newOrder.Comment += $"Dit is een gesplitste bestelling van {order.Customer.Name}.\n";
             newOrder.ParentOrder = order;
             CreateOrder(newOrder);
         }
 
+        order.Comment += $"Bestelling is opgesplitst in {newCustomers.Count} bestellingen.\n";
+        order.IsFinished = true;
         UpdateOrder(order);
     }
 

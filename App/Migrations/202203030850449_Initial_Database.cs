@@ -38,6 +38,7 @@
                         Id = c.Long(nullable: false, identity: true),
                         OrderDate = c.DateTime(nullable: false, precision: 0),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        SplitPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
                         IsMember = c.Boolean(nullable: false),
                         IsPaid = c.Boolean(nullable: false),
                         IsFinished = c.Boolean(nullable: false),
