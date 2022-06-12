@@ -7,9 +7,9 @@ public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
 
-    public CustomerService(IUnitOfWork unitOfWork)
+    public CustomerService(ICustomerRepository customerRepository)
     {
-        _customerRepository = unitOfWork.GetMemberRepository();
+        _customerRepository = customerRepository;
     }
 
     public List<Customer> GetCustomers()
@@ -20,12 +20,11 @@ public class CustomerService : ICustomerService
     public Customer FindOrCreateCustomer(string customerName)
     {
         var customer = _customerRepository.FindCustomer(customerName);
-        if (customer != null)
+        if (customer == null)
         {
-            return customer;
+            customer = new Customer() { Name = customerName };
         }
 
-        Customer newCustomer = new Customer() { Name = customerName };
-        return newCustomer;
+        return customer;
     }
 }

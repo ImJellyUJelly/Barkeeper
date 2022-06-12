@@ -7,6 +7,7 @@ public partial class SplitBestellingForm : Form
 {
     private readonly IOrderService _orderService;
     private readonly ICustomerService _memberService;
+    private readonly IMoneyCalculator _moneyCalculator;
 
     private readonly Order _order;
     private List<Order> _orders;
@@ -14,10 +15,11 @@ public partial class SplitBestellingForm : Form
     private int _numberOfNewOrders = 2;
     private Dictionary<ComboBox, NumericUpDown> _toolsNewOrders = new Dictionary<ComboBox, NumericUpDown>();
 
-    public SplitBestellingForm(IOrderService orderService, ICustomerService memberService, Order order)
+    public SplitBestellingForm(IOrderService orderService, ICustomerService memberService, IMoneyCalculator moneyCalculator, Order order)
     {
         _orderService = orderService;
         _memberService = memberService;
+        _moneyCalculator = moneyCalculator;
         _order = order;
         _orders = _orderService.GetOrders();
         _orders.Remove(_order);
@@ -31,7 +33,7 @@ public partial class SplitBestellingForm : Form
         lbId.Text = _order.Id.ToString();
         lbCustomerName.Text = _order.Customer.Name;
         lbOrderDate.Text = $"{_order.OrderDate.ToShortTimeString()} - {_order.OrderDate.ToShortDateString()}";
-        lbPrice.Text = $"€ {_order.Price}";
+        lbPrice.Text = $"€ {_order.Price + _order.SplitPrice}";
         cbIsMember.Checked = _order.IsMember;
         cbIsFinished.Checked = _order.IsFinished;
         cbIsPaid.Checked = _order.IsPaid;
@@ -54,7 +56,7 @@ public partial class SplitBestellingForm : Form
         lbCustomerName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
         lbCustomerName.Size = new Size(lbCustomer1.Width, lbCustomer1.Height);
         lbCustomerName.Location = new Point(lbCustomer1.Location.X, (lbCustomer1.Location.Y + (_toolsNewOrders.Count * (cbCustomerName1.Height + heightdivider))));
-        this.Controls.Add(lbCustomerName);
+        Controls.Add(lbCustomerName);
 
         ComboBox cbCustomerName = new ComboBox();
         cbCustomerName.TabIndex = _toolsNewOrders.Count + 1;
@@ -62,21 +64,21 @@ public partial class SplitBestellingForm : Form
         cbCustomerName.Size = new Size(cbCustomerName1.Width, cbCustomerName1.Height);
         cbCustomerName.Location = new Point(cbCustomerName1.Location.X, (cbCustomerName1.Location.Y + (_toolsNewOrders.Count * (cbCustomerName1.Height + heightdivider))));
         AddOrdersToComboBox(cbCustomerName);
-        this.Controls.Add(cbCustomerName);
+        Controls.Add(cbCustomerName);
 
         Label lbPrice = new Label();
         lbPrice.Text = "Prijs:";
         lbPrice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
         lbPrice.Size = new Size(lbPrice1.Width, lbPrice1.Height);
         lbPrice.Location = new Point(lbPrice1.Location.X, (lbPrice1.Location.Y + (_toolsNewOrders.Count * (cbCustomerName1.Height + heightdivider))));
-        this.Controls.Add(lbPrice);
+        Controls.Add(lbPrice);
 
         Label lbEuroSign = new Label();
         lbEuroSign.Text = "€";
         lbEuroSign.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
         lbEuroSign.Size = new Size(lbEuro1.Width, lbEuro1.Height);
         lbEuroSign.Location = new Point(lbEuro1.Location.X, (lbEuro1.Location.Y + (_toolsNewOrders.Count * (cbCustomerName1.Height + heightdivider))));
-        this.Controls.Add(lbEuroSign);
+        Controls.Add(lbEuroSign);
 
         NumericUpDown nudPrice = new NumericUpDown();
         nudPrice.Minimum = 0;
@@ -85,7 +87,7 @@ public partial class SplitBestellingForm : Form
         nudPrice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
         nudPrice.Size = new Size(nudCustomer1.Width, nudCustomer1.Height);
         nudPrice.Location = new Point(nudCustomer1.Location.X, (nudCustomer1.Location.Y + (_toolsNewOrders.Count * (cbCustomerName1.Height + heightdivider))));
-        this.Controls.Add(nudPrice);
+        Controls.Add(nudPrice);
 
         _toolsNewOrders.Add(cbCustomerName, nudPrice);
         _numberOfNewOrders++;
@@ -106,15 +108,15 @@ public partial class SplitBestellingForm : Form
         }
 
         comboBox.Items.Add("----------------");
-        foreach (var name in _memberService.GetCustomers())
+        foreach (Customer customer in _memberService.GetCustomers())
         {
-            comboBox.Items.Add(name);
+            comboBox.Items.Add(customer.Name);
         }
     }
 
     private void SetPriceForNewOrders()
     {
-        decimal price = _order.Price / _numberOfNewOrders;
+        decimal price = _moneyCalculator.PricePerSplitOrder(_order, _numberOfNewOrders);
         foreach (var dict in _toolsNewOrders)
         {
             dict.Value.Value = price;
@@ -128,14 +130,13 @@ public partial class SplitBestellingForm : Form
             return;
         }
 
-        var newOrder = new Dictionary<string, decimal>();
+        var newOrders = new Dictionary<string, decimal>();
         foreach (var pair in _toolsNewOrders)
         {
-            decimal price = Math.Round(pair.Value.Value, 2);
-            newOrder.Add(pair.Key.Text, price);
+            newOrders.Add(pair.Key.Text, pair.Value.Value);
         }
 
-        _orderService.SplitOrder(_order, newOrder);
+        _orderService.SplitOrder(_order, newOrders);
         Close();
     }
 

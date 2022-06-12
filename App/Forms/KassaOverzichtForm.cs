@@ -12,14 +12,17 @@ public partial class KassaOverzichtForm : Form
     private readonly IOrderService _orderService;
     private readonly IProductService _productService;
     private readonly ICustomerService _customerService;
+    private readonly IMoneyCalculator _moneyCalculator;
 
     public KassaOverzichtForm(IOrderService orderService, 
         IProductService productService, 
-        ICustomerService customerService)
+        ICustomerService customerService,
+        IMoneyCalculator moneyCalculator)
     {
         _orderService = orderService;
         _productService = productService;
         _customerService = customerService;
+        _moneyCalculator = moneyCalculator;
 
         InitializeComponent();
         InitializeGeneralInformation();
@@ -41,9 +44,17 @@ public partial class KassaOverzichtForm : Form
     private void RefreshCustomerComboBox()
     {
         cbCustomerName.Items.Clear();
-        foreach (Order order in _orderService.GetUnFinishedAndUnPaidOrders())
+        var orders = _orderService.GetUnFinishedAndUnPaidOrders().OrderBy(order => order.Customer.Name);
+        foreach (Order order in orders)
         {
             cbCustomerName.Items.Add(order.Customer.Name);
+        }
+
+        cbCustomerName.Items.Add("----------------");
+        var customers = _customerService.GetCustomers().OrderBy(customer => customer.Name);
+        foreach(Customer customer in customers)
+        {
+            cbCustomerName.Items.Add(customer.Name);
         }
 
         cbCustomerName.Text = "";
@@ -91,7 +102,8 @@ public partial class KassaOverzichtForm : Form
         }
         else
         {
-            totalPrice = _orderService.CalculateOrderPrice(order);
+            totalPrice = _moneyCalculator.PricePerOrder(order);
+            totalPrice += order.SplitPrice;
         }
 
         lbOrderPrice.Text = $"€ {totalPrice}";
@@ -341,7 +353,7 @@ public partial class KassaOverzichtForm : Form
 
     private void bestellingOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var orderForm = new BestellingOverzichtForm(_orderService, _customerService);
+        var orderForm = new BestellingOverzichtForm(_orderService, _customerService, _moneyCalculator);
         orderForm.ShowDialog();
 
         _selectedOrder = null;
@@ -365,7 +377,7 @@ public partial class KassaOverzichtForm : Form
             return;
         }
 
-        var form = new AfrekenForm(_orderService, _selectedOrder);
+        var form = new AfrekenForm(_orderService, _moneyCalculator, _selectedOrder);
         form.ShowDialog();
 
         _selectedOrder = null;

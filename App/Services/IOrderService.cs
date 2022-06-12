@@ -4,8 +4,6 @@ namespace App.Services;
 
 public interface IOrderService
 {
-    decimal CalculateOrderPrice(Order order);
-
     List<Order> GetOrders();
     List<Order> GetUnFinishedAndUnPaidOrders();
 

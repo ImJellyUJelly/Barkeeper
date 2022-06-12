@@ -7,11 +7,13 @@ public partial class BestellingOverzichtForm : Form
 {
     private readonly IOrderService _orderService;
     private readonly ICustomerService _memberService;
+    private readonly IMoneyCalculator _moneyCalculator;
 
-    public BestellingOverzichtForm(IOrderService orderService, ICustomerService memberService)
+    public BestellingOverzichtForm(IOrderService orderService, ICustomerService memberService, IMoneyCalculator moneyCalculator)
     {
         _orderService = orderService;
         _memberService = memberService;
+        _moneyCalculator = moneyCalculator;
 
         InitializeComponent();
         LoadOrders();
@@ -93,7 +95,7 @@ public partial class BestellingOverzichtForm : Form
         Order order = (Order)lvOrders.SelectedItems[0].Tag;
         if (order == null) { return; }
 
-        var form = new SplitBestellingForm(_orderService, _memberService, order);
+        var form = new SplitBestellingForm(_orderService, _memberService, _moneyCalculator, order);
         form.ShowDialog();
         LoadOrders();
     }
@@ -123,7 +125,7 @@ public partial class BestellingOverzichtForm : Form
         Order order = (Order)lvOrders.SelectedItems[0].Tag;
         if (order == null) { return; }
 
-        var form = new AfrekenForm(_orderService, order);
+        var form = new AfrekenForm(_orderService, _moneyCalculator, order);
         form.ShowDialog();
 
         LoadOrders();

@@ -49,6 +49,7 @@ public partial class BestellingenSamenvoegenForm : Form
                 lvProducts.Items.Add(item);
             }
 
+            totalPrice += order.SplitPrice;
             lbOrderCustomerNames.Text += $" {order.Customer.Name}";
             if(lbOrderCustomerNames.Width > 610)
             {

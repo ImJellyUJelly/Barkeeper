@@ -7,9 +7,9 @@ public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
 
-    public ProductService(IUnitOfWork unitOfWork)
+    public ProductService(IProductRepository productRepository)
     {
-        _productRepository = unitOfWork.GetProductRepository();
+        _productRepository = productRepository;
     }
 
     public Product GetProductById(int productId)

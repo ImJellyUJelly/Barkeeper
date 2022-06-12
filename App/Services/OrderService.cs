@@ -8,44 +8,37 @@ public class OrderService : IOrderService
     private readonly IOrderRepository _orderRepository;
     private readonly ICustomerService _customerService;
     private readonly IOrderDetailService _orderDetailService;
+    private readonly IMoneyCalculator _moneyCalculator;
 
-    public OrderService(IUnitOfWork unitOfWork,
-        ICustomerService customerService,
-        IOrderDetailService orderDetailService)
+    public OrderService(IOrderRepository orderRepository, ICustomerService customerService,
+        IOrderDetailService orderDetailService, IMoneyCalculator moneyCalculator)
     {
-        _orderRepository = unitOfWork.GetOrderRepository();
+        _orderRepository = orderRepository;
         _customerService = customerService;
         _orderDetailService = orderDetailService;
+        _moneyCalculator = moneyCalculator;
     }
 
     public OrderDetail AddProductToOrder(Order order, Product product)
     {
         var orderDetail = new OrderDetail() { Order = order, Product = product, TimeAdded = DateTime.Now };
         order.OrderDetails.Add(orderDetail);
-        order.Price = CalculateOrderPrice(order);
+        order.Price = _moneyCalculator.PricePerOrder(order);
         UpdateOrder(order);
         return orderDetail;
-    }
-
-    public decimal CalculateOrderPrice(Order order)
-    {
-        decimal totalPrice = 0.00M;
-        order.OrderDetails.ForEach(od => totalPrice += (order.IsMember ? od.Product.MemberPrice : od.Product.Price));
-        totalPrice += order.SplitPrice;
-        return totalPrice;
     }
 
     public Order CreateOrder(Order order)
     {
         order.OrderDate = DateTime.Now;
-        order.Price = CalculateOrderPrice(order);
+        order.Price = _moneyCalculator.PricePerOrder(order);
         return _orderRepository.CreateOrder(order);
     }
 
     public void DeleteProductFromOrder(Order order, OrderDetail orderDetail)
     {
         _orderDetailService.RemoveOrderDetail(orderDetail);
-        order.Price = CalculateOrderPrice(order);
+        order.Price = _moneyCalculator.PricePerOrder(order);
         UpdateOrder(order);
     }
 
@@ -67,30 +60,39 @@ public class OrderService : IOrderService
     public void MergeOrders(List<Order> orderList, string customerName)
     {
         Customer customer = _customerService.FindOrCreateCustomer(customerName);
-        var newOrder = new Order() { Customer = customer, OrderDate = DateTime.Now, IsMember = true };
-        newOrder.Comment += "Deze bestelling is samengevoegd uit ID's: ";
-        foreach (var order in orderList)
+        Order mergedOrder = GetOrderByCustomerName(customer.Name);
+        if (mergedOrder == null)
         {
-            newOrder.Comment += $"{order.Id} ";
-            foreach (var orderDetail in order.OrderDetails)
-            {
-                AddProductToOrder(newOrder, orderDetail.Product);
-            }
+            mergedOrder = new Order() { Customer = customer, OrderDate = DateTime.Now, IsMember = true };
+            mergedOrder = CreateOrder(mergedOrder);
         }
-        newOrder.Comment += "\n";
-
-        newOrder = CreateOrder(newOrder);
-        newOrder.Price = CalculateOrderPrice(newOrder);
-        foreach (var order in orderList)
+        else
         {
-            order.Comment += $"Bestelling is samengevoegd in de bestelling van {newOrder.Customer.Name} met ID: {newOrder.Id}.\n";
-            order.IsFinished = true;
-            UpdateOrder(order);
+            mergedOrder.Comment += "Deze bestelling is samengevoegd uit ID's: ";
+            foreach (var order in orderList)
+            {
+                mergedOrder.Comment += $"{order.Id} ";
+                foreach (var orderDetail in order.OrderDetails)
+                {
+                    AddProductToOrder(mergedOrder, orderDetail.Product);
+                }
+            }
+
+            mergedOrder.Comment += "\n";
+            mergedOrder.Price = _moneyCalculator.PriceForMergedOrder(orderList);
+            mergedOrder.SplitPrice = _moneyCalculator.SplitPriceForMergedOrder(orderList);
+            foreach (var order in orderList)
+            {
+                order.Comment += $"Bestelling is samengevoegd in de bestelling van {mergedOrder.Customer.Name} met ID: {mergedOrder.Id}.\n";
+                order.IsFinished = true;
+                UpdateOrder(order);
+            }
         }
     }
 
     public void SplitOrder(Order order, Dictionary<string, decimal> newCustomers)
     {
+        decimal splitPrice = _moneyCalculator.PricePerSplitOrder(order, newCustomers.Count);
         foreach (var item in newCustomers)
         {
             Order newOrder = GetOrderByCustomerName(item.Key);
@@ -100,7 +102,7 @@ public class OrderService : IOrderService
                 { 
                     OrderDate = DateTime.Now, 
                     Customer = _customerService.FindOrCreateCustomer(item.Key), 
-                    SplitPrice = item.Value 
+                    SplitPrice = splitPrice
                 };
             }
 

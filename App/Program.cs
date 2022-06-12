@@ -1,5 +1,6 @@
 using App.Contexts;
 using App.Forms;
+using App.Repositories;
 using App.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -33,13 +34,16 @@ internal static class Program
         // Database
         services.AddScoped<BarkeeperContext>();
 
-        // Unit Of Work
-        services.AddScoped<IUnitOfWork, UnitOfWork>();
+        // Repositories
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
 
         // Services
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ICustomerService, CustomerService>();
         services.AddScoped<IOrderDetailService, OrderDetailService>();
+        services.AddScoped<IMoneyCalculator, MoneyCalculator>();
     }
 }

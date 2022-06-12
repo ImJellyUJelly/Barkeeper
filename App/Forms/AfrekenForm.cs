@@ -6,11 +6,14 @@ namespace App.Forms;
 public partial class AfrekenForm : Form
 {
     private readonly IOrderService _orderService;
+    private readonly IMoneyCalculator _moneyCalculator;
+
     private Order _order;
 
-    public AfrekenForm(IOrderService orderService, Order order)
+    public AfrekenForm(IOrderService orderService, IMoneyCalculator moneyCalculator, Order order)
     {
         _orderService = orderService;
+        _moneyCalculator = moneyCalculator;
         _order = order;
 
         InitializeComponent();
@@ -36,7 +39,7 @@ public partial class AfrekenForm : Form
     {
         _order.IsMember = cbIsMember.Checked;
         _orderService.UpdateOrder(_order);
-        EditPriceLabel(_orderService.CalculateOrderPrice(_order));
+        EditPriceLabel(_moneyCalculator.PricePerOrder(_order));
         LoadProducts();
     }
 
