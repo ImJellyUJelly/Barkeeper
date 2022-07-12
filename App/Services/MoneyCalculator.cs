@@ -7,15 +7,7 @@ namespace App.Services
         public decimal PricePerOrder(Order order)
         {
             decimal totalPrice = 0.00M;
-            if (order.OrderDetails.Count > 0)
-            {
-                order.OrderDetails.ForEach(od => totalPrice += (order.IsMember ? od.Product.MemberPrice : od.Product.Price));
-            }
-            else
-            {
-                totalPrice += order.Price;
-            }
-
+            order.OrderDetails.ForEach(od => totalPrice += (order.IsMember ? od.Product.MemberPrice : od.Product.Price));
             return Math.Round(totalPrice, 2);
         }
 

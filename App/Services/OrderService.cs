@@ -38,6 +38,7 @@ public class OrderService : IOrderService
     public void DeleteProductFromOrder(Order order, OrderDetail orderDetail)
     {
         _orderDetailService.RemoveOrderDetail(orderDetail);
+        order.OrderDetails.Remove(orderDetail);
         order.Price = _moneyCalculator.PricePerOrder(order);
         UpdateOrder(order);
     }

@@ -23,8 +23,30 @@ public class CustomerService : ICustomerService
         if (customer == null)
         {
             customer = new Customer() { Name = customerName };
+            _customerRepository.AddCustomer(customer);
         }
 
         return customer;
+    }
+
+    public Customer UpdateCustomer(Customer customer)
+    {
+        if(customer == null)
+        {
+            return null;
+        }
+
+        _customerRepository.UpdateCustomer(customer);
+        return customer;
+    }
+
+    public void DeleteCustomer(Customer customer)
+    {
+        if(customer == null)
+        {
+            return;
+        }
+
+        _customerRepository.DeleteCustomer(customer);
     }
 }

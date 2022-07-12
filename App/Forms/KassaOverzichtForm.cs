@@ -385,4 +385,10 @@ public partial class KassaOverzichtForm : Form
         RefreshProductsInOrder();
         RefreshCustomerComboBox();
     }
+
+    private void TSMICustomers_Click(object sender, EventArgs e)
+    {
+        var form = new CustomerForm(_customerService);
+        form.ShowDialog();
+    }
 }

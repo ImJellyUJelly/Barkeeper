@@ -41,7 +41,7 @@ public partial class BestellingOverzichtForm : Form
             item.SubItems.Add($"{order.OrderDate.ToString("dd/MM/yyyy")} - {order.OrderDate.ToShortTimeString()}");
             item.SubItems.Add(GetTextFromBool(order.IsPaid));
             item.SubItems.Add(GetTextFromBool(order.IsFinished));
-            item.SubItems.Add(order.OrderDetails.Count.ToString());
+            item.SubItems.Add($"€ {_moneyCalculator.PricePerOrder(order)}");
             item.SubItems.Add(order.Comment);
             lvOrders.Items.Add(item);
         }
@@ -49,32 +49,12 @@ public partial class BestellingOverzichtForm : Form
 
     private void lvOrders_SelectedIndexChanged(object sender, EventArgs e)
     {
-        if (lvOrders.SelectedItems.Count > 0 && lvOrders.SelectedItems.Count < 2)
-        {
-            btSplitOrder.Enabled = true;
-        }
-        else
-        {
-            btSplitOrder.Enabled = false;
-        }
+        var orders = lvOrders.SelectedItems;
+        Order order = orders.Count > 0 ? (Order)orders[0].Tag : null;
 
-        if (lvOrders.SelectedItems.Count > 1)
-        {
-            btMergeOrders.Enabled = true;
-        }
-        else
-        {
-            btMergeOrders.Enabled = false;
-        }
-
-        if (lvOrders.SelectedItems.Count == 1)
-        {
-            btPay.Enabled = true;
-        }
-        else
-        {
-            btPay.Enabled = false;
-        }
+        btSplitOrder.Enabled = (orders.Count > 0 && orders.Count < 2) && order.CanPay ? true : false;
+        btMergeOrders.Enabled = orders.Count > 1 ? true : false;
+        btPay.Enabled = orders.Count == 1 && order.CanPay ? true : false;
     }
 
     private void btMergeOrders_Click(object sender, EventArgs e)
@@ -120,7 +100,7 @@ public partial class BestellingOverzichtForm : Form
         return "Nee";
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    private void btPay_Click(object sender, EventArgs e)
     {
         Order order = (Order)lvOrders.SelectedItems[0].Tag;
         if (order == null) { return; }

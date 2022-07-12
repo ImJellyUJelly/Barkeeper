@@ -48,7 +48,7 @@
             this.bestellingenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bestellingOverzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.klantenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.overzichtToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMICustomers = new System.Windows.Forms.ToolStripMenuItem();
             this.productenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.overzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
@@ -141,6 +141,7 @@
             this.columnHeader2,
             this.columnHeader3});
             this.lvProducts.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lvProducts.FullRowSelect = true;
             this.lvProducts.Location = new System.Drawing.Point(6, 155);
             this.lvProducts.MultiSelect = false;
             this.lvProducts.Name = "lvProducts";
@@ -254,17 +255,17 @@
             // klantenToolStripMenuItem
             // 
             this.klantenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.overzichtToolStripMenuItem1});
+            this.TSMICustomers});
             this.klantenToolStripMenuItem.Name = "klantenToolStripMenuItem";
             this.klantenToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.klantenToolStripMenuItem.Text = "Klanten";
             // 
-            // overzichtToolStripMenuItem1
+            // TSMICustomers
             // 
-            this.overzichtToolStripMenuItem1.Enabled = false;
-            this.overzichtToolStripMenuItem1.Name = "overzichtToolStripMenuItem1";
-            this.overzichtToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
-            this.overzichtToolStripMenuItem1.Text = "Overzicht";
+            this.TSMICustomers.Name = "TSMICustomers";
+            this.TSMICustomers.Size = new System.Drawing.Size(124, 22);
+            this.TSMICustomers.Text = "Overzicht";
+            this.TSMICustomers.Click += new System.EventHandler(this.TSMICustomers_Click);
             // 
             // productenToolStripMenuItem
             // 
@@ -382,7 +383,7 @@
         private ToolStripMenuItem overzichtToolStripMenuItem;
         private ToolStripMenuItem bestellingOverzichtToolStripMenuItem;
         private ToolStripMenuItem klantenToolStripMenuItem;
-        private ToolStripMenuItem overzichtToolStripMenuItem1;
+        private ToolStripMenuItem TSMICustomers;
         private Panel pProducts;
         private CheckBox cbIsMember;
         private Label label5;

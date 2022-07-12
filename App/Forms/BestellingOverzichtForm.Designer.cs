@@ -55,10 +55,9 @@
             this.chComments});
             this.lvOrders.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lvOrders.FullRowSelect = true;
-            this.lvOrders.Location = new System.Drawing.Point(14, 107);
-            this.lvOrders.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.lvOrders.Location = new System.Drawing.Point(12, 80);
             this.lvOrders.Name = "lvOrders";
-            this.lvOrders.Size = new System.Drawing.Size(1126, 848);
+            this.lvOrders.Size = new System.Drawing.Size(986, 637);
             this.lvOrders.TabIndex = 0;
             this.lvOrders.UseCompatibleStateImageBehavior = false;
             this.lvOrders.View = System.Windows.Forms.View.Details;
@@ -96,7 +95,7 @@
             // 
             // chProducts
             // 
-            this.chProducts.Text = "Aantal producten";
+            this.chProducts.Text = "Prijs";
             this.chProducts.Width = 130;
             // 
             // chComments
@@ -107,9 +106,10 @@
             // btMergeOrders
             // 
             this.btMergeOrders.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btMergeOrders.Location = new System.Drawing.Point(250, 5);
+            this.btMergeOrders.Location = new System.Drawing.Point(219, 4);
+            this.btMergeOrders.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btMergeOrders.Name = "btMergeOrders";
-            this.btMergeOrders.Size = new System.Drawing.Size(112, 95);
+            this.btMergeOrders.Size = new System.Drawing.Size(98, 71);
             this.btMergeOrders.TabIndex = 1;
             this.btMergeOrders.Text = "Samen- voegen";
             this.btMergeOrders.UseVisualStyleBackColor = true;
@@ -118,9 +118,10 @@
             // btSplitOrder
             // 
             this.btSplitOrder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btSplitOrder.Location = new System.Drawing.Point(132, 5);
+            this.btSplitOrder.Location = new System.Drawing.Point(116, 4);
+            this.btSplitOrder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btSplitOrder.Name = "btSplitOrder";
-            this.btSplitOrder.Size = new System.Drawing.Size(112, 95);
+            this.btSplitOrder.Size = new System.Drawing.Size(98, 71);
             this.btSplitOrder.TabIndex = 2;
             this.btSplitOrder.Text = "Splitsen";
             this.btSplitOrder.UseVisualStyleBackColor = true;
@@ -129,24 +130,24 @@
             // btPay
             // 
             this.btPay.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btPay.Location = new System.Drawing.Point(14, 5);
+            this.btPay.Location = new System.Drawing.Point(12, 4);
+            this.btPay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btPay.Name = "btPay";
-            this.btPay.Size = new System.Drawing.Size(112, 95);
+            this.btPay.Size = new System.Drawing.Size(98, 71);
             this.btPay.TabIndex = 3;
             this.btPay.Text = "Afrekenen";
             this.btPay.UseVisualStyleBackColor = true;
-            this.btPay.Click += new System.EventHandler(this.button1_Click);
+            this.btPay.Click += new System.EventHandler(this.btPay_Click);
             // 
             // BestellingOverzichtForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1152, 972);
+            this.ClientSize = new System.Drawing.Size(1008, 729);
             this.Controls.Add(this.btPay);
             this.Controls.Add(this.btSplitOrder);
             this.Controls.Add(this.btMergeOrders);
             this.Controls.Add(this.lvOrders);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "BestellingOverzichtForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Overzicht bestellingen";

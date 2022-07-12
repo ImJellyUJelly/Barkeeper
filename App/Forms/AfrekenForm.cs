@@ -26,7 +26,7 @@ public partial class AfrekenForm : Form
         lbOrderDate.Text = $"{_order.OrderDate.ToShortTimeString()} - {_order.OrderDate.ToShortDateString()}";
         cbIsMember.Checked = _order.IsMember;
         tbComments.Text = _order.Comment;
-        EditPriceLabel(_order.Price);
+        EditPriceLabel(_order.Price + _order.SplitPrice);
         LoadProducts();
     }
 
@@ -39,7 +39,7 @@ public partial class AfrekenForm : Form
     {
         _order.IsMember = cbIsMember.Checked;
         _orderService.UpdateOrder(_order);
-        EditPriceLabel(_moneyCalculator.PricePerOrder(_order));
+        EditPriceLabel(_moneyCalculator.PricePerOrder(_order) + _order.SplitPrice);
         LoadProducts();
     }
 
@@ -104,7 +104,7 @@ public partial class AfrekenForm : Form
 
     private void Pay(decimal amount)
     {
-        decimal remainder = _order.Price - amount;
+        decimal remainder = (_order.Price + _order.SplitPrice) - amount;
         if (remainder > 0)
         {
             _order.Price = remainder;

@@ -12,6 +12,7 @@ public class Order
     public bool IsFinished { get; set; }
     public string Comment { get; set; }
     public Order ParentOrder { get; set; }
+    public bool CanPay { get { return !IsFinished; } }
 
     public List<OrderDetail> OrderDetails { get; set; }
 

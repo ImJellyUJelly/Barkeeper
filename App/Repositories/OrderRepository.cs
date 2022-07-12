@@ -15,46 +15,6 @@ public class OrderRepository : IOrderRepository
     public OrderRepository(BarkeeperContext dbContext, IProductRepository productRepository)
     {
         _dbContext = dbContext;
-
-        //_productRepository = productRepository;
-        //_orders = new List<Order>() {
-        //    new Order()
-        //    {   Id = 1,
-        //        Customer = new Customer() { Name = "Jon Doe" },
-        //        OrderDate = new DateTime(2022, 10, 5),
-        //        OrderDetails = new List<OrderDetail> {
-        //            new OrderDetail() { Id = 0, Product = productRepository.GetProductByName("Koffie"), TimeAdded = DateTime.Now  },
-        //            new OrderDetail() { Id = 0, Product = productRepository.GetProductByName("Koffie"), TimeAdded = DateTime.Now  },
-        //            new OrderDetail() { Id = 0, Product = productRepository.GetProductByName("Hertog-Jan"), TimeAdded = DateTime.Now  },
-        //            new OrderDetail() { Id = 0, Product = productRepository.GetProductByName("Chocomel"), TimeAdded = DateTime.Now  } },
-        //        IsMember = true
-        //    },
-        //    new Order() {
-        //        Id = 2,
-        //        Customer = new Customer() { Name = "Captain Jack Sparrow" },
-        //        OrderDate = new DateTime(2021, 1, 2),
-        //        IsMember = false
-        //    },
-        //    new Order() {
-        //        Id = 3,
-        //        Customer = new Customer() { Name = "Baan 5" },
-        //        OrderDate = new DateTime(2022, 2, 14),
-        //        IsMember = true,
-        //        OrderDetails = new List<OrderDetail> {
-        //            new OrderDetail() { Id = 2, Product = productRepository.GetProductByName("Hertog-Jan"), TimeAdded = new DateTime(2022, 2, 14, 21, 20, 56) },
-        //            new OrderDetail() { Id = 2, Product = productRepository.GetProductByName("Hertog-Jan"), TimeAdded = new DateTime(2022, 2, 14, 21, 20, 57) },
-        //            new OrderDetail() { Id = 2, Product = productRepository.GetProductByName("Hertog-Jan"), TimeAdded = new DateTime(2022, 2, 14, 21, 20, 58) },
-        //            new OrderDetail() { Id = 2, Product = productRepository.GetProductByName("Hertog-Jan"), TimeAdded = new DateTime(2022, 2, 14, 21, 20, 59) },
-        //            new OrderDetail() { Id = 2, Product = productRepository.GetProductByName("Radler Alcoholvrij"), TimeAdded = new DateTime(2022, 2, 14, 21, 21, 23) }},
-        //        Comment = "Op Baan 5 staan Will Smith, De Koning Van Spanje en Rapper Sjors.\n"
-        //    }
-        //};
-        //foreach (var order in _orders)
-        //{
-        //    decimal totalPrice = 0.00M;
-        //    order.OrderDetails.ForEach(od => totalPrice += (order.IsMember ? od.Product.MemberPrice : od.Product.Price));
-        //    order.Price = totalPrice;
-        //}
     }
 
     public Order CreateOrder(Order order)
