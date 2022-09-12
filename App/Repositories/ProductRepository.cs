@@ -12,6 +12,12 @@ public class ProductRepository : IProductRepository
         _context = context;
     }
 
+    public void AddProduct(Product product)
+    {
+        _context.Products.Add(product);
+        _context.SaveChanges();
+    }
+
     public Product GetProductById(int productId)
     {
         return _context.Products.FirstOrDefault(product => product.Id == productId);
@@ -19,11 +25,18 @@ public class ProductRepository : IProductRepository
 
     public Product GetProductByName(string productName)
     {
-        return _context.Products.FirstOrDefault(product => product.Name == productName);
+        return _context.Products.FirstOrDefault(product => product.Name.Equals(productName));
     }
 
     public List<Product> GetProducts()
     {
         return _context.Products.ToList();
+    }
+
+    public void UpdateProduct(Product product)
+    {
+        var prod = _context.Products.First(p => p.Id == product.Id);
+        prod = product;
+        _context.SaveChanges();
     }
 }

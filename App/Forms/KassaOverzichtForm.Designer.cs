@@ -44,7 +44,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbDate = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bestellingenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bestellingOverzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.klantenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,12 +115,13 @@
             // 
             this.lbOrderPrice.AutoSize = true;
             this.lbOrderPrice.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbOrderPrice.Location = new System.Drawing.Point(248, 546);
+            this.lbOrderPrice.Location = new System.Drawing.Point(248, 548);
             this.lbOrderPrice.Name = "lbOrderPrice";
             this.lbOrderPrice.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.lbOrderPrice.Size = new System.Drawing.Size(78, 32);
             this.lbOrderPrice.TabIndex = 7;
             this.lbOrderPrice.Text = "€ 0,00";
+            this.lbOrderPrice.Click += new System.EventHandler(this.lbOrderPrice_Click);
             // 
             // btPay
             // 
@@ -221,7 +221,6 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
             this.bestellingenToolStripMenuItem,
             this.klantenToolStripMenuItem,
             this.productenToolStripMenuItem});
@@ -230,12 +229,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(1008, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.fileToolStripMenuItem.Text = "Bestand";
             // 
             // bestellingenToolStripMenuItem
             // 
@@ -277,10 +270,10 @@
             // 
             // overzichtToolStripMenuItem
             // 
-            this.overzichtToolStripMenuItem.Enabled = false;
             this.overzichtToolStripMenuItem.Name = "overzichtToolStripMenuItem";
             this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.overzichtToolStripMenuItem.Text = "Overzicht";
+            this.overzichtToolStripMenuItem.Click += new System.EventHandler(this.overzichtToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -363,7 +356,6 @@
         private GroupBox groupBox2;
         private Label lbDate;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem productenToolStripMenuItem;
         private ToolStripMenuItem bestellingenToolStripMenuItem;
         private Label lbOrderDate;

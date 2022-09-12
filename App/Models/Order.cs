@@ -3,7 +3,7 @@
 public class Order
 {
     public long Id { get; set; }
-    public Customer Customer { get; set; }
+    public Customer? Customer { get; set; }
     public DateTime OrderDate { get; set; }
     public decimal Price { get; set; }
     public decimal SplitPrice { get; set; }
@@ -12,8 +12,8 @@ public class Order
     public bool IsFinished { get; set; }
     public string Comment { get; set; }
     public Order ParentOrder { get; set; }
-    public bool CanPay { get { return !IsFinished; } }
-
+    public bool CanPay => !IsFinished && !IsPaid;
+    public decimal PaidAmount { get; set; }
     public List<OrderDetail> OrderDetails { get; set; }
 
     public Order()
@@ -23,6 +23,6 @@ public class Order
 
     public override string ToString()
     {
-        return Customer.Name;
+        return Customer?.Name;
     }
 }

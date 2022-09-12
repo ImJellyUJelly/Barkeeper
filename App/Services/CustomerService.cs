@@ -1,11 +1,16 @@
 ﻿using App.Models;
 using App.Repositories;
+using System;
 
 namespace App.Services;
 
 public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
+
+    public event EventHandler<Customer> CustomerAdded;
+    public event EventHandler<Customer> CustomerEdited;
+    public event EventHandler<string> CustomerDeleted;
 
     public CustomerService(ICustomerRepository customerRepository)
     {
@@ -22,8 +27,8 @@ public class CustomerService : ICustomerService
         var customer = _customerRepository.FindCustomer(customerName);
         if (customer == null)
         {
-            customer = new Customer() { Name = customerName };
-            _customerRepository.AddCustomer(customer);
+            customer = _customerRepository.AddCustomer(new Customer { Name = customerName});
+            CustomerAdded?.Invoke(this, customer);
         }
 
         return customer;
@@ -36,7 +41,8 @@ public class CustomerService : ICustomerService
             return null;
         }
 
-        _customerRepository.UpdateCustomer(customer);
+        customer = _customerRepository.UpdateCustomer(customer);
+        CustomerEdited?.Invoke(this, customer);
         return customer;
     }
 
@@ -47,6 +53,37 @@ public class CustomerService : ICustomerService
             return;
         }
 
+        BeforeCustomerDeleted(customer.Name);
         _customerRepository.DeleteCustomer(customer);
+    }
+
+    public void UpdateOrCreateCustomer(Customer customer)
+    {
+        if (customer == null)
+        {
+            return;
+        }
+
+        var foundCustomer = _customerRepository.FindCustomer(customer.Name);
+        if (foundCustomer == null)
+        {
+            _customerRepository.AddCustomer(customer);
+            CustomerAdded?.Invoke(this, customer);
+        }
+        else
+        {
+            _customerRepository.UpdateCustomer(foundCustomer);
+            CustomerEdited?.Invoke(this, customer);
+        }
+    }
+
+    protected virtual void BeforeCustomerDeleted(string customerName)
+    {
+        CustomerDeleted?.Invoke(this, customerName);
+    }
+
+    public Customer FindCustomer(string customerName)
+    {
+        return _customerRepository.FindCustomer(customerName);
     }
 }

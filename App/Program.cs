@@ -38,6 +38,7 @@ internal static class Program
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<IRevenueRepository, RevenueRepository>();
 
         // Services
         services.AddScoped<IOrderService, OrderService>();
@@ -45,5 +46,6 @@ internal static class Program
         services.AddScoped<ICustomerService, CustomerService>();
         services.AddScoped<IOrderDetailService, OrderDetailService>();
         services.AddScoped<IMoneyCalculator, MoneyCalculator>();
+        services.AddScoped<IRevenueService, RevenueService>();
     }
 }

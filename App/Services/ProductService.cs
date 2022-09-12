@@ -12,6 +12,11 @@ public class ProductService : IProductService
         _productRepository = productRepository;
     }
 
+    public void AddProduct(Product product)
+    {
+        _productRepository.AddProduct(product);
+    }
+
     public Product GetProductById(int productId)
     {
         return _productRepository.GetProductById(productId);
@@ -25,5 +30,10 @@ public class ProductService : IProductService
     public List<Product> GetProducts()
     {
         return _productRepository.GetProducts();
+    }
+
+    public void UpdateProduct(Product product)
+    {
+        _productRepository.UpdateProduct(product);
     }
 }

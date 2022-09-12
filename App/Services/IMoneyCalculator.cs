@@ -32,5 +32,13 @@ namespace App.Services
         /// <param name="order">An order.</param>
         /// <returns>A price for one order, including if the customer is a member or not.</returns>
         decimal PricePerOrder(Order order);
+
+        /// <summary>
+        /// Calculate whether to use MemberPrice of Price based on IsMember of an Order.
+        /// </summary>
+        /// <param name="detail">The OrderDetail which needs to calculate price.</param>
+        /// <param name="isMember">Is the order from a member.</param>
+        /// <returns></returns>
+        decimal PricePerOrderDetail(OrderDetail detail, bool isMember);
     }
 }

@@ -6,6 +6,7 @@ public interface IOrderService
 {
     List<Order> GetOrders();
     List<Order> GetUnFinishedAndUnPaidOrders();
+    List<Order> GetAllOrderByCustomerName(string customerName);
 
     Order GetOrderByCustomerName(string customerName);
     Order CreateOrder(Order order);

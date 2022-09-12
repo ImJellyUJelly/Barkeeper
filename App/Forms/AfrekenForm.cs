@@ -7,13 +7,15 @@ public partial class AfrekenForm : Form
 {
     private readonly IOrderService _orderService;
     private readonly IMoneyCalculator _moneyCalculator;
+    private readonly IRevenueService _revenueService;
 
     private Order _order;
 
-    public AfrekenForm(IOrderService orderService, IMoneyCalculator moneyCalculator, Order order)
+    public AfrekenForm(IOrderService orderService, IMoneyCalculator moneyCalculator, IRevenueService revenueService, Order order)
     {
         _orderService = orderService;
         _moneyCalculator = moneyCalculator;
+        _revenueService = revenueService;
         _order = order;
 
         InitializeComponent();
@@ -22,24 +24,30 @@ public partial class AfrekenForm : Form
 
     private void InitialLoad()
     {
-        lbCustomerName.Text = _order.Customer.Name;
+        lbCustomerName.Text = _order.Customer?.Name;
         lbOrderDate.Text = $"{_order.OrderDate.ToShortTimeString()} - {_order.OrderDate.ToShortDateString()}";
         cbIsMember.Checked = _order.IsMember;
         tbComments.Text = _order.Comment;
-        EditPriceLabel(_order.Price + _order.SplitPrice);
+        EditPriceLabel(_order);
         LoadProducts();
     }
 
-    private void EditPriceLabel(decimal price)
+    private void EditPriceLabel(Order order)
     {
-        lbPrice.Text = $"€ {price}";
+        lbPrice.Text = $"€ {order.Price}";
     }
 
     private void cbIsMember_CheckedChanged(object sender, EventArgs e)
     {
         _order.IsMember = cbIsMember.Checked;
+        if(_order.Customer != null)
+        {
+            _order.Customer.IsMember = cbIsMember.Checked;
+        }
+
+        _order.Price = _moneyCalculator.PricePerOrder(_order);
         _orderService.UpdateOrder(_order);
-        EditPriceLabel(_moneyCalculator.PricePerOrder(_order) + _order.SplitPrice);
+        EditPriceLabel(_order);
         LoadProducts();
     }
 
@@ -105,11 +113,15 @@ public partial class AfrekenForm : Form
     private void Pay(decimal amount)
     {
         decimal remainder = (_order.Price + _order.SplitPrice) - amount;
+
+        Revenue revenue = new Revenue() { Amount = amount, SaleDate = DateTime.Now };
+        _revenueService.AddPayment(revenue);
         if (remainder > 0)
         {
-            _order.Price = remainder;
+            _order.PaidAmount += amount;
+            _order.Price = _moneyCalculator.PricePerOrder(_order);
             _orderService.UpdateOrder(_order);
-            EditPriceLabel(_order.Price);
+            EditPriceLabel(_order);
             return;
         }
 

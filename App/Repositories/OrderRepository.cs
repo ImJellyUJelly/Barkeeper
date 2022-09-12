@@ -8,10 +8,6 @@ public class OrderRepository : IOrderRepository
 {
     private readonly BarkeeperContext _dbContext;
 
-    // For testing only
-    //private readonly List<Order> _orders;
-    //private readonly IProductRepository _productRepository;
-
     public OrderRepository(BarkeeperContext dbContext, IProductRepository productRepository)
     {
         _dbContext = dbContext;
@@ -53,5 +49,10 @@ public class OrderRepository : IOrderRepository
     {
         _dbContext.SaveChanges();
         return order;
+    }
+
+    public List<Order> GetOrdersByName(string customerName)
+    {
+        return _dbContext.Orders.Where(order => order.Customer.Name.Equals(customerName)).ToList();
     }
 }

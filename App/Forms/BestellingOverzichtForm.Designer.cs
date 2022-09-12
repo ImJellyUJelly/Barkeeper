@@ -40,6 +40,7 @@
             this.btMergeOrders = new System.Windows.Forms.Button();
             this.btSplitOrder = new System.Windows.Forms.Button();
             this.btPay = new System.Windows.Forms.Button();
+            this.btEditOrder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lvOrders
@@ -139,11 +140,24 @@
             this.btPay.UseVisualStyleBackColor = true;
             this.btPay.Click += new System.EventHandler(this.btPay_Click);
             // 
+            // btEditOrder
+            // 
+            this.btEditOrder.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btEditOrder.Location = new System.Drawing.Point(323, 4);
+            this.btEditOrder.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btEditOrder.Name = "btEditOrder";
+            this.btEditOrder.Size = new System.Drawing.Size(98, 71);
+            this.btEditOrder.TabIndex = 4;
+            this.btEditOrder.Text = "Bestelling inzien";
+            this.btEditOrder.UseVisualStyleBackColor = true;
+            this.btEditOrder.Click += new System.EventHandler(this.btEditOrder_Click);
+            // 
             // BestellingOverzichtForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 729);
+            this.Controls.Add(this.btEditOrder);
             this.Controls.Add(this.btPay);
             this.Controls.Add(this.btSplitOrder);
             this.Controls.Add(this.btMergeOrders);
@@ -169,5 +183,6 @@
         private ColumnHeader chComments;
         private ColumnHeader chIsFinished;
         private Button btPay;
+        private Button btEditOrder;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using App.Models;
 using App.Repositories;
+using System;
 
 namespace App.Services;
 
@@ -17,11 +18,26 @@ public class OrderService : IOrderService
         _customerService = customerService;
         _orderDetailService = orderDetailService;
         _moneyCalculator = moneyCalculator;
+
+        _customerService.CustomerDeleted += OnCustomerDeleted;
+    }
+
+    private void OnCustomerDeleted(object sender, string customerName)
+    {
+        var orders = GetAllOrderByCustomerName(customerName);
+        if (orders == null) return;
+
+        foreach(var order in orders)
+        {
+            order.Customer = null;
+        }
     }
 
     public OrderDetail AddProductToOrder(Order order, Product product)
     {
-        var orderDetail = new OrderDetail() { Order = order, Product = product, TimeAdded = DateTime.Now };
+        var orderDetail = new OrderDetail { Order = order, Product = product };
+        orderDetail.Price = _moneyCalculator.PricePerOrderDetail(orderDetail, order.IsMember);
+        orderDetail.TimeAdded = DateTime.Now;
         order.OrderDetails.Add(orderDetail);
         order.Price = _moneyCalculator.PricePerOrder(order);
         UpdateOrder(order);
@@ -50,7 +66,7 @@ public class OrderService : IOrderService
 
     public List<Order> GetOrders()
     {
-        return _orderRepository.GetOrders().OrderBy(order => order.Customer.Name).ToList();
+        return _orderRepository.GetOrders().OrderBy(order => order.Customer?.Name).ToList();
     }
 
     public List<Order> GetUnFinishedAndUnPaidOrders()
@@ -107,7 +123,7 @@ public class OrderService : IOrderService
                 };
             }
 
-            newOrder.Comment += $"Dit is een gesplitste bestelling van {order.Customer.Name}.\n";
+            newOrder.Comment += $"Dit is een gesplitste bestelling van {order.Customer?.Name}.\n";
             newOrder.ParentOrder = order;
             CreateOrder(newOrder);
         }
@@ -127,5 +143,10 @@ public class OrderService : IOrderService
         order.IsPaid = true;
         order.IsFinished = true;
         _orderRepository.UpdateOrder(order);
+    }
+
+    public List<Order> GetAllOrderByCustomerName(string customerName)
+    {
+        return _orderRepository.GetOrdersByName(customerName);
     }
 }

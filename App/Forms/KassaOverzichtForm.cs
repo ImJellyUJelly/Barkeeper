@@ -13,16 +13,19 @@ public partial class KassaOverzichtForm : Form
     private readonly IProductService _productService;
     private readonly ICustomerService _customerService;
     private readonly IMoneyCalculator _moneyCalculator;
+    private readonly IRevenueService _revenueService;
 
-    public KassaOverzichtForm(IOrderService orderService, 
-        IProductService productService, 
+    public KassaOverzichtForm(IOrderService orderService,
+        IProductService productService,
         ICustomerService customerService,
-        IMoneyCalculator moneyCalculator)
+        IMoneyCalculator moneyCalculator,
+        IRevenueService revenueService)
     {
         _orderService = orderService;
         _productService = productService;
         _customerService = customerService;
         _moneyCalculator = moneyCalculator;
+        _revenueService = revenueService;
 
         InitializeComponent();
         InitializeGeneralInformation();
@@ -44,17 +47,19 @@ public partial class KassaOverzichtForm : Form
     private void RefreshCustomerComboBox()
     {
         cbCustomerName.Items.Clear();
+        cbCustomerName.Items.Add("Open bestellingen:");
         var orders = _orderService.GetUnFinishedAndUnPaidOrders().OrderBy(order => order.Customer.Name);
         foreach (Order order in orders)
         {
-            cbCustomerName.Items.Add(order.Customer.Name);
+            cbCustomerName.Items.Add(order.Customer?.Name);
         }
 
         cbCustomerName.Items.Add("----------------");
+        cbCustomerName.Items.Add("Klanten:");
         var customers = _customerService.GetCustomers().OrderBy(customer => customer.Name);
-        foreach(Customer customer in customers)
+        foreach (Customer customer in customers)
         {
-            cbCustomerName.Items.Add(customer.Name);
+            cbCustomerName.Items.Add(customer);
         }
 
         cbCustomerName.Text = "";
@@ -97,7 +102,7 @@ public partial class KassaOverzichtForm : Form
             foreach (ListViewItem item in lvProducts.Items)
             {
                 OrderDetail detail = (OrderDetail)item.Tag;
-                totalPrice += detail.Product.Price;
+                totalPrice += detail.Price;
             }
         }
         else
@@ -119,7 +124,8 @@ public partial class KassaOverzichtForm : Form
 
         if (_selectedOrder == null)
         {
-            OrderDetail detail = new OrderDetail() { Product = product };
+            OrderDetail detail = new OrderDetail() { Order = _selectedOrder, Product = product };
+            detail.Price = _moneyCalculator.PricePerOrderDetail(detail, false);
             var item = new ListViewItem();
             item.Tag = detail;
             item.Text = product.Name;
@@ -180,6 +186,15 @@ public partial class KassaOverzichtForm : Form
     private void btSelectCustomer_Click(object sender, EventArgs e)
     {
         string customerName = cbCustomerName.Text.Trim();
+        Customer customer = _customerService.FindCustomer(customerName);
+
+        if (IsCustomerNameNotValid(customerName))
+        {
+            _selectedOrder = null;
+            RefreshCustomerComboBox();
+            return;
+        }
+
         if (customerName == "" && _selectedOrder == null)
         {
             if (lvProducts.Items.Count > 0)
@@ -194,6 +209,7 @@ public partial class KassaOverzichtForm : Form
                 return;
             }
         }
+        // When an order is selected, but it must be unselected.
         else if (customerName == "" && _selectedOrder != null)
         {
             _selectedOrder = null;
@@ -204,22 +220,24 @@ public partial class KassaOverzichtForm : Form
         else if (customerName != "" && _selectedOrder == null)
         {
             Order order = _orderService.GetOrderByCustomerName(customerName);
+            bool isMember = customer != null ? customer.IsMember : false;
             if (order == null)
             {
-
-                order = new Order() { Customer = _customerService.FindOrCreateCustomer(customerName) };
-                DialogResult dialogResult = MessageBox.Show($"Is {customerName} een lid van de club?", "Nieuwe klant", MessageBoxButtons.YesNoCancel);
-
-                if (dialogResult == DialogResult.Cancel)
+                if (customer == null)
                 {
-                    cbCustomerName.Text = "";
-                    return;
-                }
-                else if (dialogResult == DialogResult.Yes)
-                {
-                    order.IsMember = true;
+                    DialogResult dialogResult = MessageBox.Show($"Is {customerName} een lid van de club?", "Nieuwe klant", MessageBoxButtons.YesNoCancel);
+                    if (dialogResult == DialogResult.Cancel)
+                    {
+                        cbCustomerName.Text = "";
+                        return;
+                    }
+                    else if (dialogResult == DialogResult.Yes)
+                    {
+                        isMember = true;
+                    }
                 }
 
+                order = new Order() { Customer = _customerService.FindOrCreateCustomer(customerName), IsMember = isMember };
                 foreach (ListViewItem item in lvProducts.Items)
                 {
                     var detail = (OrderDetail)item.Tag;
@@ -250,6 +268,14 @@ public partial class KassaOverzichtForm : Form
         RefreshCustomerComboBox();
         RefreshProductsInOrder();
         ToggleOrderInfo();
+    }
+
+    private bool IsCustomerNameNotValid(string customerName)
+    {
+        return customerName.Equals("Open bestellingen:") ||
+            customerName.Equals("Klanten:") ||
+            customerName.Equals("----------------");
+
     }
 
     private void lvProducts_SelectedIndexChanged(object sender, EventArgs e)
@@ -353,7 +379,7 @@ public partial class KassaOverzichtForm : Form
 
     private void bestellingOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var orderForm = new BestellingOverzichtForm(_orderService, _customerService, _moneyCalculator);
+        var orderForm = new BestellingOverzichtForm(_orderService, _customerService, _moneyCalculator, _revenueService);
         orderForm.ShowDialog();
 
         _selectedOrder = null;
@@ -376,9 +402,16 @@ public partial class KassaOverzichtForm : Form
         {
             return;
         }
+        if (_selectedOrder.Price > 0.00M)
+        {
 
-        var form = new AfrekenForm(_orderService, _moneyCalculator, _selectedOrder);
-        form.ShowDialog();
+            var form = new AfrekenForm(_orderService, _moneyCalculator, _revenueService, _selectedOrder);
+            form.ShowDialog();
+        }
+        else
+        {
+            _orderService.PayOrder(_selectedOrder, 0.00M);
+        }
 
         _selectedOrder = null;
         ToggleOrderInfo();
@@ -390,5 +423,18 @@ public partial class KassaOverzichtForm : Form
     {
         var form = new CustomerForm(_customerService);
         form.ShowDialog();
+
+        RefreshCustomerComboBox();
+    }
+
+    private void overzichtToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var form = new ProductOverzichtForm(_productService);
+        form.Show();
+    }
+
+    private void lbOrderPrice_Click(object sender, EventArgs e)
+    {
+
     }
 }

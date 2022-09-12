@@ -6,12 +6,14 @@ namespace App.Forms;
 public partial class BestellingenSamenvoegenForm : Form
 {
     private readonly IOrderService _orderService;
+    private readonly IMoneyCalculator _moneyCalculater;
     private List<Order> _orders;
 
-    public BestellingenSamenvoegenForm(IOrderService orderService, List<Order> orders)
+    public BestellingenSamenvoegenForm(IOrderService orderService, IMoneyCalculator moneyCalculator, List<Order> orders)
     {
         _orderService = orderService;
         _orders = orders;
+        _moneyCalculater = moneyCalculator;
         InitializeComponent();
         InitializeMergeOrders();
     }
@@ -37,20 +39,19 @@ public partial class BestellingenSamenvoegenForm : Form
                 if (order.IsMember)
                 {
                     item.SubItems.Add($"€ {od.Product.MemberPrice}");
-                    totalPrice += od.Product.MemberPrice;
                 }
                 else
                 {
                     item.SubItems.Add($"€ {od.Product.Price}");
-                    totalPrice += od.Product.Price;
                 }
+
                 item.SubItems.Add($"{od.TimeAdded.ToShortDateString()} - {od.TimeAdded.ToShortTimeString()}");
                 item.SubItems.Add(order.Customer.Name);
                 lvProducts.Items.Add(item);
             }
 
-            totalPrice += order.SplitPrice;
-            lbOrderCustomerNames.Text += $" {order.Customer.Name}";
+            totalPrice += _moneyCalculater.PricePerOrder(order) + order.SplitPrice;
+            lbOrderCustomerNames.Text += $" {order.Customer?.Name}";
             if(lbOrderCustomerNames.Width > 610)
             {
                 lbOrderCustomerNames.Width = 610;

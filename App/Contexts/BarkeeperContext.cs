@@ -12,6 +12,7 @@ public class BarkeeperContext : DbContext
     public DbSet<OrderDetail> OrderDetails { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<Customer> Customers { get; set; }
+    public DbSet<Revenue> Revenues { get; set; }
 
     public BarkeeperContext(): base("server=localhost;port=3306;database=Barkeeper_Development;uid=root;password=Password01!")
     {
@@ -23,6 +24,7 @@ public class BarkeeperContext : DbContext
         modelBuilder.Entity<Order>().HasKey(order => order.Id);
         modelBuilder.Entity<Order>().Property(order => order.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         modelBuilder.Entity<Order>().HasOptional(order => order.ParentOrder);
+        modelBuilder.Entity<Order>().HasOptional(order => order.Customer);
 
         modelBuilder.Entity<Product>().HasKey(product => product.Id);
         modelBuilder.Entity<Product>().Property(product => product.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);

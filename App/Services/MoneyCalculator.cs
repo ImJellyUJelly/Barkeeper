@@ -7,7 +7,9 @@ namespace App.Services
         public decimal PricePerOrder(Order order)
         {
             decimal totalPrice = 0.00M;
-            order.OrderDetails.ForEach(od => totalPrice += (order.IsMember ? od.Product.MemberPrice : od.Product.Price));
+            order.OrderDetails.ForEach(od => od.Price = PricePerOrderDetail(od, order.IsMember));
+            order.OrderDetails.ForEach(od => totalPrice += od.Price);
+            totalPrice -= order.PaidAmount;
             return Math.Round(totalPrice, 2);
         }
 
@@ -15,6 +17,7 @@ namespace App.Services
         {
             decimal totalPrice = 0.00M;
             totalPrice += orders.Sum(order => order.Price);
+            totalPrice -= orders.Sum(order => order.PaidAmount);
             return Math.Round(totalPrice, 2);
         }
 
@@ -22,6 +25,7 @@ namespace App.Services
         {
             decimal totalSplitPrice = 0.00M;
             totalSplitPrice += orders.Sum(order => order.SplitPrice);
+            totalSplitPrice -= orders.Sum(order => order.PaidAmount);
             return Math.Round(totalSplitPrice, 2);
         }
 
@@ -29,7 +33,13 @@ namespace App.Services
         {
             decimal totalPrice = 0.00M;
             totalPrice += order.Price + order.SplitPrice;
+            totalPrice -= order.PaidAmount;
             return Math.Round(totalPrice / numberOfCustomers, 2);
+        }
+
+        public decimal PricePerOrderDetail(OrderDetail detail, bool isMember)
+        {
+            return isMember ? detail.Product.MemberPrice : detail.Product.Price;
         }
     }
 }
