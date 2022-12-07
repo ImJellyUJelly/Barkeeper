@@ -292,6 +292,7 @@ public partial class KassaOverzichtForm : Form
 
     private void InitializeProductButtons()
     {
+        pProducts.Controls.Clear();
         int a = 0;
         int b = 0;
         int factor = 0;
@@ -430,11 +431,7 @@ public partial class KassaOverzichtForm : Form
     private void overzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
         var form = new ProductOverzichtForm(_productService);
-        form.Show();
-    }
-
-    private void lbOrderPrice_Click(object sender, EventArgs e)
-    {
-
+        form.ShowDialog();
+        InitializeProductButtons();
     }
 }

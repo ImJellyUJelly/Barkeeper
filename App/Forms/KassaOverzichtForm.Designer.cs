@@ -121,7 +121,6 @@
             this.lbOrderPrice.Size = new System.Drawing.Size(78, 32);
             this.lbOrderPrice.TabIndex = 7;
             this.lbOrderPrice.Text = "€ 0,00";
-            this.lbOrderPrice.Click += new System.EventHandler(this.lbOrderPrice_Click);
             // 
             // btPay
             // 
