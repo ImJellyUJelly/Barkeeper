@@ -14,7 +14,7 @@ public class BarkeeperContext : DbContext
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Revenue> Revenues { get; set; }
 
-    public BarkeeperContext(): base("server=localhost;port=3306;database=Barkeeper_Development;uid=root;password=Password01!")
+    public BarkeeperContext(): base("server=localhost;port=3306;database=Barkeeper_Development;uid=root;password=P4ssw0rd01!")
     {
         Database.SetInitializer(new CreateDatabaseIfNotExists<BarkeeperContext>());
     }

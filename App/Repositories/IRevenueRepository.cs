@@ -6,5 +6,6 @@ namespace App.Repositories
     {
         void AddPayment(Revenue revenue);
         List<Revenue> GetRevenues();
+        List<Revenue> GetRevenuesBetweenDates(DateTime startDate, DateTime endDate);
     }
 }
