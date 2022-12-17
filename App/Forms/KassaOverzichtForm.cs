@@ -426,4 +426,10 @@ public partial class KassaOverzichtForm : Form
         form.ShowDialog();
         InitializeProductButtons();
     }
+
+    private void omzetOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var form = new OmzetOverzichtForm(_revenueService);
+        form.ShowDialog();
+    }
 }

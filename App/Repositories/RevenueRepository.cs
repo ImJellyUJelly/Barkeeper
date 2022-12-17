@@ -21,5 +21,12 @@ namespace App.Repositories
         {
             return _context.Revenues.ToList();
         }
+
+        public List<Revenue> GetRevenuesBetweenDates(DateTime startDate, DateTime endDate)
+        {
+            return _context.Revenues.Where(rev => rev.SaleDate >= startDate)
+                .Where(rev => rev.SaleDate < endDate)
+                .ToList();
+        }
     }
 }
