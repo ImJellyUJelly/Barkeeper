@@ -1,6 +1,5 @@
 ﻿using App.Models;
 using App.Repositories;
-using System;
 
 namespace App.Services;
 
@@ -100,7 +99,7 @@ public class OrderService : IOrderService
             mergedOrder.SplitPrice = _moneyCalculator.SplitPriceForMergedOrder(orderList);
             foreach (var order in orderList)
             {
-                order.Comment += $"Bestelling is samengevoegd in de bestelling van {mergedOrder.Customer.Name} met ID: {mergedOrder.Id}.\n";
+                order.Comment += $"Bestelling is samengevoegd in de bestelling van {mergedOrder.Customer?.Name} met ID: {mergedOrder.Id}.\n";
                 order.IsFinished = true;
                 UpdateOrder(order);
             }

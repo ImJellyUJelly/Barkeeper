@@ -78,15 +78,7 @@ public partial class KassaOverzichtForm : Form
             var item = new ListViewItem();
             item.Tag = detail;
             item.Text = detail.Product.Name;
-            if (_selectedOrder.IsMember)
-            {
-                item.SubItems.Add($"€ {detail.Product.MemberPrice}");
-            }
-            else
-            {
-                item.SubItems.Add($"€ {detail.Product.Price}");
-            }
-
+            item.SubItems.Add($"€ {detail.Price}");
             item.SubItems.Add($"{detail.TimeAdded.ToShortTimeString()} - {detail.TimeAdded.ToShortDateString()}");
             lvProducts.Items.Add(item);
         }

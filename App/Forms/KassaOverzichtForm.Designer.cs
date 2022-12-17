@@ -102,13 +102,14 @@
             // 
             // btDeleteProduct
             // 
+            this.btDeleteProduct.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.btDeleteProduct.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btDeleteProduct.Location = new System.Drawing.Point(6, 546);
             this.btDeleteProduct.Name = "btDeleteProduct";
             this.btDeleteProduct.Size = new System.Drawing.Size(37, 37);
             this.btDeleteProduct.TabIndex = 8;
             this.btDeleteProduct.Text = "-";
-            this.btDeleteProduct.UseVisualStyleBackColor = true;
+            this.btDeleteProduct.UseVisualStyleBackColor = false;
             this.btDeleteProduct.Click += new System.EventHandler(this.btDeleteProduct_Click);
             // 
             // lbOrderPrice
@@ -124,13 +125,14 @@
             // 
             // btPay
             // 
+            this.btPay.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.btPay.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btPay.Location = new System.Drawing.Point(266, 112);
             this.btPay.Name = "btPay";
             this.btPay.Size = new System.Drawing.Size(100, 37);
             this.btPay.TabIndex = 5;
             this.btPay.Text = "Afrekenen";
-            this.btPay.UseVisualStyleBackColor = true;
+            this.btPay.UseVisualStyleBackColor = false;
             this.btPay.Click += new System.EventHandler(this.btPay_Click);
             // 
             // lvProducts
@@ -240,7 +242,7 @@
             // bestellingOverzichtToolStripMenuItem
             // 
             this.bestellingOverzichtToolStripMenuItem.Name = "bestellingOverzichtToolStripMenuItem";
-            this.bestellingOverzichtToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.bestellingOverzichtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bestellingOverzichtToolStripMenuItem.Text = "Overzicht";
             this.bestellingOverzichtToolStripMenuItem.Click += new System.EventHandler(this.bestellingOverzichtToolStripMenuItem_Click);
             // 
@@ -255,7 +257,7 @@
             // TSMICustomers
             // 
             this.TSMICustomers.Name = "TSMICustomers";
-            this.TSMICustomers.Size = new System.Drawing.Size(124, 22);
+            this.TSMICustomers.Size = new System.Drawing.Size(180, 22);
             this.TSMICustomers.Text = "Overzicht";
             this.TSMICustomers.Click += new System.EventHandler(this.TSMICustomers_Click);
             // 
@@ -270,7 +272,7 @@
             // overzichtToolStripMenuItem
             // 
             this.overzichtToolStripMenuItem.Name = "overzichtToolStripMenuItem";
-            this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.overzichtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.overzichtToolStripMenuItem.Text = "Overzicht";
             this.overzichtToolStripMenuItem.Click += new System.EventHandler(this.overzichtToolStripMenuItem_Click);
             // 
@@ -308,13 +310,14 @@
             // 
             // btSelectCustomer
             // 
+            this.btSelectCustomer.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.btSelectCustomer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btSelectCustomer.Location = new System.Drawing.Point(278, 84);
             this.btSelectCustomer.Name = "btSelectCustomer";
             this.btSelectCustomer.Size = new System.Drawing.Size(100, 36);
             this.btSelectCustomer.TabIndex = 15;
             this.btSelectCustomer.Text = "Selecteer";
-            this.btSelectCustomer.UseVisualStyleBackColor = true;
+            this.btSelectCustomer.UseVisualStyleBackColor = false;
             this.btSelectCustomer.Click += new System.EventHandler(this.btSelectCustomer_Click);
             // 
             // pProducts
@@ -328,6 +331,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(1008, 729);
             this.Controls.Add(this.pProducts);
             this.Controls.Add(this.btSelectCustomer);
