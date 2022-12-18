@@ -38,7 +38,15 @@ namespace App.Services
         /// </summary>
         /// <param name="detail">The OrderDetail which needs to calculate price.</param>
         /// <param name="isMember">Is the order from a member.</param>
-        /// <returns></returns>
+        /// <returns>A price per OrderDetail.</returns>
         decimal PricePerOrderDetail(OrderDetail detail, bool isMember);
+
+        /// <summary>
+        /// Pay an Amount for an Order. There may or may not be a remainder that needs to be paid.
+        /// </summary>
+        /// <param name="order">The Order that is being paid.</param>
+        /// <param name="amount">The Amount that is being paid.</param>
+        /// <returns>The remainder that needs to be paid. If this is negative, money must be returned to the Customer.</returns>
+        decimal PayOrder(Order order, decimal amount);
     }
 }

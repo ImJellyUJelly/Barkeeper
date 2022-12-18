@@ -59,15 +59,7 @@ public partial class AfrekenForm : Form
             var item = new ListViewItem();
             item.Tag = detail.Product;
             item.Text = detail.Product.Name;
-            if (_order.IsMember)
-            {
-                item.SubItems.Add($"€ {detail.Product.MemberPrice}");
-            }
-            else
-            {
-                item.SubItems.Add($"€ {detail.Product.Price}");
-            }
-
+            item.SubItems.Add($"€ {detail.Price}");
             item.SubItems.Add($"{detail.TimeAdded.ToShortTimeString()} - {detail.TimeAdded.ToShortDateString()}");
             lvProducts.Items.Add(item);
         }
@@ -112,8 +104,7 @@ public partial class AfrekenForm : Form
 
     private void Pay(decimal amount)
     {
-        decimal remainder = (_order.Price + _order.SplitPrice) - amount;
-
+        decimal remainder = _moneyCalculator.PayOrder(_order, amount);
         Revenue revenue = new Revenue() { Amount = amount, SaleDate = DateTime.Now };
         _revenueService.AddPayment(revenue);
         if (remainder > 0)

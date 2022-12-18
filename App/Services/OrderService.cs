@@ -34,9 +34,7 @@ public class OrderService : IOrderService
 
     public OrderDetail AddProductToOrder(Order order, Product product)
     {
-        var orderDetail = new OrderDetail { Order = order, Product = product };
-        orderDetail.Price = _moneyCalculator.PricePerOrderDetail(orderDetail, order.IsMember);
-        orderDetail.TimeAdded = DateTime.Now;
+        var orderDetail = _orderDetailService.AddOrderDetail(order, product);
         order.OrderDetails.Add(orderDetail);
         order.Price = _moneyCalculator.PricePerOrder(order);
         UpdateOrder(order);
@@ -79,8 +77,7 @@ public class OrderService : IOrderService
         Order mergedOrder = GetOrderByCustomerName(customer.Name);
         if (mergedOrder == null)
         {
-            mergedOrder = new Order() { Customer = customer, OrderDate = DateTime.Now, IsMember = true };
-            mergedOrder = CreateOrder(mergedOrder);
+            mergedOrder = CreateOrder(new Order() { Customer = customer, OrderDate = DateTime.Now, IsMember = true });
         }
         else
         {

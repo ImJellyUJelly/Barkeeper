@@ -47,19 +47,69 @@ namespace Tests.Services
             Assert.AreEqual(expectedResult, result);
         }
 
-        [TestCase("1.00", "1.33")]
+        [TestCase("1.00", "2.00")]
         [TestCase("1.33", "2.66")]
         [TestCase("1.333", "2.67")]
         [TestCase("1.99", "3.98")]
         public void PricePerOrder(decimal price, decimal expectedResult)
         {
             // Arrange
-            var order = new Order() { Price = price };
+            var orderDetails = new List<OrderDetail>
+            {
+                new OrderDetail() { Price = price },
+                new OrderDetail() { Price = price }
+            };
+
+            var order = new Order() { OrderDetails = orderDetails };
 
             var target = new MoneyCalculator();
 
             // Act
             decimal result = target.PricePerOrder(order);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestCase("12.00", "-2.00")]
+        [TestCase("8.00", "2.00")]
+        public void PayOrder_ReturnsRemainder(decimal amount, decimal expectedResult)
+        {
+            // Arrange
+            var order = new Order()
+            {
+                OrderDetails = new List<OrderDetail>
+                {
+                    new OrderDetail { Price = 10.00M },
+                }
+            };
+            var target = new MoneyCalculator();
+
+            // Act
+            var result = target.PayOrder(order, amount);
+
+            // Assert
+            Assert.AreEqual(expectedResult, result);
+        }
+
+        [TestCase("10.00", "1.50", "-0.50")]
+        [TestCase("10.00", "2.00", "0.00")]
+        [TestCase("10.00", "4.00", "2.00")]
+        public void PayOrder_ReturnsRemainder_WithSplitPrice(decimal amount, decimal splitPrice, decimal expectedResult)
+        {
+            // Arrange
+            var order = new Order()
+            {
+                OrderDetails = new List<OrderDetail>
+                {
+                    new OrderDetail { Price = 8.00M },
+                },
+                SplitPrice = splitPrice
+            };
+            var target = new MoneyCalculator();
+
+            // Act
+            var result = target.PayOrder(order, amount);
 
             // Assert
             Assert.AreEqual(expectedResult, result);

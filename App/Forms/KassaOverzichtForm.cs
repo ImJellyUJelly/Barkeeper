@@ -235,6 +235,7 @@ public partial class KassaOverzichtForm : Form
                     var detail = (OrderDetail)item.Tag;
                     detail.Order = order;
                     detail.TimeAdded = DateTime.Now;
+
                     order.OrderDetails.Add(detail);
                 }
 

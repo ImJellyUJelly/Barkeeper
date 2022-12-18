@@ -8,6 +8,7 @@ namespace App.Services
         {
             decimal totalPrice = 0.00M;
             order.OrderDetails.ForEach(od => totalPrice += od.Price);
+            totalPrice += order.SplitPrice;
             totalPrice -= order.PaidAmount;
             return Math.Round(totalPrice, 2);
         }
@@ -39,6 +40,12 @@ namespace App.Services
         public decimal PricePerOrderDetail(OrderDetail detail, bool isMember)
         {
             return isMember ? detail.Product.MemberPrice : detail.Product.Price;
+        }
+
+        public decimal PayOrder(Order order, decimal amount)
+        {
+            decimal remainder = PricePerOrder(order) - amount;
+            return remainder;
         }
     }
 }

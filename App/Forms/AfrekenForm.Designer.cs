@@ -66,9 +66,11 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(10, 9);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(579, 703);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox1.Size = new System.Drawing.Size(507, 527);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -76,27 +78,27 @@
             // 
             this.lbPrice.AutoSize = true;
             this.lbPrice.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbPrice.Location = new System.Drawing.Point(467, 81);
+            this.lbPrice.Location = new System.Drawing.Point(409, 61);
             this.lbPrice.Name = "lbPrice";
-            this.lbPrice.Size = new System.Drawing.Size(85, 32);
+            this.lbPrice.Size = new System.Drawing.Size(70, 25);
             this.lbPrice.TabIndex = 18;
             this.lbPrice.Text = "lbPrice";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(409, 83);
+            this.label5.Location = new System.Drawing.Point(358, 62);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(52, 28);
+            this.label5.Size = new System.Drawing.Size(43, 21);
             this.label5.TabIndex = 17;
             this.label5.Text = "Prijs:";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 269);
+            this.label4.Location = new System.Drawing.Point(5, 202);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(106, 28);
+            this.label4.Size = new System.Drawing.Size(84, 21);
             this.label4.TabIndex = 16;
             this.label4.Text = "Producten:";
             // 
@@ -106,9 +108,10 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
-            this.lvProducts.Location = new System.Drawing.Point(6, 300);
+            this.lvProducts.Location = new System.Drawing.Point(5, 225);
+            this.lvProducts.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lvProducts.Name = "lvProducts";
-            this.lvProducts.Size = new System.Drawing.Size(566, 397);
+            this.lvProducts.Size = new System.Drawing.Size(496, 299);
             this.lvProducts.TabIndex = 15;
             this.lvProducts.UseCompatibleStateImageBehavior = false;
             this.lvProducts.View = System.Windows.Forms.View.Details;
@@ -132,9 +135,10 @@
             // 
             this.cbIsMember.AutoSize = true;
             this.cbIsMember.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cbIsMember.Location = new System.Drawing.Point(6, 82);
+            this.cbIsMember.Location = new System.Drawing.Point(5, 62);
+            this.cbIsMember.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.cbIsMember.Name = "cbIsMember";
-            this.cbIsMember.Size = new System.Drawing.Size(110, 32);
+            this.cbIsMember.Size = new System.Drawing.Size(90, 25);
             this.cbIsMember.TabIndex = 14;
             this.cbIsMember.Text = "Is een lid";
             this.cbIsMember.UseVisualStyleBackColor = true;
@@ -142,45 +146,46 @@
             // 
             // tbComments
             // 
-            this.tbComments.Location = new System.Drawing.Point(6, 148);
+            this.tbComments.Location = new System.Drawing.Point(5, 111);
+            this.tbComments.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tbComments.Multiline = true;
             this.tbComments.Name = "tbComments";
-            this.tbComments.Size = new System.Drawing.Size(566, 78);
+            this.tbComments.Size = new System.Drawing.Size(496, 60);
             this.tbComments.TabIndex = 5;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 117);
+            this.label3.Location = new System.Drawing.Point(5, 88);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(136, 28);
+            this.label3.Size = new System.Drawing.Size(109, 21);
             this.label3.TabIndex = 4;
             this.label3.Text = "Opmerkingen:";
             // 
             // lbOrderDate
             // 
             this.lbOrderDate.AutoSize = true;
-            this.lbOrderDate.Location = new System.Drawing.Point(165, 51);
+            this.lbOrderDate.Location = new System.Drawing.Point(144, 38);
             this.lbOrderDate.Name = "lbOrderDate";
-            this.lbOrderDate.Size = new System.Drawing.Size(121, 28);
+            this.lbOrderDate.Size = new System.Drawing.Size(96, 21);
             this.lbOrderDate.TabIndex = 3;
             this.lbOrderDate.Text = "lbOrderDate";
             // 
             // lbCustomerName
             // 
             this.lbCustomerName.AutoSize = true;
-            this.lbCustomerName.Location = new System.Drawing.Point(165, 23);
+            this.lbCustomerName.Location = new System.Drawing.Point(144, 17);
             this.lbCustomerName.Name = "lbCustomerName";
-            this.lbCustomerName.Size = new System.Drawing.Size(165, 28);
+            this.lbCustomerName.Size = new System.Drawing.Size(133, 21);
             this.lbCustomerName.TabIndex = 2;
             this.lbCustomerName.Text = "lbCustomerName";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 51);
+            this.label2.Location = new System.Drawing.Point(5, 38);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(124, 28);
+            this.label2.Size = new System.Drawing.Size(99, 21);
             this.label2.TabIndex = 1;
             this.label2.Text = "Besteldatum:";
             // 
@@ -188,18 +193,19 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(6, 23);
+            this.label1.Location = new System.Drawing.Point(5, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 28);
+            this.label1.Size = new System.Drawing.Size(87, 21);
             this.label1.TabIndex = 0;
             this.label1.Text = "Klantnaam:";
             // 
             // btFive
             // 
             this.btFive.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btFive.Location = new System.Drawing.Point(873, 12);
+            this.btFive.Location = new System.Drawing.Point(764, 9);
+            this.btFive.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btFive.Name = "btFive";
-            this.btFive.Size = new System.Drawing.Size(267, 107);
+            this.btFive.Size = new System.Drawing.Size(234, 80);
             this.btFive.TabIndex = 1;
             this.btFive.Text = "€ 5,-";
             this.btFive.UseVisualStyleBackColor = true;
@@ -208,9 +214,10 @@
             // btTen
             // 
             this.btTen.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btTen.Location = new System.Drawing.Point(873, 125);
+            this.btTen.Location = new System.Drawing.Point(764, 94);
+            this.btTen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btTen.Name = "btTen";
-            this.btTen.Size = new System.Drawing.Size(267, 107);
+            this.btTen.Size = new System.Drawing.Size(234, 80);
             this.btTen.TabIndex = 2;
             this.btTen.Text = "€ 10,-";
             this.btTen.UseVisualStyleBackColor = true;
@@ -219,9 +226,10 @@
             // btTwenty
             // 
             this.btTwenty.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btTwenty.Location = new System.Drawing.Point(873, 238);
+            this.btTwenty.Location = new System.Drawing.Point(764, 178);
+            this.btTwenty.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btTwenty.Name = "btTwenty";
-            this.btTwenty.Size = new System.Drawing.Size(267, 107);
+            this.btTwenty.Size = new System.Drawing.Size(234, 80);
             this.btTwenty.TabIndex = 3;
             this.btTwenty.Text = "€ 20,-";
             this.btTwenty.UseVisualStyleBackColor = true;
@@ -230,9 +238,10 @@
             // btFifty
             // 
             this.btFifty.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btFifty.Location = new System.Drawing.Point(873, 351);
+            this.btFifty.Location = new System.Drawing.Point(762, 262);
+            this.btFifty.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btFifty.Name = "btFifty";
-            this.btFifty.Size = new System.Drawing.Size(267, 107);
+            this.btFifty.Size = new System.Drawing.Size(234, 80);
             this.btFifty.TabIndex = 4;
             this.btFifty.Text = "€ 50,-";
             this.btFifty.UseVisualStyleBackColor = true;
@@ -241,9 +250,10 @@
             // btCash
             // 
             this.btCash.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btCash.Location = new System.Drawing.Point(873, 464);
+            this.btCash.Location = new System.Drawing.Point(764, 348);
+            this.btCash.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btCash.Name = "btCash";
-            this.btCash.Size = new System.Drawing.Size(267, 107);
+            this.btCash.Size = new System.Drawing.Size(234, 80);
             this.btCash.TabIndex = 5;
             this.btCash.Text = "Contant";
             this.btCash.UseVisualStyleBackColor = true;
@@ -252,9 +262,10 @@
             // btPin
             // 
             this.btPin.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btPin.Location = new System.Drawing.Point(873, 577);
+            this.btPin.Location = new System.Drawing.Point(764, 433);
+            this.btPin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btPin.Name = "btPin";
-            this.btPin.Size = new System.Drawing.Size(267, 107);
+            this.btPin.Size = new System.Drawing.Size(234, 80);
             this.btPin.TabIndex = 6;
             this.btPin.Text = "Pinnen";
             this.btPin.UseVisualStyleBackColor = true;
@@ -262,9 +273,9 @@
             // 
             // AfrekenForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1152, 727);
+            this.ClientSize = new System.Drawing.Size(1008, 545);
             this.Controls.Add(this.btPin);
             this.Controls.Add(this.btCash);
             this.Controls.Add(this.btFifty);
@@ -272,6 +283,7 @@
             this.Controls.Add(this.btTen);
             this.Controls.Add(this.btFive);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "AfrekenForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bestelling afrekenen";
