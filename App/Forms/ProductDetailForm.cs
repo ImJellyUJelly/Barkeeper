@@ -50,6 +50,13 @@ namespace App.Forms
                 MessageBox.Show("Vul een prijs en ledenprijs groter dan € 0,00 in.");
             }
 
+            DialogResult dialogResult = MessageBox.Show($"Let op: het wijzigen van de prijs heeft invloed op de openstaande bestellingen! " +
+                $"Wilt u doorgaan?", "Product wijzigen", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.No)
+            {
+                return;
+            }
+
             if (_product != null)
             {
                 _product.Name = name;

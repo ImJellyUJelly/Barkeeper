@@ -31,8 +31,7 @@ namespace App.Forms
             cbIsFinished.Enabled = _canEdit;
             cbIsPaid.Enabled = _canEdit;
 
-
-            tbName.Text = Order.Customer.Name;
+            tbName.Text = Order.Customer?.Name;
             lbOrderDate.Text = $"{Order.OrderDate.ToShortDateString()} - {Order.OrderDate.ToShortTimeString()}";
             cbIsMember.Checked = Order.IsMember;
             cbIsFinished.Checked = Order.IsFinished;
@@ -75,6 +74,7 @@ namespace App.Forms
         private void CalculatePrice()
         {
             lbPrice.Text = $"€ {Calculator.PricePerOrder(Order)}";
+            lbPaidAmount.Text = $"€ {Order.PaidAmount}";
         }
 
         private void cbIsMember_Click(object sender, EventArgs e)

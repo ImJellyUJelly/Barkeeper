@@ -46,6 +46,9 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btSave = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbPaidAmount = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -128,6 +131,9 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.lbPaidAmount);
+            this.groupBox4.Controls.Add(this.label2);
+            this.groupBox4.Controls.Add(this.label1);
             this.groupBox4.Controls.Add(this.lbPrice);
             this.groupBox4.Controls.Add(this.cbIsPaid);
             this.groupBox4.Controls.Add(this.cbIsFinished);
@@ -233,6 +239,33 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(178, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 21);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Prijs:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(157, 59);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(64, 21);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Betaald:";
+            // 
+            // lbPaidAmount
+            // 
+            this.lbPaidAmount.AutoSize = true;
+            this.lbPaidAmount.Location = new System.Drawing.Point(227, 59);
+            this.lbPaidAmount.Name = "lbPaidAmount";
+            this.lbPaidAmount.Size = new System.Drawing.Size(52, 21);
+            this.lbPaidAmount.TabIndex = 5;
+            this.lbPaidAmount.Text = "label1";
+            // 
             // BestellingInformatieForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -281,5 +314,8 @@
         private Button btSave;
         private Button btClose;
         private Label lbPrice;
+        private Label lbPaidAmount;
+        private Label label2;
+        private Label label1;
     }
 }

@@ -55,6 +55,7 @@ namespace Tests.Services
             var customerRepositoryMock = new Mock<ICustomerRepository>();
             customerRepositoryMock.Setup(mock => mock.FindCustomer(customerName))
                 .Returns(() => null);
+            customerRepositoryMock.Setup(mock => mock.AddCustomer(It.IsAny<Customer>())).Returns(new Customer() { Name = customerName });
 
             var target = new CustomerService(customerRepositoryMock.Object);
 

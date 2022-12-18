@@ -107,6 +107,7 @@
             // 
             // btDeleteProduct
             // 
+            this.btDeleteProduct.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.btDeleteProduct.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btDeleteProduct.Location = new System.Drawing.Point(7, 728);
             this.btDeleteProduct.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -114,7 +115,7 @@
             this.btDeleteProduct.Size = new System.Drawing.Size(42, 49);
             this.btDeleteProduct.TabIndex = 8;
             this.btDeleteProduct.Text = "-";
-            this.btDeleteProduct.UseVisualStyleBackColor = true;
+            this.btDeleteProduct.UseVisualStyleBackColor = false;
             this.btDeleteProduct.Click += new System.EventHandler(this.btDeleteProduct_Click);
             // 
             // lbOrderPrice
@@ -130,6 +131,7 @@
             // 
             // btPay
             // 
+            this.btPay.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.btPay.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btPay.Location = new System.Drawing.Point(304, 149);
             this.btPay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -137,7 +139,7 @@
             this.btPay.Size = new System.Drawing.Size(114, 49);
             this.btPay.TabIndex = 5;
             this.btPay.Text = "Afrekenen";
-            this.btPay.UseVisualStyleBackColor = true;
+            this.btPay.UseVisualStyleBackColor = false;
             this.btPay.Click += new System.EventHandler(this.btPay_Click);
             // 
             // lvProducts
@@ -335,6 +337,7 @@
             // 
             // btSelectCustomer
             // 
+            this.btSelectCustomer.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.btSelectCustomer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btSelectCustomer.Location = new System.Drawing.Point(318, 112);
             this.btSelectCustomer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -342,7 +345,7 @@
             this.btSelectCustomer.Size = new System.Drawing.Size(114, 48);
             this.btSelectCustomer.TabIndex = 15;
             this.btSelectCustomer.Text = "Selecteer";
-            this.btSelectCustomer.UseVisualStyleBackColor = true;
+            this.btSelectCustomer.UseVisualStyleBackColor = false;
             this.btSelectCustomer.Click += new System.EventHandler(this.btSelectCustomer_Click);
             // 
             // pProducts

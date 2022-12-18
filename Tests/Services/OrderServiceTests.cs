@@ -24,7 +24,8 @@ namespace Tests.Services
             // Arrange
             var orderRepositoryMock = new Mock<IOrderRepository>();
             orderRepositoryMock.Setup(mock => mock.GetOrders()).Returns(new List<Order>());
-            var target = new OrderService(orderRepositoryMock.Object, null, null, null);
+            var customerServiceMock = new Mock<ICustomerService>();
+            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, null);
 
             // Act
             var result = target.GetOrders();
@@ -41,7 +42,8 @@ namespace Tests.Services
             var orderRepositoryMock = new Mock<IOrderRepository>();
             orderRepositoryMock.Setup(mock => mock.GetOrders())
                 .Returns(new List<Order> { new Order { Customer = new Customer { Name = "Customer 1" } } });
-            var target = new OrderService(orderRepositoryMock.Object, null, null, null);
+            var customerServiceMock = new Mock<ICustomerService>();
+            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, null);
 
             // Act
             var result = target.GetOrders();
@@ -57,7 +59,8 @@ namespace Tests.Services
             // Arrange
             var orderRepositoryMock = new Mock<IOrderRepository>();
             orderRepositoryMock.Setup(mock => mock.GetOrders()).Returns(new List<Order>());
-            var target = new OrderService(orderRepositoryMock.Object, null, null, null);
+            var customerServiceMock = new Mock<ICustomerService>();
+            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, null);
 
             // Act
             var result = target.GetUnFinishedAndUnPaidOrders();
@@ -81,7 +84,8 @@ namespace Tests.Services
 
             var orderRepositoryMock = new Mock<IOrderRepository>();
             orderRepositoryMock.Setup(mock => mock.GetOrders()).Returns(orderList);
-            var target = new OrderService(orderRepositoryMock.Object, null, null, null);
+            var customerServiceMock = new Mock<ICustomerService>();
+            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, null);
 
             // Act
             var result = target.GetUnFinishedAndUnPaidOrders();
@@ -97,7 +101,8 @@ namespace Tests.Services
             var customer = new Customer { Name = "Customer 1" };
             var orderRepositoryMock = new Mock<IOrderRepository>();
             orderRepositoryMock.Setup(mock => mock.GetOrderByName(It.IsAny<string>())).Returns(new Order { Customer = customer });
-            var target = new OrderService(orderRepositoryMock.Object, null, null, null);
+            var customerServiceMock = new Mock<ICustomerService>();
+            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, null);
 
             // Act
             Order result = target.GetOrderByCustomerName(customer.Name);
@@ -111,17 +116,19 @@ namespace Tests.Services
         public void CreateOrder_ReturnsTheOrderWithCalculatedPrice()
         {
             // Arrange
-            var order = new Order()
-            {
+            var order = new Order() { 
                 OrderDetails = new List<OrderDetail>
                 {
-                    new OrderDetail { Product = new Product { Price = 1.20M } },
-                    new OrderDetail { Product = new Product { Price = 1.20M } }
+                    new OrderDetail { Price = 1.20M },
+                    new OrderDetail { Price = 1.20M }
                 }
             };
+
             var orderRepositoryMock = new Mock<IOrderRepository>();
             orderRepositoryMock.Setup(mock => mock.CreateOrder(It.IsAny<Order>())).Returns(order);
-            var target = new OrderService(orderRepositoryMock.Object, null, null, _moneyCalculator);
+            var customerServiceMock = new Mock<ICustomerService>();
+
+            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, _moneyCalculator);
 
             // Act
             Order result = target.CreateOrder(order);
