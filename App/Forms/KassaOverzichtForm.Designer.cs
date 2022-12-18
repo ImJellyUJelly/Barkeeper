@@ -107,7 +107,7 @@
             // 
             // btDeleteProduct
             // 
-            this.btDeleteProduct.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.btDeleteProduct.BackColor = System.Drawing.SystemColors.Control;
             this.btDeleteProduct.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btDeleteProduct.Location = new System.Drawing.Point(7, 728);
             this.btDeleteProduct.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -131,7 +131,7 @@
             // 
             // btPay
             // 
-            this.btPay.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.btPay.BackColor = System.Drawing.SystemColors.Control;
             this.btPay.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btPay.Location = new System.Drawing.Point(304, 149);
             this.btPay.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -298,7 +298,7 @@
             // 
             this.omzetOverzichtToolStripMenuItem.Enabled = false;
             this.omzetOverzichtToolStripMenuItem.Name = "omzetOverzichtToolStripMenuItem";
-            this.omzetOverzichtToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.omzetOverzichtToolStripMenuItem.Size = new System.Drawing.Size(200, 26);
             this.omzetOverzichtToolStripMenuItem.Text = "Omzet overzicht";
             this.omzetOverzichtToolStripMenuItem.Click += new System.EventHandler(this.omzetOverzichtToolStripMenuItem_Click);
             // 
@@ -337,7 +337,7 @@
             // 
             // btSelectCustomer
             // 
-            this.btSelectCustomer.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.btSelectCustomer.BackColor = System.Drawing.SystemColors.Control;
             this.btSelectCustomer.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btSelectCustomer.Location = new System.Drawing.Point(318, 112);
             this.btSelectCustomer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);

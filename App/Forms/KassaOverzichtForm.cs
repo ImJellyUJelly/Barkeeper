@@ -114,26 +114,23 @@ public partial class KassaOverzichtForm : Form
             return;
         }
 
-        if (_selectedOrder == null)
-        {
-            OrderDetail detail = new OrderDetail() { Order = _selectedOrder, Product = product };
-            detail.Price = _moneyCalculator.PricePerOrderDetail(detail, false);
-            var item = new ListViewItem();
-            item.Tag = detail;
-            item.Text = product.Name;
-            item.SubItems.Add($"€ {product.Price}");
-            item.SubItems.Add($"{DateTime.Now.ToShortDateString()} - {DateTime.Now.ToShortTimeString()}");
-            lvProducts.Items.Add(item);
-            CalculateTotalPrice(null);
-            return;
-        }
-        else
+        if (_selectedOrder != null)
         {
             _orderService.AddProductToOrder(_selectedOrder, product);
+            ToggleOrderInfo();
+            RefreshProductsInOrder();
+            return;
         }
 
-        ToggleOrderInfo();
-        RefreshProductsInOrder();
+        OrderDetail detail = new OrderDetail() { Order = _selectedOrder, Product = product };
+        detail.Price = _moneyCalculator.PricePerOrderDetail(detail, false);
+        var item = new ListViewItem();
+        item.Tag = detail;
+        item.Text = product.Name;
+        item.SubItems.Add($"€ {product.Price}");
+        item.SubItems.Add($"{DateTime.Now.ToShortDateString()} - {DateTime.Now.ToShortTimeString()}");
+        lvProducts.Items.Add(item);
+        CalculateTotalPrice(null);
     }
 
     private void ToggleOrderInfo()
