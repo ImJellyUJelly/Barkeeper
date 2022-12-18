@@ -72,7 +72,8 @@ public class CustomerService : ICustomerService
         }
         else
         {
-            _customerRepository.UpdateCustomer(foundCustomer);
+            customer.Id = foundCustomer.Id;
+            _customerRepository.UpdateCustomer(customer);
             CustomerEdited?.Invoke(this, customer);
         }
     }

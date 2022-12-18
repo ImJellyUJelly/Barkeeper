@@ -24,6 +24,7 @@ namespace App.Forms
 
         private void UpdateProductsList()
         {
+            lvProducts.Items.Clear();
             foreach (var product in _products)
             {
                 var item = new ListViewItem();
@@ -48,7 +49,6 @@ namespace App.Forms
             var form = new ProductDetailForm(_productService, product);
             form.ShowDialog();
 
-            lvProducts.Items.Clear();
             _products = null;
             InitialLoad();
         }

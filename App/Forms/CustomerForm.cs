@@ -13,13 +13,12 @@ public partial class CustomerForm : Form
         _customerService = customerService;
         InitializeComponent();
         RefreshCustomerList();
-
-        btEdit.Enabled = false;
-        btDelete.Enabled = false;
     }
 
     private void RefreshCustomerList()
     {
+        btEdit.Enabled = false;
+        btDelete.Enabled = false;
         lvCustomers.Items.Clear();
         foreach (Customer customer in _customerService.GetCustomers())
         {

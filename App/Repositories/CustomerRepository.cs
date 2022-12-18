@@ -37,6 +37,13 @@ public class CustomerRepository : ICustomerRepository
 
     public Customer UpdateCustomer(Customer customer)
     {
+        var foundCustomer = _context.Customers.FirstOrDefault(cust => cust.Id == customer.Id);
+        if (foundCustomer != null)
+        {
+            foundCustomer.Name = customer.Name;
+            foundCustomer.IsMember = customer.IsMember;
+        }
+
         _context.SaveChanges();
         return customer;
     }

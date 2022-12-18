@@ -32,6 +32,7 @@ public partial class KlantDetailForm : Form
 
         Customer = new Customer { Name = tbName.Text, IsMember = cbIsMember.Checked };
         _customerService.UpdateOrCreateCustomer(Customer);
+        Close();
     }
 
     private void btCancel_Click(object sender, EventArgs e)
