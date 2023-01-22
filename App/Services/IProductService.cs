@@ -7,6 +7,6 @@ public interface IProductService
     List<Product> GetProducts();
     Product GetProductById(int productId);
     Product GetProductByName(string productName);
-    void AddProduct(Product product);
-    void UpdateProduct(Product product);
+    void AddProduct(string name, decimal price, decimal memberPrice, ProductCategory category);
+    void UpdateProduct(Product product, string name, decimal price, decimal memberPrice, ProductCategory category);
 }

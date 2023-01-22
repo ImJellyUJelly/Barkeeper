@@ -12,8 +12,15 @@ public class ProductService : IProductService
         _productRepository = productRepository;
     }
 
-    public void AddProduct(Product product)
+    public void AddProduct(string name, decimal price, decimal memberPrice, ProductCategory category)
     {
+        var product = new Product()
+        {
+            Name = name,
+            Price = price,
+            MemberPrice = memberPrice,
+            Category = category
+        };
         _productRepository.AddProduct(product);
     }
 
@@ -32,8 +39,13 @@ public class ProductService : IProductService
         return _productRepository.GetProducts();
     }
 
-    public void UpdateProduct(Product product)
+    public void UpdateProduct(Product product, string name, decimal price, decimal memberPrice, ProductCategory category)
     {
+        product.Name = name;
+        product.Price = price;
+        product.MemberPrice = memberPrice;
+        product.Category = category;
+
         _productRepository.UpdateProduct(product);
     }
 }

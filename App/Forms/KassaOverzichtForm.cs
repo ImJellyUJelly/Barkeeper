@@ -363,8 +363,7 @@ public partial class KassaOverzichtForm : Form
         bool isMember = cbIsMember.Checked;
         if (_selectedOrder == null) { return; }
 
-        _selectedOrder.IsMember = isMember;
-        _orderService.UpdateOrder(_selectedOrder);
+        _orderService.UpdateOrder(_selectedOrder, isMember);
         RefreshProductsInOrder();
     }
 

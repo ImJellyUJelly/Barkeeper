@@ -68,7 +68,11 @@ namespace App.Forms
 
         private void btSave_Click(object sender, EventArgs e)
         {
-            OrderService.UpdateOrder(Order);
+            Order.IsFinished = cbIsFinished.Checked;
+            Order.IsPaid = cbIsPaid.Checked;
+            Order.Comment = tbComment.Text == "" ? null : tbComment.Text;
+            OrderService.UpdateOrder(Order, Order.IsMember);
+            Close();
         }
 
         private void CalculatePrice()

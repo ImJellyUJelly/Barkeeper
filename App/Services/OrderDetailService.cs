@@ -22,6 +22,14 @@ public class OrderDetailService : IOrderDetailService
         return orderDetail;
     }
 
+    public void UpdateOrderDetails(Order order)
+    {
+        foreach(var orderDetail in order.OrderDetails) 
+        { 
+            orderDetail.Price = _moneyCalculator.PricePerOrderDetail(orderDetail, order.IsMember);
+        }
+    }
+
     public void RemoveOrderDetail(OrderDetail orderDetail)
     {
         _context.OrderDetails.Remove(orderDetail);

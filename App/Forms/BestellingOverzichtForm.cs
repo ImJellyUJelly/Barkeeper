@@ -129,7 +129,19 @@ public partial class BestellingOverzichtForm : Form
 
     private void btEditOrder_Click(object sender, EventArgs e)
     {
-        Order order = (Order)lvOrders.SelectedItems[0].Tag;
+        OpenOrderDetailsForm();
+    }
+
+    private void lvOrders_DoubleClick(object sender, EventArgs e)
+    {
+        OpenOrderDetailsForm();
+    }
+
+    private void OpenOrderDetailsForm()
+    {
+        if (lvOrders.SelectedItems.Count <= 0) { return; }
+
+        Order order = (Order) lvOrders.SelectedItems[0].Tag;
         if (order == null) { return; }
 
         bool canEdit = !order.IsFinished;

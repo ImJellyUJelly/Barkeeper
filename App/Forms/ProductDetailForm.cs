@@ -40,43 +40,33 @@ namespace App.Forms
             decimal memberPrice = nudLedenPrice.Value;
             ProductCategory category = (ProductCategory)cbCategory.SelectedItem;
 
-            if(tbName.Text == "" || tbName.Text == null)
+            if (tbName.Text == "" || tbName.Text == null)
             {
                 MessageBox.Show("Vul een geldige naam in.");
+                return;
             }
 
-            if(nudPrice.Value < 0.00M || nudLedenPrice.Value < 0.00M)
+            if (nudPrice.Value < 0.00M || nudLedenPrice.Value < 0.00M)
             {
                 MessageBox.Show("Vul een prijs en ledenprijs groter dan € 0,00 in.");
-            }
-
-            DialogResult dialogResult = MessageBox.Show($"Let op: het wijzigen van de prijs heeft invloed op de openstaande bestellingen! " +
-                $"Wilt u doorgaan?", "Product wijzigen", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.No)
-            {
                 return;
             }
 
             if (_product != null)
             {
-                _product.Name = name;
-                _product.Price = price;
-                _product.MemberPrice = memberPrice;
-                _product.Category = category;
+                DialogResult dialogResult = MessageBox.Show($"Let op: het wijzigen van de prijs heeft invloed op de openstaande bestellingen! " +
+                    $"Wilt u doorgaan?", "Product wijzigen", MessageBoxButtons.YesNo);
 
-                _productService.UpdateProduct(_product);
+                if (dialogResult == DialogResult.No)
+                {
+                    return;
+                }
+
+                _productService.UpdateProduct(_product, name, price, memberPrice, category);
             }
             else
             {
-                _product = new Product()
-                {
-                    Name = name,
-                    Price = price,
-                    MemberPrice = memberPrice,
-                    Category = category
-                };
-
-                _productService.AddProduct(_product);
+                _productService.AddProduct(name, price, memberPrice, category);
             }
 
             Close();

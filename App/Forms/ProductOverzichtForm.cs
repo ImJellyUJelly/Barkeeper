@@ -45,8 +45,27 @@ namespace App.Forms
                 return;
             }
 
-            var product = (Product)lvProducts.SelectedItems[0].Tag;
-            var form = new ProductDetailForm(_productService, product);
+            OpenProductDetailsForm(false);
+        }
+
+        private void btNewProduct_Click(object sender, EventArgs e)
+        {
+            OpenProductDetailsForm(true);
+        }
+
+        private void OpenProductDetailsForm(bool newProduct)
+        {
+            ProductDetailForm form;
+            if (newProduct)
+            {
+                form = new ProductDetailForm(_productService, null);
+            }
+            else
+            {
+                var product = (Product)lvProducts.SelectedItems[0].Tag;
+                form = new ProductDetailForm(_productService, product);
+            }
+
             form.ShowDialog();
 
             _products = null;

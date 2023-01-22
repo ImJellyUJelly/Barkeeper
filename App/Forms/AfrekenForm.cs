@@ -8,8 +8,7 @@ public partial class AfrekenForm : Form
     private readonly IOrderService _orderService;
     private readonly IMoneyCalculator _moneyCalculator;
     private readonly IRevenueService _revenueService;
-
-    private Order _order;
+    private readonly Order _order;
 
     public AfrekenForm(IOrderService orderService, IMoneyCalculator moneyCalculator, IRevenueService revenueService, Order order)
     {
@@ -46,7 +45,7 @@ public partial class AfrekenForm : Form
         }
 
         _order.Price = _moneyCalculator.PricePerOrder(_order);
-        _orderService.UpdateOrder(_order);
+        _orderService.UpdateOrder(_order, _order.IsMember);
         EditPriceLabel(_order);
         LoadProducts();
     }
@@ -89,40 +88,54 @@ public partial class AfrekenForm : Form
     {
         var form = new CashForm();
         form.ShowDialog();
+
         if(form.IsClosed)
         {
             return;
         }
 
         Pay(form.Payment);
+        Close();
     }
 
     private void btPin_Click(object sender, EventArgs e)
     {
-        MessageBox.Show("Not implemented");
+        var form = new PinForm(_order.Price);
+        form.ShowDialog();
+
+        if (form.IsClosed)
+        {
+            return;
+        }
+
+        Pay(form.Payment);
+        Close();
     }
 
     private void Pay(decimal amount)
     {
         decimal remainder = _moneyCalculator.PayOrder(_order, amount);
         Revenue revenue = new Revenue() { Amount = amount, SaleDate = DateTime.Now };
-        _revenueService.AddPayment(revenue);
         if (remainder > 0)
         {
             _order.PaidAmount += amount;
             _order.Price = _moneyCalculator.PricePerOrder(_order);
-            _orderService.UpdateOrder(_order);
+            _orderService.UpdateOrder(_order, _order.IsMember);
             EditPriceLabel(_order);
+            _revenueService.AddPayment(revenue);
             return;
         }
 
         if (remainder < 0)
         {
+            amount -= (0 - remainder);
+            revenue.Amount = amount;
             var form = new TeruggaveForm(remainder);
             form.ShowDialog();
         }
 
         _orderService.PayOrder(_order, amount);
+        _revenueService.AddPayment(revenue);
         Close();
     }
 }

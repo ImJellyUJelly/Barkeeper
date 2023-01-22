@@ -63,6 +63,7 @@
             this.lvOrders.UseCompatibleStateImageBehavior = false;
             this.lvOrders.View = System.Windows.Forms.View.Details;
             this.lvOrders.SelectedIndexChanged += new System.EventHandler(this.lvOrders_SelectedIndexChanged);
+            this.lvOrders.DoubleClick += new System.EventHandler(this.lvOrders_DoubleClick);
             this.lvOrders.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lvOrders_KeyDown);
             // 
             // chID
