@@ -8,7 +8,7 @@ public class OrderRepository : IOrderRepository
 {
     private readonly BarkeeperContext _dbContext;
 
-    public OrderRepository(BarkeeperContext dbContext, IProductRepository productRepository)
+    public OrderRepository(BarkeeperContext dbContext)
     {
         _dbContext = dbContext;
     }

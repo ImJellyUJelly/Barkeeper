@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial_Database : DbMigration
+    public partial class Initialize_Database : DbMigration
     {
         public override void Up()
         {
@@ -12,7 +12,8 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(unicode: false),
+                        Name = c.String(),
+                        IsMember = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -21,7 +22,8 @@
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
-                        TimeAdded = c.DateTime(nullable: false, precision: 0),
+                        TimeAdded = c.DateTime(nullable: false),
+                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Order_Id = c.Long(nullable: false),
                         Product_Id = c.Long(nullable: false),
                     })
@@ -36,13 +38,14 @@
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
-                        OrderDate = c.DateTime(nullable: false, precision: 0),
+                        OrderDate = c.DateTime(nullable: false),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         SplitPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
                         IsMember = c.Boolean(nullable: false),
                         IsPaid = c.Boolean(nullable: false),
                         IsFinished = c.Boolean(nullable: false),
-                        Comment = c.String(unicode: false),
+                        Comment = c.String(),
+                        PaidAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Customer_Id = c.Int(),
                         ParentOrder_Id = c.Long(),
                     })
@@ -57,10 +60,20 @@
                 c => new
                     {
                         Id = c.Long(nullable: false, identity: true),
-                        Name = c.String(unicode: false),
+                        Name = c.String(),
                         MemberPrice = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Category = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Revenues",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Amount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        SaleDate = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -76,6 +89,7 @@
             DropIndex("dbo.Orders", new[] { "Customer_Id" });
             DropIndex("dbo.OrderDetails", new[] { "Product_Id" });
             DropIndex("dbo.OrderDetails", new[] { "Order_Id" });
+            DropTable("dbo.Revenues");
             DropTable("dbo.Products");
             DropTable("dbo.Orders");
             DropTable("dbo.OrderDetails");

@@ -7,13 +7,13 @@ namespace App.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class Add_Price_To_OrderDetail : IMigrationMetadata
+    public sealed partial class Initialize_Database : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Add_Price_To_OrderDetail));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initialize_Database));
         
         string IMigrationMetadata.Id
         {
-            get { return "202208011911008_Add_Price_To_OrderDetail"; }
+            get { return "202301232054339_Initialize_Database"; }
         }
         
         string IMigrationMetadata.Source

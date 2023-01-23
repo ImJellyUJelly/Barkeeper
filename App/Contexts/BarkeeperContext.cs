@@ -2,19 +2,27 @@
 using MySql.Data.EntityFramework;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.SqlServer;
 
 namespace App.Contexts;
 
-[DbConfigurationType(typeof(MySqlEFConfiguration))]
+//[DbConfigurationType(typeof(MySqlEFConfiguration))]
+[DbConfigurationType(typeof(Configuration))]
 public class BarkeeperContext : DbContext
 {
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<OrderDetail> OrderDetails { get; set; }
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Customer> Customers { get; set; }
-    public DbSet<Revenue> Revenues { get; set; }
+    public DbSet<Order>? Orders { get; set; }
+    public DbSet<OrderDetail>? OrderDetails { get; set; }
+    public DbSet<Product>? Products { get; set; }
+    public DbSet<Customer>? Customers { get; set; }
+    public DbSet<Revenue>? Revenues { get; set; }
 
-    public BarkeeperContext(): base("server=localhost;port=3306;database=Barkeeper_Development;uid=root;password=Password01!")
+    //public BarkeeperContext() : base("Barkeeper_Development_MySql")
+    //{
+    //    Database.SetInitializer(new CreateDatabaseIfNotExists<BarkeeperContext>());
+    //}
+
+    public BarkeeperContext() : base(@";Server=localhost\SQLSERVER;Database=Barkeeper_Development;MultipleActiveResultSets=true;Integrated Security=true;Trusted_Connection=True;")
     {
         Database.SetInitializer(new CreateDatabaseIfNotExists<BarkeeperContext>());
     }
@@ -36,5 +44,14 @@ public class BarkeeperContext : DbContext
 
         modelBuilder.Entity<Customer>().HasKey(customer => customer.Id);
         modelBuilder.Entity<Customer>().Property(customer => customer.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+    }
+}
+
+public class Configuration : DbConfiguration
+{
+    public Configuration()
+    {
+        SetExecutionStrategy("System.Data.SqlClient", () => new SqlAzureExecutionStrategy(), "Barkeeper");
+        SetDefaultConnectionFactory(new SqlConnectionFactory());
     }
 }
