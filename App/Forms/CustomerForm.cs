@@ -62,7 +62,7 @@ public partial class CustomerForm : Form
     private void btAdd_Click(object sender, EventArgs e)
     {
         KlantDetailForm form = new KlantDetailForm(_customerService, null);
-        form.Show();
+        form.ShowDialog();
         RefreshCustomerList();
     }
 
