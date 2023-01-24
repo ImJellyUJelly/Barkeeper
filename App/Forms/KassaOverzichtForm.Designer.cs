@@ -289,9 +289,8 @@
             // 
             // omzetOverzichtToolStripMenuItem
             // 
-            this.omzetOverzichtToolStripMenuItem.Enabled = false;
             this.omzetOverzichtToolStripMenuItem.Name = "omzetOverzichtToolStripMenuItem";
-            this.omzetOverzichtToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.omzetOverzichtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.omzetOverzichtToolStripMenuItem.Text = "Omzet overzicht";
             this.omzetOverzichtToolStripMenuItem.Click += new System.EventHandler(this.omzetOverzichtToolStripMenuItem_Click);
             // 

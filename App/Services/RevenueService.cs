@@ -27,7 +27,14 @@ namespace App.Services
 
         public List<Revenue> GetRevenuesBetweenDates(DateTime startDate, DateTime endDate)
         {
-            return _revenueRepository.GetRevenuesBetweenDates(startDate, endDate);
+            try
+            {
+                return _revenueRepository.GetRevenuesBetweenDates(startDate, endDate);
+            }
+            catch (Exception)
+            {
+                return new List<Revenue>();
+            }
         }
 
         public void ExportRevenues(List<Revenue> revenues)
@@ -61,6 +68,43 @@ namespace App.Services
                 workbook.SaveAs(excelStream);
                 excelStream.Dispose();
             }
+        }
+
+
+        public decimal GetRevenueBetweenDates(DateTime startDate, DateTime endDate)
+        {
+            return _revenueRepository.GetRevenueBetweenDates(startDate, endDate);
+        }
+
+        public List<Order> GetPaymentsByTheBoard()
+        {
+            return new List<Order>();
+        }
+
+        public List<Revenue> GetRevenuesForFileExport()
+        {
+            //var startDate = new DateTime(DateTime.Now.Year, 1, 1);
+            //var endDate = new DateTime(DateTime.Now.Year + 1, 1, 1);
+
+            //try
+            //{
+            //    return _revenueRepository.GetRevenueFileExport(startDate, endDate);
+            //}
+            //catch (Exception)
+            //{
+            //    return new List<Revenue>();
+            //}
+            return new List<Revenue>();
+        }
+
+        public void InsertSales(List<OrderDetail> orderDetails)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Revenue> GetSalesBetweenDates(DateTime startDate, DateTime endDate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

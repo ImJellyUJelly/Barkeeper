@@ -17,6 +17,21 @@ namespace App.Repositories
             _context.SaveChanges();
         }
 
+        public decimal GetRevenueBetweenDates(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                return _context.Revenues
+                    .Where(revenue => revenue.SaleDate >= startDate)
+                    .Where(revnue => revnue.SaleDate < endDate)
+                    .Sum(revenue => revenue.Amount);
+            }
+            catch (Exception)
+            {
+                return 0M;
+            }
+        }
+
         public List<Revenue> GetRevenues()
         {
             return _context.Revenues.ToList();
