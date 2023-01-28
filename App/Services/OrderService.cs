@@ -9,14 +9,17 @@ public class OrderService : IOrderService
     private readonly ICustomerService _customerService;
     private readonly IOrderDetailService _orderDetailService;
     private readonly IMoneyCalculator _moneyCalculator;
+    private readonly IRevenueService _revenueService;
 
     public OrderService(IOrderRepository orderRepository, ICustomerService customerService,
-        IOrderDetailService orderDetailService, IMoneyCalculator moneyCalculator)
+        IOrderDetailService orderDetailService, IMoneyCalculator moneyCalculator,
+        IRevenueService revenueService)
     {
         _orderRepository = orderRepository;
         _customerService = customerService;
         _orderDetailService = orderDetailService;
         _moneyCalculator = moneyCalculator;
+        _revenueService = revenueService;
 
         _customerService.CustomerDeleted += OnCustomerDeleted;
     }
@@ -26,7 +29,7 @@ public class OrderService : IOrderService
         var orders = GetAllOrderByCustomerName(customerName);
         if (orders == null) return;
 
-        foreach(var order in orders)
+        foreach (var order in orders)
         {
             order.Customer = null;
         }
@@ -111,10 +114,10 @@ public class OrderService : IOrderService
             Order newOrder = GetOrderByCustomerName(item.Key);
             if (newOrder == null)
             {
-                newOrder = new Order() 
-                { 
-                    OrderDate = DateTime.Now, 
-                    Customer = _customerService.FindOrCreateCustomer(item.Key), 
+                newOrder = new Order()
+                {
+                    OrderDate = DateTime.Now,
+                    Customer = _customerService.FindOrCreateCustomer(item.Key),
                     SplitPrice = splitPrice
                 };
             }
@@ -137,7 +140,31 @@ public class OrderService : IOrderService
         _orderRepository.UpdateOrder(order);
     }
 
-    public void PayOrder(Order order, decimal amount)
+    public decimal PayOrder(Order order, decimal amount, PayMethod payMethod)
+    {
+        decimal remainder = _moneyCalculator.GetRemainderAfterPayment(order, amount);
+        var revenue = new Revenue() { Amount = amount, SaleDate = DateTime.Now, PayMethod = payMethod };
+
+        order.PaidAmount += amount;
+        order.Price = _moneyCalculator.PricePerOrder(order);
+
+        UpdateOrder(order, order.IsMember);
+
+        if (remainder >= 0)
+        {
+            _revenueService.AddPayment(revenue);
+        }
+        else
+        {
+            amount -= (0 - remainder);
+            revenue.Amount = amount;
+            _revenueService.AddPayment(revenue);
+        }
+
+        return remainder;
+    }
+
+    public void FinishOrder(Order order)
     {
         order.IsPaid = true;
         order.IsFinished = true;

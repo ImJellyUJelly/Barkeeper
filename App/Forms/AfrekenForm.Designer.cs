@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lbCoins = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.lbPrice = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -49,11 +51,14 @@
             this.btFifty = new System.Windows.Forms.Button();
             this.btCash = new System.Windows.Forms.Button();
             this.btPin = new System.Windows.Forms.Button();
+            this.btMunten = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lbCoins);
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.lbPrice);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
@@ -74,11 +79,30 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
+            // lbCoins
+            // 
+            this.lbCoins.AutoSize = true;
+            this.lbCoins.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbCoins.Location = new System.Drawing.Point(409, 79);
+            this.lbCoins.Name = "lbCoins";
+            this.lbCoins.Size = new System.Drawing.Size(94, 25);
+            this.lbCoins.TabIndex = 20;
+            this.lbCoins.Text = "lbMunten";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(334, 82);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(67, 21);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "Munten:";
+            // 
             // lbPrice
             // 
             this.lbPrice.AutoSize = true;
             this.lbPrice.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbPrice.Location = new System.Drawing.Point(409, 61);
+            this.lbPrice.Location = new System.Drawing.Point(409, 54);
             this.lbPrice.Name = "lbPrice";
             this.lbPrice.Size = new System.Drawing.Size(70, 25);
             this.lbPrice.TabIndex = 18;
@@ -87,7 +111,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(358, 62);
+            this.label5.Location = new System.Drawing.Point(358, 55);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(43, 21);
             this.label5.TabIndex = 17;
@@ -271,11 +295,24 @@
             this.btPin.UseVisualStyleBackColor = true;
             this.btPin.Click += new System.EventHandler(this.btPin_Click);
             // 
+            // btMunten
+            // 
+            this.btMunten.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btMunten.Location = new System.Drawing.Point(523, 433);
+            this.btMunten.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btMunten.Name = "btMunten";
+            this.btMunten.Size = new System.Drawing.Size(234, 80);
+            this.btMunten.TabIndex = 7;
+            this.btMunten.Text = "Munten";
+            this.btMunten.UseVisualStyleBackColor = true;
+            this.btMunten.Click += new System.EventHandler(this.btMunten_Click);
+            // 
             // AfrekenForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 545);
+            this.Controls.Add(this.btMunten);
             this.Controls.Add(this.btPin);
             this.Controls.Add(this.btCash);
             this.Controls.Add(this.btFifty);
@@ -316,5 +353,8 @@
         private Button btFifty;
         private Button btCash;
         private Button btPin;
+        private Label lbCoins;
+        private Label label7;
+        private Button btMunten;
     }
 }

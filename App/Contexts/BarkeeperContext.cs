@@ -26,7 +26,6 @@ public class BarkeeperContext : DbContext
     public BarkeeperContext() : base(@"Server=DESKTOP-K6B8OF0\SQLEXPRESS;Database=Barkeeper_Development;MultipleActiveResultSets=true;Integrated Security=true;Trusted_Connection=True;")
     {
         Database.SetInitializer(new CreateDatabaseIfNotExists<BarkeeperContext>());
-        Seed();
     }
 
     protected override void OnModelCreating(DbModelBuilder modelBuilder)

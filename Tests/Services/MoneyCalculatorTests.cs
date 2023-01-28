@@ -86,7 +86,7 @@ namespace Tests.Services
             var target = new MoneyCalculator();
 
             // Act
-            var result = target.PayOrder(order, amount);
+            var result = target.GetRemainderAfterPayment(order, amount);
 
             // Assert
             Assert.AreEqual(expectedResult, result);
@@ -109,7 +109,7 @@ namespace Tests.Services
             var target = new MoneyCalculator();
 
             // Act
-            var result = target.PayOrder(order, amount);
+            var result = target.GetRemainderAfterPayment(order, amount);
 
             // Assert
             Assert.AreEqual(expectedResult, result);

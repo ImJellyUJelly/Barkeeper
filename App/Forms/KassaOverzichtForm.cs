@@ -400,7 +400,7 @@ public partial class KassaOverzichtForm : Form
         }
         else
         {
-            _orderService.PayOrder(_selectedOrder, 0.00M);
+            _orderService.PayOrder(_selectedOrder, 0.00M, PayMethod.None);
         }
 
         _selectedOrder = null;

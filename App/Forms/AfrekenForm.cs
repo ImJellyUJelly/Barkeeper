@@ -27,13 +27,14 @@ public partial class AfrekenForm : Form
         lbOrderDate.Text = $"{_order.OrderDate.ToShortTimeString()} - {_order.OrderDate.ToShortDateString()}";
         cbIsMember.Checked = _order.IsMember;
         tbComments.Text = _order.Comment;
-        EditPriceLabel(_order);
+        EditPriceLabels(_order);
         LoadProducts();
     }
 
-    private void EditPriceLabel(Order order)
+    private void EditPriceLabels(Order order)
     {
         lbPrice.Text = $"€ {order.Price}";
+        lbCoins.Text = $"€ {order.Coins}";
     }
 
     private void cbIsMember_CheckedChanged(object sender, EventArgs e)
@@ -46,7 +47,7 @@ public partial class AfrekenForm : Form
 
         _order.Price = _moneyCalculator.PricePerOrder(_order);
         _orderService.UpdateOrder(_order, _order.IsMember);
-        EditPriceLabel(_order);
+        EditPriceLabels(_order);
         LoadProducts();
     }
 
@@ -66,22 +67,22 @@ public partial class AfrekenForm : Form
 
     private void btFive_Click(object sender, EventArgs e)
     {
-        Pay(5);
+        Pay(5, PayMethod.Cash);
     }
 
     private void btTen_Click(object sender, EventArgs e)
     {
-        Pay(10);
+        Pay(10, PayMethod.Cash);
     }
 
     private void btTwenty_Click(object sender, EventArgs e)
     {
-        Pay(20);
+        Pay(20, PayMethod.Cash);
     }
 
     private void btFifty_Click(object sender, EventArgs e)
     {
-        Pay(50);
+        Pay(50, PayMethod.Cash);
     }
 
     private void btCash_Click(object sender, EventArgs e)
@@ -94,8 +95,7 @@ public partial class AfrekenForm : Form
             return;
         }
 
-        Pay(form.Payment);
-        Close();
+        Pay(form.Payment, PayMethod.Cash);
     }
 
     private void btPin_Click(object sender, EventArgs e)
@@ -108,34 +108,31 @@ public partial class AfrekenForm : Form
             return;
         }
 
-        Pay(form.Payment);
-        Close();
+        Pay(form.Payment, PayMethod.Card);
     }
 
-    private void Pay(decimal amount)
+    private void Pay(decimal amount, PayMethod payMethod)
     {
-        decimal remainder = _moneyCalculator.PayOrder(_order, amount);
-        Revenue revenue = new Revenue() { Amount = amount, SaleDate = DateTime.Now };
+        decimal remainder = _orderService.PayOrder(_order, amount, payMethod);
         if (remainder > 0)
         {
-            _order.PaidAmount += amount;
-            _order.Price = _moneyCalculator.PricePerOrder(_order);
-            _orderService.UpdateOrder(_order, _order.IsMember);
-            EditPriceLabel(_order);
-            _revenueService.AddPayment(revenue);
+            EditPriceLabels(_order);
             return;
         }
 
         if (remainder < 0)
         {
-            amount -= (0 - remainder);
-            revenue.Amount = amount;
             var form = new TeruggaveForm(remainder);
             form.ShowDialog();
         }
 
-        _orderService.PayOrder(_order, amount);
-        _revenueService.AddPayment(revenue);
+        _orderService.FinishOrder(_order);
         Close();
+    }
+
+    private void btMunten_Click(object sender, EventArgs e)
+    {
+        var amount = _order.Price - _order.PaidAmount;
+        Pay(amount, PayMethod.Coins);
     }
 }

@@ -10,22 +10,28 @@ namespace Tests.Services
     [TestFixture]
     public class OrderServiceTests
     {
-        private IMoneyCalculator _moneyCalculator;
+        private Mock<IMoneyCalculator> _moneyCalculatorMock;
+        private Mock<IRevenueService> _revenueServiceMock;
+        private Mock<IOrderRepository> _orderRepositoryMock;
+        private Mock<ICustomerService> _customerServiceMock;
+        private Mock<IOrderDetailService> _orderDetailService;
 
         [SetUp]
         public void SetUp()
         {
-            _moneyCalculator = new MoneyCalculator();
+            _moneyCalculatorMock = new Mock<IMoneyCalculator>();
+            _revenueServiceMock = new Mock<IRevenueService>();
+            _orderRepositoryMock = new Mock<IOrderRepository>();
+            _customerServiceMock = new Mock<ICustomerService>();
+            _orderDetailService = new Mock<IOrderDetailService>();
         }
 
         [Test]
         public void GetOrders_ReturnsAnEmptyListOfOrders()
         {
             // Arrange
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            orderRepositoryMock.Setup(mock => mock.GetOrders()).Returns(new List<Order>());
-            var customerServiceMock = new Mock<ICustomerService>();
-            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, null);
+            _orderRepositoryMock.Setup(mock => mock.GetOrders()).Returns(new List<Order>());
+            var target = new OrderService(_orderRepositoryMock.Object, _customerServiceMock.Object, null, null, _revenueServiceMock.Object);
 
             // Act
             var result = target.GetOrders();
@@ -39,11 +45,9 @@ namespace Tests.Services
         public void GetOrders_ReturnsAListOfOrders()
         {
             // Arrange
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            orderRepositoryMock.Setup(mock => mock.GetOrders())
+            _orderRepositoryMock.Setup(mock => mock.GetOrders())
                 .Returns(new List<Order> { new Order { Customer = new Customer { Name = "Customer 1" } } });
-            var customerServiceMock = new Mock<ICustomerService>();
-            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, null);
+            var target = new OrderService(_orderRepositoryMock.Object, _customerServiceMock.Object, null, null, _revenueServiceMock.Object);
 
             // Act
             var result = target.GetOrders();
@@ -57,10 +61,8 @@ namespace Tests.Services
         public void GetUnFinishedAndUnPaidOrders_ReturnsAEmptyListOfUnpaidAndUnFinishedOrders()
         {
             // Arrange
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            orderRepositoryMock.Setup(mock => mock.GetOrders()).Returns(new List<Order>());
-            var customerServiceMock = new Mock<ICustomerService>();
-            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, null);
+            _orderRepositoryMock.Setup(mock => mock.GetOrders()).Returns(new List<Order>());
+            var target = new OrderService(_orderRepositoryMock.Object, _customerServiceMock.Object, null, null, _revenueServiceMock.Object);
 
             // Act
             var result = target.GetUnFinishedAndUnPaidOrders();
@@ -82,10 +84,8 @@ namespace Tests.Services
                 new Order { IsFinished = false, IsPaid = false }
             };
 
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            orderRepositoryMock.Setup(mock => mock.GetOrders()).Returns(orderList);
-            var customerServiceMock = new Mock<ICustomerService>();
-            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, null);
+            _orderRepositoryMock.Setup(mock => mock.GetOrders()).Returns(orderList);
+            var target = new OrderService(_orderRepositoryMock.Object, _customerServiceMock.Object, null, null, _revenueServiceMock.Object);
 
             // Act
             var result = target.GetUnFinishedAndUnPaidOrders();
@@ -99,10 +99,8 @@ namespace Tests.Services
         {
             // Arrange
             var customer = new Customer { Name = "Customer 1" };
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            orderRepositoryMock.Setup(mock => mock.GetOrderByName(It.IsAny<string>())).Returns(new Order { Customer = customer });
-            var customerServiceMock = new Mock<ICustomerService>();
-            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, null);
+            _orderRepositoryMock.Setup(mock => mock.GetOrderByName(It.IsAny<string>())).Returns(new Order { Customer = customer });
+            var target = new OrderService(_orderRepositoryMock.Object, _customerServiceMock.Object, null, null, _revenueServiceMock.Object);
 
             // Act
             Order result = target.GetOrderByCustomerName(customer.Name);
@@ -124,11 +122,10 @@ namespace Tests.Services
                 }
             };
 
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            orderRepositoryMock.Setup(mock => mock.CreateOrder(It.IsAny<Order>())).Returns(order);
-            var customerServiceMock = new Mock<ICustomerService>();
+            _orderRepositoryMock.Setup(mock => mock.CreateOrder(It.IsAny<Order>())).Returns(order);
+            _moneyCalculatorMock.Setup(mock => mock.PricePerOrder(It.IsAny<Order>())).Returns(2.40M);
 
-            var target = new OrderService(orderRepositoryMock.Object, customerServiceMock.Object, null, _moneyCalculator);
+            var target = new OrderService(_orderRepositoryMock.Object, _customerServiceMock.Object, null, _moneyCalculatorMock.Object, _revenueServiceMock.Object);
 
             // Act
             Order result = target.CreateOrder(order);
@@ -136,6 +133,32 @@ namespace Tests.Services
             // Assert
             Assert.IsNotNull(result);
             Assert.AreEqual(2.40M, result.Price);
+        }
+
+        [TestCase("15", "10", "5")]
+        [TestCase("10", "10", "0")]
+        [TestCase("10", "20", "-10")]
+        [TestCase("10.50", "20", "-9.50")]
+        [TestCase("3.99", "2.75", "1.24")]
+        [TestCase("2.75", "4.00", "-1.25")]
+        [TestCase("10", "10.50", "-0.50")]
+        public void PayOrder_ReturnsRemainder(decimal price, decimal amount, decimal expectedRemainder)
+        {
+            // Arrange
+            Order order = new Order { Price = price };
+
+            _orderRepositoryMock.Setup(mock => mock.CreateOrder(It.IsAny<Order>())).Returns(order);
+            _orderDetailService.Setup(mock => mock.UpdateOrderDetails(It.IsAny<Order>()));
+            _moneyCalculatorMock.Setup(mock => mock.GetRemainderAfterPayment(It.IsAny<Order>(), It.IsAny<decimal>())).Returns(expectedRemainder);
+
+            var target = new OrderService(_orderRepositoryMock.Object, _customerServiceMock.Object, _orderDetailService.Object, _moneyCalculatorMock.Object, _revenueServiceMock.Object);
+
+            // Act
+            var result = target.PayOrder(order, amount, It.IsAny<PayMethod>());
+
+            // Assert
+            Assert.AreEqual(expectedRemainder, result);
+            _revenueServiceMock.Verify(mock => mock.AddPayment(It.IsAny<Revenue>()), Times.Once);
         }
     }
 }

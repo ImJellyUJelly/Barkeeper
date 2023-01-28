@@ -16,5 +16,15 @@ public interface IOrderService
 
     void MergeOrders(List<Order> orderList, string customerName);
     void SplitOrder(Order order, Dictionary<string, decimal> newOrders);
-    void PayOrder(Order order, decimal amount);
+    
+    /// <summary>
+    /// Calculate the remainder of the order. When the remainder is > 0 the customer still needs to pay. 
+    /// When the remainders is < 0 the customer gets money back.
+    /// </summary>
+    /// <param name="order">Order to pay.</param>
+    /// <param name="amount">Amount being payed.</param>
+    /// <param name="payMethod">The method used to pay.</param>
+    /// <returns>Remainder of the order to pay or get back.</returns>
+    decimal PayOrder(Order order, decimal amount, PayMethod payMethod);
+    void FinishOrder(Order order);
 }

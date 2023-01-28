@@ -47,6 +47,6 @@ namespace App.Services
         /// <param name="order">The Order that is being paid.</param>
         /// <param name="amount">The Amount that is being paid.</param>
         /// <returns>The remainder that needs to be paid. If this is negative, money must be returned to the Customer.</returns>
-        decimal PayOrder(Order order, decimal amount);
+        decimal GetRemainderAfterPayment(Order order, decimal amount);
     }
 }

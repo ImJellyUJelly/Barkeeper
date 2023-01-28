@@ -7,4 +7,5 @@ public class OrderDetail
     public Product Product { get; set; }
     public DateTime TimeAdded { get; set; }
     public decimal Price { get; set; }
+    public int Coins { get; set; }
 }

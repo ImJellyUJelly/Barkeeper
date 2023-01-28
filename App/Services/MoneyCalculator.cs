@@ -42,10 +42,20 @@ namespace App.Services
             return isMember ? detail.Product.MemberPrice : detail.Product.Price;
         }
 
-        public decimal PayOrder(Order order, decimal amount)
+        public decimal GetRemainderAfterPayment(Order order, decimal amount)
         {
             decimal remainder = PricePerOrder(order) - amount;
             return remainder;
+        }
+
+        public int CalculateTotalCoinsPerOrder(Order order)
+        {
+            if (order.Price <= 0) PricePerOrder(order);
+
+            int coins = 0;
+            order.OrderDetails.ForEach(od => coins += od.Coins);
+
+            return coins;
         }
     }
 }
