@@ -30,7 +30,6 @@
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cbIsMember = new System.Windows.Forms.CheckBox();
             this.btDeleteProduct = new System.Windows.Forms.Button();
             this.lbOrderPrice = new System.Windows.Forms.Label();
             this.btPay = new System.Windows.Forms.Button();
@@ -52,6 +51,7 @@
             this.overzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.beheerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.omzetOverzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sessieBeheerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cbCustomerName = new System.Windows.Forms.ComboBox();
@@ -64,7 +64,6 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.cbIsMember);
             this.groupBox2.Controls.Add(this.btDeleteProduct);
             this.groupBox2.Controls.Add(this.lbOrderPrice);
             this.groupBox2.Controls.Add(this.btPay);
@@ -89,18 +88,6 @@
             this.label5.Size = new System.Drawing.Size(75, 30);
             this.label5.TabIndex = 10;
             this.label5.Text = "Totaal:";
-            // 
-            // cbIsMember
-            // 
-            this.cbIsMember.AutoSize = true;
-            this.cbIsMember.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cbIsMember.Location = new System.Drawing.Point(11, 100);
-            this.cbIsMember.Name = "cbIsMember";
-            this.cbIsMember.Size = new System.Drawing.Size(149, 25);
-            this.cbIsMember.TabIndex = 9;
-            this.cbIsMember.Text = "St. Sebastiaan Lid";
-            this.cbIsMember.UseVisualStyleBackColor = true;
-            this.cbIsMember.Click += new System.EventHandler(this.cbIsMember_Click);
             // 
             // btDeleteProduct
             // 
@@ -282,7 +269,8 @@
             // beheerToolStripMenuItem
             // 
             this.beheerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.omzetOverzichtToolStripMenuItem});
+            this.omzetOverzichtToolStripMenuItem,
+            this.sessieBeheerToolStripMenuItem});
             this.beheerToolStripMenuItem.Name = "beheerToolStripMenuItem";
             this.beheerToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.beheerToolStripMenuItem.Text = "Beheer";
@@ -290,9 +278,16 @@
             // omzetOverzichtToolStripMenuItem
             // 
             this.omzetOverzichtToolStripMenuItem.Name = "omzetOverzichtToolStripMenuItem";
-            this.omzetOverzichtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.omzetOverzichtToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.omzetOverzichtToolStripMenuItem.Text = "Omzet overzicht";
             this.omzetOverzichtToolStripMenuItem.Click += new System.EventHandler(this.omzetOverzichtToolStripMenuItem_Click);
+            // 
+            // sessieBeheerToolStripMenuItem
+            // 
+            this.sessieBeheerToolStripMenuItem.Name = "sessieBeheerToolStripMenuItem";
+            this.sessieBeheerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.sessieBeheerToolStripMenuItem.Text = "Sessie beheer";
+            this.sessieBeheerToolStripMenuItem.Click += new System.EventHandler(this.sessieBeheerToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -396,10 +391,10 @@
         private ToolStripMenuItem klantenToolStripMenuItem;
         private ToolStripMenuItem TSMICustomers;
         private Panel pProducts;
-        private CheckBox cbIsMember;
         private Label label5;
         private ColumnHeader columnHeader3;
         private ToolStripMenuItem beheerToolStripMenuItem;
         private ToolStripMenuItem omzetOverzichtToolStripMenuItem;
+        private ToolStripMenuItem sessieBeheerToolStripMenuItem;
     }
 }

@@ -31,7 +31,6 @@
             this.lvOrders = new System.Windows.Forms.ListView();
             this.chID = new System.Windows.Forms.ColumnHeader();
             this.chCustomerName = new System.Windows.Forms.ColumnHeader();
-            this.chIsMember = new System.Windows.Forms.ColumnHeader();
             this.chOrderDate = new System.Windows.Forms.ColumnHeader();
             this.chIsPaid = new System.Windows.Forms.ColumnHeader();
             this.chIsFinished = new System.Windows.Forms.ColumnHeader();
@@ -48,7 +47,6 @@
             this.lvOrders.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chID,
             this.chCustomerName,
-            this.chIsMember,
             this.chOrderDate,
             this.chIsPaid,
             this.chIsFinished,
@@ -74,11 +72,6 @@
             // 
             this.chCustomerName.Text = "Klantnaam";
             this.chCustomerName.Width = 180;
-            // 
-            // chIsMember
-            // 
-            this.chIsMember.Text = "Is lid?";
-            this.chIsMember.Width = 80;
             // 
             // chOrderDate
             // 
@@ -175,7 +168,6 @@
         private ListView lvOrders;
         private ColumnHeader chID;
         private ColumnHeader chCustomerName;
-        private ColumnHeader chIsMember;
         private ColumnHeader chOrderDate;
         private ColumnHeader chProducts;
         private ColumnHeader chIsPaid;

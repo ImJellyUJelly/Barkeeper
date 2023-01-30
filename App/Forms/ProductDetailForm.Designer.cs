@@ -38,12 +38,15 @@
             this.cbCategory = new System.Windows.Forms.ComboBox();
             this.btCancel = new System.Windows.Forms.Button();
             this.btSave = new System.Windows.Forms.Button();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cbActive = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudLedenPrice)).BeginInit();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPrice)).BeginInit();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -73,7 +76,7 @@
             this.groupBox2.Size = new System.Drawing.Size(157, 68);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Ledenprijs";
+            this.groupBox2.Text = "Evenementprijs";
             // 
             // nudLedenPrice
             // 
@@ -106,9 +109,9 @@
             // 
             this.groupBox4.Controls.Add(this.cbCategory);
             this.groupBox4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.groupBox4.Location = new System.Drawing.Point(12, 159);
+            this.groupBox4.Location = new System.Drawing.Point(12, 233);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(326, 67);
+            this.groupBox4.Size = new System.Drawing.Size(329, 67);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Categorie";
@@ -124,7 +127,7 @@
             // btCancel
             // 
             this.btCancel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btCancel.Location = new System.Drawing.Point(12, 249);
+            this.btCancel.Location = new System.Drawing.Point(12, 306);
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(105, 38);
             this.btCancel.TabIndex = 3;
@@ -135,7 +138,7 @@
             // btSave
             // 
             this.btSave.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btSave.Location = new System.Drawing.Point(236, 249);
+            this.btSave.Location = new System.Drawing.Point(236, 306);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(105, 38);
             this.btSave.TabIndex = 4;
@@ -143,11 +146,33 @@
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.cbActive);
+            this.groupBox5.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.groupBox5.Location = new System.Drawing.Point(12, 159);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(157, 68);
+            this.groupBox5.TabIndex = 3;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Wordt verkocht";
+            // 
+            // cbActive
+            // 
+            this.cbActive.AutoSize = true;
+            this.cbActive.Location = new System.Drawing.Point(6, 28);
+            this.cbActive.Name = "cbActive";
+            this.cbActive.Size = new System.Drawing.Size(68, 25);
+            this.cbActive.TabIndex = 0;
+            this.cbActive.Text = "Actief";
+            this.cbActive.UseVisualStyleBackColor = true;
+            // 
             // ProductDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(353, 299);
+            this.ClientSize = new System.Drawing.Size(353, 355);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.groupBox4);
@@ -163,6 +188,8 @@
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudPrice)).EndInit();
             this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -179,5 +206,7 @@
         private ComboBox cbCategory;
         private Button btCancel;
         private Button btSave;
+        private GroupBox groupBox5;
+        private CheckBox cbActive;
     }
 }

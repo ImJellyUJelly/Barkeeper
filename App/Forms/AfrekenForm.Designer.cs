@@ -38,7 +38,6 @@
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
-            this.cbIsMember = new System.Windows.Forms.CheckBox();
             this.tbComments = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.lbOrderDate = new System.Windows.Forms.Label();
@@ -63,7 +62,6 @@
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.lvProducts);
-            this.groupBox1.Controls.Add(this.cbIsMember);
             this.groupBox1.Controls.Add(this.tbComments);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.lbOrderDate);
@@ -154,19 +152,6 @@
             // 
             this.columnHeader3.Text = "Datum toegevoegd";
             this.columnHeader3.Width = 225;
-            // 
-            // cbIsMember
-            // 
-            this.cbIsMember.AutoSize = true;
-            this.cbIsMember.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cbIsMember.Location = new System.Drawing.Point(5, 62);
-            this.cbIsMember.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cbIsMember.Name = "cbIsMember";
-            this.cbIsMember.Size = new System.Drawing.Size(90, 25);
-            this.cbIsMember.TabIndex = 14;
-            this.cbIsMember.Text = "Is een lid";
-            this.cbIsMember.UseVisualStyleBackColor = true;
-            this.cbIsMember.CheckedChanged += new System.EventHandler(this.cbIsMember_CheckedChanged);
             // 
             // tbComments
             // 
@@ -346,7 +331,6 @@
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
-        private CheckBox cbIsMember;
         private Button btFive;
         private Button btTen;
         private Button btTwenty;

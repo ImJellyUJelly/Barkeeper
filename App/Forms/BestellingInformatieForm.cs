@@ -7,39 +7,37 @@ namespace App.Forms
     {
         private bool _canEdit = true;
 
-        private IMoneyCalculator Calculator { get; }
-        private IOrderService OrderService { get; }
-
         private Order Order { get; set; }
-        public BestellingInformatieForm(IOrderService orderService, IMoneyCalculator calculator, Order order, bool canEdit)
+        public BestellingInformatieForm(IOrderService orderService, ISessionService sessionService, Order order, bool canEdit)
         {
             InitializeComponent();
-            Calculator = calculator;
             OrderService = orderService;
+            SessionService = sessionService;
             Order = order;
             _canEdit = canEdit;
 
             InitialLoad();
         }
 
+        private ISessionService SessionService { get; }
+        private IOrderService OrderService { get; }
+
         private void InitialLoad()
         {
             if (Order == null) return;
 
             tbName.Enabled = _canEdit;
-            cbIsMember.Enabled = _canEdit;
             cbIsFinished.Enabled = _canEdit;
             cbIsPaid.Enabled = _canEdit;
 
             tbName.Text = Order.Customer?.Name;
             lbOrderDate.Text = $"{Order.OrderDate.ToShortDateString()} - {Order.OrderDate.ToShortTimeString()}";
-            cbIsMember.Checked = Order.IsMember;
             cbIsFinished.Checked = Order.IsFinished;
             cbIsPaid.Checked = Order.IsPaid;
             tbComment.Text = Order.Comment;
 
             FillProducts();
-            CalculatePrice();
+            UpdatePrice();
         }
 
         private void FillProducts()
@@ -50,9 +48,9 @@ namespace App.Forms
                 var item = new ListViewItem();
                 item.Tag = detail;
                 item.Text = detail.Product.Name;
-                if (Order.IsMember)
+                if (SessionService.BoughtDuringEvent(detail.TimeAdded))
                 {
-                    item.SubItems.Add($"€ {detail.Product.MemberPrice}");
+                    item.SubItems.Add($"€ {detail.Product.EventPrice}");
                 }
                 else
                 {
@@ -70,22 +68,16 @@ namespace App.Forms
         {
             Order.IsFinished = cbIsFinished.Checked;
             Order.IsPaid = cbIsPaid.Checked;
-            Order.Comment = tbComment.Text == "" ? null : tbComment.Text;
-            OrderService.UpdateOrder(Order, Order.IsMember);
+            Order.Comment = tbComment.Text == "" ? string.Empty : tbComment.Text;
+            OrderService.UpdateOrder(Order);
             Close();
         }
 
-        private void CalculatePrice()
+        private void UpdatePrice()
         {
-            lbPrice.Text = $"€ {Calculator.PricePerOrder(Order)}";
+            OrderService.UpdateOrder(Order);
+            lbPrice.Text = $"€ {Order.Price}";
             lbPaidAmount.Text = $"€ {Order.PaidAmount}";
-        }
-
-        private void cbIsMember_Click(object sender, EventArgs e)
-        {
-            Order.IsMember = cbIsMember.Checked;
-            FillProducts();
-            CalculatePrice();
         }
     }
 }

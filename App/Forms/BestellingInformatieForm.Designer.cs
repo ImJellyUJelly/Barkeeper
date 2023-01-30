@@ -32,10 +32,12 @@
             this.tbName = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lbOrderDate = new System.Windows.Forms.Label();
-            this.cbIsMember = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tbComment = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lbPaidAmount = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.lbPrice = new System.Windows.Forms.Label();
             this.cbIsPaid = new System.Windows.Forms.CheckBox();
             this.cbIsFinished = new System.Windows.Forms.CheckBox();
@@ -46,9 +48,6 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.btSave = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lbPaidAmount = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -96,22 +95,9 @@
             this.lbOrderDate.TabIndex = 0;
             this.lbOrderDate.Text = "label1";
             // 
-            // cbIsMember
-            // 
-            this.cbIsMember.AutoSize = true;
-            this.cbIsMember.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.cbIsMember.Location = new System.Drawing.Point(6, 28);
-            this.cbIsMember.Name = "cbIsMember";
-            this.cbIsMember.Size = new System.Drawing.Size(96, 25);
-            this.cbIsMember.TabIndex = 2;
-            this.cbIsMember.Text = "VZOD Lid";
-            this.cbIsMember.UseVisualStyleBackColor = true;
-            this.cbIsMember.Click += new System.EventHandler(this.cbIsMember_Click);
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.tbComment);
-            this.groupBox3.Controls.Add(this.cbIsMember);
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox3.Location = new System.Drawing.Point(12, 158);
             this.groupBox3.Name = "groupBox3";
@@ -144,6 +130,33 @@
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Betaal informatie";
+            // 
+            // lbPaidAmount
+            // 
+            this.lbPaidAmount.AutoSize = true;
+            this.lbPaidAmount.Location = new System.Drawing.Point(227, 59);
+            this.lbPaidAmount.Name = "lbPaidAmount";
+            this.lbPaidAmount.Size = new System.Drawing.Size(52, 21);
+            this.lbPaidAmount.TabIndex = 5;
+            this.lbPaidAmount.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(157, 59);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(64, 21);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Betaald:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(178, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 21);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Prijs:";
             // 
             // lbPrice
             // 
@@ -239,33 +252,6 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(178, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 21);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Prijs:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(157, 59);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 21);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Betaald:";
-            // 
-            // lbPaidAmount
-            // 
-            this.lbPaidAmount.AutoSize = true;
-            this.lbPaidAmount.Location = new System.Drawing.Point(227, 59);
-            this.lbPaidAmount.Name = "lbPaidAmount";
-            this.lbPaidAmount.Size = new System.Drawing.Size(52, 21);
-            this.lbPaidAmount.TabIndex = 5;
-            this.lbPaidAmount.Text = "label1";
-            // 
             // BestellingInformatieForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -300,7 +286,6 @@
         private TextBox tbName;
         private GroupBox groupBox2;
         private Label lbOrderDate;
-        private CheckBox cbIsMember;
         private GroupBox groupBox3;
         private GroupBox groupBox4;
         private CheckBox cbIsPaid;

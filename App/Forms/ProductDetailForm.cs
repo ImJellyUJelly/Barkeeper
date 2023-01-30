@@ -24,8 +24,9 @@ namespace App.Forms
 
             tbName.Text = _product.Name;
             nudPrice.Value = _product.Price;
-            nudLedenPrice.Value = _product.MemberPrice;
+            nudLedenPrice.Value = _product.EventPrice;
             cbCategory.SelectedItem = _product.Category;
+            cbActive.Checked = _product.IsActive;
         }
 
         private void btCancel_Click(object sender, EventArgs e)
@@ -37,8 +38,9 @@ namespace App.Forms
         {
             string name = tbName.Text;
             decimal price = nudPrice.Value;
-            decimal memberPrice = nudLedenPrice.Value;
+            decimal eventPrice = nudLedenPrice.Value;
             ProductCategory category = (ProductCategory)cbCategory.SelectedItem;
+            bool isActive = cbActive.Checked;
 
             if (tbName.Text == "" || tbName.Text == null)
             {
@@ -48,7 +50,7 @@ namespace App.Forms
 
             if (nudPrice.Value < 0.00M || nudLedenPrice.Value < 0.00M)
             {
-                MessageBox.Show("Vul een prijs en ledenprijs groter dan € 0,00 in.");
+                MessageBox.Show("Vul een prijs en evenementprijs groter dan € 0,00 in.");
                 return;
             }
 
@@ -62,11 +64,11 @@ namespace App.Forms
                     return;
                 }
 
-                _productService.UpdateProduct(_product, name, price, memberPrice, category);
+                _productService.UpdateProduct(_product, name, price, eventPrice, category, isActive);
             }
             else
             {
-                _productService.AddProduct(name, price, memberPrice, category);
+                _productService.AddProduct(name, price, eventPrice, category, isActive);
             }
 
             Close();

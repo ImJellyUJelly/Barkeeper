@@ -11,8 +11,10 @@ public class OrderService : IOrderService
     private readonly IMoneyCalculator _moneyCalculator;
     private readonly IRevenueService _revenueService;
 
-    public OrderService(IOrderRepository orderRepository, ICustomerService customerService,
-        IOrderDetailService orderDetailService, IMoneyCalculator moneyCalculator,
+    public OrderService(IOrderRepository orderRepository, 
+        ICustomerService customerService,
+        IOrderDetailService orderDetailService,
+        IMoneyCalculator moneyCalculator,
         IRevenueService revenueService)
     {
         _orderRepository = orderRepository;
@@ -40,7 +42,7 @@ public class OrderService : IOrderService
         var orderDetail = _orderDetailService.AddOrderDetail(order, product);
         order.OrderDetails.Add(orderDetail);
         order.Price = _moneyCalculator.PricePerOrder(order);
-        UpdateOrder(order, order.IsMember);
+        UpdateOrder(order);
         return orderDetail;
     }
 
@@ -56,7 +58,7 @@ public class OrderService : IOrderService
         _orderDetailService.RemoveOrderDetail(orderDetail);
         order.OrderDetails.Remove(orderDetail);
         order.Price = _moneyCalculator.PricePerOrder(order);
-        UpdateOrder(order, order.IsMember);
+        UpdateOrder(order);
     }
 
     public Order GetOrderByCustomerName(string customerName)
@@ -80,7 +82,7 @@ public class OrderService : IOrderService
         Order mergedOrder = GetOrderByCustomerName(customer.Name);
         if (mergedOrder == null)
         {
-            mergedOrder = CreateOrder(new Order() { Customer = customer, OrderDate = DateTime.Now, IsMember = true });
+            mergedOrder = CreateOrder(new Order() { Customer = customer, OrderDate = DateTime.Now });
         }
         else
         {
@@ -101,7 +103,7 @@ public class OrderService : IOrderService
             {
                 order.Comment += $"Bestelling is samengevoegd in de bestelling van {mergedOrder.Customer?.Name} met ID: {mergedOrder.Id}.\n";
                 order.IsFinished = true;
-                UpdateOrder(order, mergedOrder.IsMember);
+                UpdateOrder(order);
             }
         }
     }
@@ -129,12 +131,11 @@ public class OrderService : IOrderService
 
         order.Comment += $"Bestelling is opgesplitst in {newCustomers.Count} bestellingen.\n";
         order.IsFinished = true;
-        UpdateOrder(order, order.IsMember);
+        UpdateOrder(order);
     }
 
-    public void UpdateOrder(Order order, bool isMember)
+    public void UpdateOrder(Order order)
     {
-        order.IsMember = isMember;
         _orderDetailService.UpdateOrderDetails(order);
         order.Price = _moneyCalculator.PricePerOrder(order);
         _orderRepository.UpdateOrder(order);
@@ -148,7 +149,7 @@ public class OrderService : IOrderService
         order.PaidAmount += amount;
         order.Price = _moneyCalculator.PricePerOrder(order);
 
-        UpdateOrder(order, order.IsMember);
+        UpdateOrder(order);
 
         if (remainder >= 0)
         {

@@ -19,18 +19,25 @@ public partial class KassaOverzichtForm : Form
         IProductService productService,
         ICustomerService customerService,
         IMoneyCalculator moneyCalculator,
-        IRevenueService revenueService)
+        IRevenueService revenueService,
+        ISessionService sessionService)
     {
         _orderService = orderService;
         _productService = productService;
         _customerService = customerService;
         _moneyCalculator = moneyCalculator;
         _revenueService = revenueService;
+        SessionService = sessionService;
+
+        CurrentSession = SessionService.GetCurrentSession();
 
         InitializeComponent();
         InitializeGeneralInformation();
         ToggleOrderInfo();
     }
+
+    private ISessionService SessionService { get; }
+    private Session CurrentSession { get; set; }
 
     private void InitializeGeneralInformation()
     {
@@ -114,7 +121,7 @@ public partial class KassaOverzichtForm : Form
             return;
         }
 
-        if (_selectedOrder != null)
+        if (_selectedOrder is not null)
         {
             _orderService.AddProductToOrder(_selectedOrder, product);
             ToggleOrderInfo();
@@ -122,12 +129,12 @@ public partial class KassaOverzichtForm : Form
             return;
         }
 
-        OrderDetail detail = new OrderDetail() { Order = _selectedOrder, Product = product };
-        detail.Price = _moneyCalculator.PricePerOrderDetail(detail, false);
+        OrderDetail detail = new () { Order = _selectedOrder, Product = product };
+        detail.Price = _moneyCalculator.PricePerOrderDetail(detail, CurrentSession.IsEvent);
         var item = new ListViewItem();
         item.Tag = detail;
         item.Text = product.Name;
-        item.SubItems.Add($"€ {product.Price}");
+        item.SubItems.Add($"€ {detail.Price}");
         item.SubItems.Add($"{DateTime.Now.ToShortDateString()} - {DateTime.Now.ToShortTimeString()}");
         lvProducts.Items.Add(item);
         CalculateTotalPrice(null);
@@ -141,16 +148,12 @@ public partial class KassaOverzichtForm : Form
             lbName.Text = "";
             lbOrderDate.Text = "";
             lbOrderPrice.Text = "€ 0,00";
-            cbIsMember.Checked = false;
-            cbIsMember.Enabled = false;
         }
         else
         {
             lbName.Text = _selectedOrder.Customer.Name;
             lbOrderDate.Text = $"{_selectedOrder.OrderDate.ToShortDateString()} - {_selectedOrder.OrderDate.ToShortTimeString()}";
             CalculateTotalPrice(_selectedOrder);
-            cbIsMember.Checked = _selectedOrder.IsMember;
-            cbIsMember.Enabled = true;
             toggle = true;
         }
 
@@ -226,7 +229,7 @@ public partial class KassaOverzichtForm : Form
                     }
                 }
 
-                order = new Order() { Customer = _customerService.FindOrCreateCustomer(customerName), IsMember = isMember };
+                order = new Order() { Customer = _customerService.FindOrCreateCustomer(customerName) };
                 foreach (ListViewItem item in lvProducts.Items)
                 {
                     var detail = (OrderDetail)item.Tag;
@@ -289,34 +292,37 @@ public partial class KassaOverzichtForm : Form
         int j = 1;
         foreach (var product in _productService.GetProducts())
         {
-            Button button = new Button();
-            button.Top = 10;
-            button.Left = 10;
-            //button.Size = new Size(116, 85);
-            button.Size = new Size(85, 85);
-            button.Text = product.Name;
-            button.Tag = product;
-            button.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);
-            button.BackColor = ButtonBackColor(product);
-            button.Click += new EventHandler(ProductClick);
-
-            int buttonWidth = factor * button.Size.Width;
-
-            if (buttonWidth + button.Size.Width >= pProducts.Width)
+            if (product.IsActive)
             {
-                a = 0;
-                b = button.Size.Height * j;
-                j++;
-                factor = 0;
-            }
-            else
-            {
-                a = buttonWidth;
-                factor++;
-            }
+                Button button = new Button();
+                button.Top = 10;
+                button.Left = 10;
+                //button.Size = new Size(116, 85);
+                button.Size = new Size(85, 85);
+                button.Text = product.Name;
+                button.Tag = product;
+                button.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);
+                button.BackColor = ButtonBackColor(product);
+                button.Click += new EventHandler(ProductClick);
 
-            button.Location = new Point(a, b);
-            pProducts.Controls.Add(button);
+                int buttonWidth = factor * button.Size.Width;
+
+                if (buttonWidth + button.Size.Width >= pProducts.Width)
+                {
+                    a = 0;
+                    b = button.Size.Height * j;
+                    j++;
+                    factor = 0;
+                }
+                else
+                {
+                    a = buttonWidth;
+                    factor++;
+                }
+
+                button.Location = new Point(a, b);
+                pProducts.Controls.Add(button);
+            }
         }
     }
 
@@ -358,18 +364,9 @@ public partial class KassaOverzichtForm : Form
         AddProductToOrder(product);
     }
 
-    private void cbIsMember_Click(object sender, EventArgs e)
-    {
-        bool isMember = cbIsMember.Checked;
-        if (_selectedOrder == null) { return; }
-
-        _orderService.UpdateOrder(_selectedOrder, isMember);
-        RefreshProductsInOrder();
-    }
-
     private void bestellingOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var orderForm = new BestellingOverzichtForm(_orderService, _customerService, _moneyCalculator, _revenueService);
+        var orderForm = new BestellingOverzichtForm(_orderService, _customerService, _moneyCalculator, _revenueService, SessionService);
         orderForm.ShowDialog();
 
         _selectedOrder = null;
@@ -427,6 +424,12 @@ public partial class KassaOverzichtForm : Form
     private void omzetOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
         var form = new OmzetOverzichtForm(_revenueService);
+        form.ShowDialog();
+    }
+
+    private void sessieBeheerToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        var form = new BeheerderForm();
         form.ShowDialog();
     }
 }

@@ -7,14 +7,12 @@ public partial class AfrekenForm : Form
 {
     private readonly IOrderService _orderService;
     private readonly IMoneyCalculator _moneyCalculator;
-    private readonly IRevenueService _revenueService;
     private readonly Order _order;
 
     public AfrekenForm(IOrderService orderService, IMoneyCalculator moneyCalculator, IRevenueService revenueService, Order order)
     {
         _orderService = orderService;
         _moneyCalculator = moneyCalculator;
-        _revenueService = revenueService;
         _order = order;
 
         InitializeComponent();
@@ -25,7 +23,6 @@ public partial class AfrekenForm : Form
     {
         lbCustomerName.Text = _order.Customer?.Name;
         lbOrderDate.Text = $"{_order.OrderDate.ToShortTimeString()} - {_order.OrderDate.ToShortDateString()}";
-        cbIsMember.Checked = _order.IsMember;
         tbComments.Text = _order.Comment;
         EditPriceLabels(_order);
         LoadProducts();
@@ -34,21 +31,7 @@ public partial class AfrekenForm : Form
     private void EditPriceLabels(Order order)
     {
         lbPrice.Text = $"€ {order.Price}";
-        lbCoins.Text = $"€ {order.Coins}";
-    }
-
-    private void cbIsMember_CheckedChanged(object sender, EventArgs e)
-    {
-        _order.IsMember = cbIsMember.Checked;
-        if(_order.Customer != null)
-        {
-            _order.Customer.IsMember = cbIsMember.Checked;
-        }
-
-        _order.Price = _moneyCalculator.PricePerOrder(_order);
-        _orderService.UpdateOrder(_order, _order.IsMember);
-        EditPriceLabels(_order);
-        LoadProducts();
+        lbCoins.Text = $"{order.Coins}";
     }
 
     private void LoadProducts()

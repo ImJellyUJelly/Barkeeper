@@ -32,7 +32,7 @@ namespace App.Forms
                 item.Text = product.Id.ToString();
                 item.SubItems.Add(product.Name);
                 item.SubItems.Add($"€ {product.Price}");
-                item.SubItems.Add($"€ {product.MemberPrice}");
+                item.SubItems.Add($"€ {product.EventPrice}");
                 item.SubItems.Add(product.Category.ToString());
                 lvProducts.Items.Add(item);
             }

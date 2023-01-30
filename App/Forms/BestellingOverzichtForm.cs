@@ -13,16 +13,20 @@ public partial class BestellingOverzichtForm : Form
     public BestellingOverzichtForm(IOrderService orderService, 
         ICustomerService memberService, 
         IMoneyCalculator moneyCalculator, 
-        IRevenueService revenueService)
+        IRevenueService revenueService,
+        ISessionService sessionService)
     {
         _orderService = orderService;
         _memberService = memberService;
         _moneyCalculator = moneyCalculator;
         _revenueService = revenueService;
+        SessionService = sessionService;
 
         InitializeComponent();
         LoadOrders();
     }
+
+    private ISessionService SessionService { get; }
 
     private void LoadOrders()
     {
@@ -43,7 +47,6 @@ public partial class BestellingOverzichtForm : Form
             item.Tag = order;
             item.Text = order.Id.ToString();
             item.SubItems.Add(order.Customer?.Name);
-            item.SubItems.Add(GetTextFromBool(order.IsMember));
             item.SubItems.Add($"{order.OrderDate.ToString("dd/MM/yyyy")} - {order.OrderDate.ToShortTimeString()}");
             item.SubItems.Add(GetTextFromBool(order.IsPaid));
             item.SubItems.Add(GetTextFromBool(order.IsFinished));
@@ -81,7 +84,7 @@ public partial class BestellingOverzichtForm : Form
             orders.Add((Order)item.Tag);
         }
 
-        var form = new BestellingenSamenvoegenForm(_orderService, _moneyCalculator, orders);
+        var form = new BestellingenSamenvoegenForm(_orderService, _moneyCalculator, SessionService, orders);
         form.ShowDialog();
         LoadOrders();
     }
@@ -145,7 +148,7 @@ public partial class BestellingOverzichtForm : Form
         if (order == null) { return; }
 
         bool canEdit = !order.IsFinished;
-        var form = new BestellingInformatieForm(_orderService, _moneyCalculator, order, canEdit);
+        var form = new BestellingInformatieForm(_orderService, SessionService, order, canEdit);
         form.Show();
     }
 }

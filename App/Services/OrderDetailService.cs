@@ -1,23 +1,26 @@
-﻿using App.Contexts;
-using App.Models;
+﻿using App.Models;
+using App.Repositories;
 
 namespace App.Services;
 
 public class OrderDetailService : IOrderDetailService
 {
-    private readonly BarkeeperContext _context;
     private readonly IMoneyCalculator _moneyCalculator;
 
-    public OrderDetailService(BarkeeperContext context, IMoneyCalculator moneyCalculator)
+    public OrderDetailService(ISessionService sessionService, IMoneyCalculator moneyCalculator, IOrderDetailRepository orderDetailRepository)
     {
-        _context = context;
         _moneyCalculator = moneyCalculator;
+        CurrentSession = sessionService.GetCurrentSession();
+        Repository = orderDetailRepository;
     }
+
+    private IOrderDetailRepository Repository { get; }
+    private Session CurrentSession { get; }
 
     public OrderDetail AddOrderDetail(Order order, Product product)
     {
         var orderDetail = new OrderDetail { Order = order, Product = product };
-        orderDetail.Price = _moneyCalculator.PricePerOrderDetail(orderDetail, order.IsMember);
+        orderDetail.Price = _moneyCalculator.PricePerOrderDetail(orderDetail, CurrentSession.IsEvent);
         orderDetail.TimeAdded = DateTime.Now;
         return orderDetail;
     }
@@ -26,13 +29,12 @@ public class OrderDetailService : IOrderDetailService
     {
         foreach(var orderDetail in order.OrderDetails) 
         { 
-            orderDetail.Price = _moneyCalculator.PricePerOrderDetail(orderDetail, order.IsMember);
+            orderDetail.Price = _moneyCalculator.PricePerOrderDetail(orderDetail, CurrentSession.IsEvent);
         }
     }
 
     public void RemoveOrderDetail(OrderDetail orderDetail)
     {
-        _context.OrderDetails.Remove(orderDetail);
-        _context.SaveChanges();
+        Repository.RemoveOrderDetail(orderDetail);
     }
 }

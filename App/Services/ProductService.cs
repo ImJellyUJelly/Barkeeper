@@ -12,14 +12,15 @@ public class ProductService : IProductService
         _productRepository = productRepository;
     }
 
-    public void AddProduct(string name, decimal price, decimal memberPrice, ProductCategory category)
+    public void AddProduct(string name, decimal price, decimal memberPrice, ProductCategory category, bool isActive)
     {
         var product = new Product()
         {
             Name = name,
             Price = price,
-            MemberPrice = memberPrice,
-            Category = category
+            EventPrice = memberPrice,
+            Category = category,
+            IsActive = isActive
         };
         _productRepository.AddProduct(product);
     }
@@ -39,12 +40,13 @@ public class ProductService : IProductService
         return _productRepository.GetProducts();
     }
 
-    public void UpdateProduct(Product product, string name, decimal price, decimal memberPrice, ProductCategory category)
+    public void UpdateProduct(Product product, string name, decimal price, decimal memberPrice, ProductCategory category, bool isActive)
     {
         product.Name = name;
         product.Price = price;
-        product.MemberPrice = memberPrice;
+        product.EventPrice = memberPrice;
         product.Category = category;
+        product.IsActive = isActive;
 
         _productRepository.UpdateProduct(product);
     }

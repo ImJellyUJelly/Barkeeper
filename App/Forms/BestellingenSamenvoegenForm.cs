@@ -9,14 +9,20 @@ public partial class BestellingenSamenvoegenForm : Form
     private readonly IMoneyCalculator _moneyCalculater;
     private List<Order> _orders;
 
-    public BestellingenSamenvoegenForm(IOrderService orderService, IMoneyCalculator moneyCalculator, List<Order> orders)
+    public BestellingenSamenvoegenForm(IOrderService orderService,
+        IMoneyCalculator moneyCalculator,
+        ISessionService sessionService,
+        List<Order> orders)
     {
         _orderService = orderService;
         _orders = orders;
         _moneyCalculater = moneyCalculator;
+        SessionService = sessionService;
         InitializeComponent();
         InitializeMergeOrders();
     }
+
+    private ISessionService SessionService { get; }
 
     private void InitializeMergeOrders()
     {
@@ -36,9 +42,9 @@ public partial class BestellingenSamenvoegenForm : Form
                 ListViewItem item = new ListViewItem();
                 item.Tag = od;
                 item.Text = od.Product.Name;
-                if (order.IsMember)
+                if (SessionService.BoughtDuringEvent(od.TimeAdded))
                 {
-                    item.SubItems.Add($"€ {od.Product.MemberPrice}");
+                    item.SubItems.Add($"€ {od.Product.EventPrice}");
                 }
                 else
                 {

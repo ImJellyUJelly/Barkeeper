@@ -11,7 +11,7 @@ public interface IOrderService
     Order GetOrderByCustomerName(string customerName);
     Order CreateOrder(Order order);
     void DeleteProductFromOrder(Order order, OrderDetail product);
-    void UpdateOrder(Order order, bool isMember);
+    void UpdateOrder(Order order);
     OrderDetail AddProductToOrder(Order order, Product product);
 
     void MergeOrders(List<Order> orderList, string customerName);

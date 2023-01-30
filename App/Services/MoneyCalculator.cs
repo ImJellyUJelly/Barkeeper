@@ -39,7 +39,7 @@ namespace App.Services
 
         public decimal PricePerOrderDetail(OrderDetail detail, bool isMember)
         {
-            return isMember ? detail.Product.MemberPrice : detail.Product.Price;
+            return isMember ? detail.Product.EventPrice : detail.Product.Price;
         }
 
         public decimal GetRemainderAfterPayment(Order order, decimal amount)

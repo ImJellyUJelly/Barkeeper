@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btNewProduct = new System.Windows.Forms.Button();
             this.lvProducts = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
-            this.btNewProduct = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,6 +49,18 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Producten";
+            // 
+            // btNewProduct
+            // 
+            this.btNewProduct.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btNewProduct.Location = new System.Drawing.Point(6, 21);
+            this.btNewProduct.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btNewProduct.Name = "btNewProduct";
+            this.btNewProduct.Size = new System.Drawing.Size(98, 71);
+            this.btNewProduct.TabIndex = 4;
+            this.btNewProduct.Text = "Nieuw";
+            this.btNewProduct.UseVisualStyleBackColor = true;
+            this.btNewProduct.Click += new System.EventHandler(this.btNewProduct_Click);
             // 
             // lvProducts
             // 
@@ -84,25 +96,13 @@
             // 
             // columnHeader4
             // 
-            this.columnHeader4.Text = "Ledenprijs";
+            this.columnHeader4.Text = "Evenementprijs";
             this.columnHeader4.Width = 100;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Text = "Categorie";
             this.columnHeader5.Width = 110;
-            // 
-            // btNewProduct
-            // 
-            this.btNewProduct.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btNewProduct.Location = new System.Drawing.Point(6, 21);
-            this.btNewProduct.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btNewProduct.Name = "btNewProduct";
-            this.btNewProduct.Size = new System.Drawing.Size(98, 71);
-            this.btNewProduct.TabIndex = 4;
-            this.btNewProduct.Text = "Nieuw";
-            this.btNewProduct.UseVisualStyleBackColor = true;
-            this.btNewProduct.Click += new System.EventHandler(this.btNewProduct_Click);
             // 
             // ProductOverzichtForm
             // 
