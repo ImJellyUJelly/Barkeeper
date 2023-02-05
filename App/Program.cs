@@ -40,6 +40,7 @@ internal static class Program
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IRevenueRepository, RevenueRepository>();
         services.AddScoped<ISessionRepository, SessionRepository>();
+        services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
 
         // Services
         services.AddScoped<IOrderService, OrderService>();

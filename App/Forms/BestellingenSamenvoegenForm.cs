@@ -52,12 +52,12 @@ public partial class BestellingenSamenvoegenForm : Form
                 }
 
                 item.SubItems.Add($"{od.TimeAdded.ToShortDateString()} - {od.TimeAdded.ToShortTimeString()}");
-                item.SubItems.Add(order.Customer.Name);
+                item.SubItems.Add(order.GetName());
                 lvProducts.Items.Add(item);
             }
 
             totalPrice += _moneyCalculater.PricePerOrder(order) + order.SplitPrice;
-            lbOrderCustomerNames.Text += $" {order.Customer?.Name}";
+            lbOrderCustomerNames.Text += $" {order.GetName()}";
             if(lbOrderCustomerNames.Width > 610)
             {
                 lbOrderCustomerNames.Width = 610;

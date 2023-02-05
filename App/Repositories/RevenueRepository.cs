@@ -23,7 +23,9 @@ namespace App.Repositories
             {
                 return _context.Revenues
                     .Where(revenue => revenue.SaleDate >= startDate)
-                    .Where(revnue => revnue.SaleDate < endDate)
+                    .Where(revenue => revenue.SaleDate < endDate)
+                    .Where(revenue => revenue.PayMethod != PayMethod.None)
+                    .Where(revenue => revenue.PayMethod != PayMethod.Coins)
                     .Sum(revenue => revenue.Amount);
             }
             catch (Exception)
@@ -39,9 +41,19 @@ namespace App.Repositories
 
         public List<Revenue> GetRevenuesBetweenDates(DateTime startDate, DateTime endDate)
         {
-            return _context.Revenues.Where(rev => rev.SaleDate >= startDate)
-                .Where(rev => rev.SaleDate < endDate)
+            try
+            {
+                return _context.Revenues
+                .Where(revenue => revenue.SaleDate >= startDate)
+                .Where(revenue => revenue.SaleDate < endDate)
+                .Where(revenue => revenue.PayMethod != PayMethod.None)
+                .Where(revenue => revenue.PayMethod != PayMethod.Coins)
                 .ToList();
+            }
+            catch (Exception)
+            {
+                return new List<Revenue>();
+            }
         }
     }
 }

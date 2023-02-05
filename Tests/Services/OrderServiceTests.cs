@@ -107,7 +107,7 @@ namespace Tests.Services
 
             // Assert
             Assert.IsNotNull(result);
-            Assert.AreEqual(customer.Name, result.Customer.Name);
+            Assert.AreEqual(customer.Name, result.GetName());
         }
 
         [Test]
@@ -159,6 +159,27 @@ namespace Tests.Services
             // Assert
             Assert.AreEqual(expectedRemainder, result);
             _revenueServiceMock.Verify(mock => mock.AddPayment(It.IsAny<Revenue>()), Times.Once);
+        }
+
+        [TestCase("2.00", "2.00", "true")]
+        [TestCase("2.00", "1.00", "false")]
+        public void AddProductToOrder_WhenAnEvent_ThenPriceWillBeCorrect(decimal eventPrice, decimal expectedPrice, bool isEvent)
+        {
+            // Arrange
+            var product = new Product { EventPrice = eventPrice, Price = 1.00M };
+            var order = new Order();
+            var orderDetail = new OrderDetail { Product = product, Order = order, Price = isEvent ? product.EventPrice : product.Price };
+            var moneyCalculator = new MoneyCalculator();
+
+            _orderDetailService.Setup(mock => mock.AddOrderDetail(It.IsAny<Order>(), It.IsAny<Product>())).Returns(orderDetail);
+
+            var target = new OrderService(_orderRepositoryMock.Object, _customerServiceMock.Object, _orderDetailService.Object, moneyCalculator, _revenueServiceMock.Object);
+
+            // Act
+            var result = target.AddProductToOrder(order, product);
+
+            // Assert
+            Assert.AreEqual(expectedPrice, result.Price);
         }
     }
 }

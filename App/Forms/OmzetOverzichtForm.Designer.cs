@@ -79,6 +79,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.btDownloadRevenue = new System.Windows.Forms.Button();
             this.gbMonthly.SuspendLayout();
             this.gpMonth.SuspendLayout();
             this.SuspendLayout();
@@ -114,7 +115,7 @@
             this.gbMonthly.Controls.Add(this.label1);
             this.gbMonthly.Controls.Add(this.label23);
             this.gbMonthly.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.gbMonthly.Location = new System.Drawing.Point(13, 12);
+            this.gbMonthly.Location = new System.Drawing.Point(13, 63);
             this.gbMonthly.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gbMonthly.Name = "gbMonthly";
             this.gbMonthly.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -288,6 +289,7 @@
             this.cbYears.Name = "cbYears";
             this.cbYears.Size = new System.Drawing.Size(140, 24);
             this.cbYears.TabIndex = 25;
+            this.cbYears.SelectedIndexChanged += new System.EventHandler(this.cbYears_SelectedIndexChanged);
             // 
             // label13
             // 
@@ -467,7 +469,7 @@
             this.gpMonth.Controls.Add(this.label16);
             this.gpMonth.Controls.Add(this.label17);
             this.gpMonth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.gpMonth.Location = new System.Drawing.Point(13, 144);
+            this.gpMonth.Location = new System.Drawing.Point(13, 195);
             this.gpMonth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gpMonth.Name = "gpMonth";
             this.gpMonth.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -714,11 +716,23 @@
             this.label17.TabIndex = 30;
             this.label17.Text = "Woensdag";
             // 
+            // btDownloadRevenue
+            // 
+            this.btDownloadRevenue.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btDownloadRevenue.Location = new System.Drawing.Point(841, 12);
+            this.btDownloadRevenue.Name = "btDownloadRevenue";
+            this.btDownloadRevenue.Size = new System.Drawing.Size(107, 51);
+            this.btDownloadRevenue.TabIndex = 2;
+            this.btDownloadRevenue.Text = "Download omzet";
+            this.btDownloadRevenue.UseVisualStyleBackColor = true;
+            this.btDownloadRevenue.Click += new System.EventHandler(this.btDownloadRevenue_Click);
+            // 
             // OmzetOverzichtForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(960, 260);
+            this.ClientSize = new System.Drawing.Size(960, 312);
+            this.Controls.Add(this.btDownloadRevenue);
             this.Controls.Add(this.gpMonth);
             this.Controls.Add(this.gbMonthly);
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -786,5 +800,6 @@
         private System.Windows.Forms.Label lbWednesday;
         private System.Windows.Forms.Label lbTuesday;
         private System.Windows.Forms.Label lbMonday;
+        private Button btDownloadRevenue;
     }
 }

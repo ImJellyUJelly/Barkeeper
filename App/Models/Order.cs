@@ -16,14 +16,15 @@ public class Order
     public bool CanPay => !IsFinished && !IsPaid;
     public decimal PaidAmount { get; set; }
     public List<OrderDetail> OrderDetails { get; set; }
+    public string CustomerName { get; set; }
 
     public Order()
     {
         OrderDetails = new List<OrderDetail>();
     }
 
-    public override string ToString()
+    public string GetName()
     {
-        return Customer?.Name;
+        return Customer?.Name ?? CustomerName;
     }
 }

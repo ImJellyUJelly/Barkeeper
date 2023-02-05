@@ -37,9 +37,9 @@ namespace App.Services
         /// Calculate whether to use MemberPrice of Price based on IsMember of an Order.
         /// </summary>
         /// <param name="detail">The OrderDetail which needs to calculate price.</param>
-        /// <param name="isMember">Is the order from a member.</param>
+        /// <param name="isEvent">Is the order done during an event.</param>
         /// <returns>A price per OrderDetail.</returns>
-        decimal PricePerOrderDetail(OrderDetail detail, bool isMember);
+        decimal PricePerOrderDetail(OrderDetail detail, bool isEvent);
 
         /// <summary>
         /// Pay an Amount for an Order. There may or may not be a remainder that needs to be paid.

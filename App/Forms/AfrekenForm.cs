@@ -21,7 +21,7 @@ public partial class AfrekenForm : Form
 
     private void InitialLoad()
     {
-        lbCustomerName.Text = _order.Customer?.Name;
+        lbCustomerName.Text = _order.GetName();
         lbOrderDate.Text = $"{_order.OrderDate.ToShortTimeString()} - {_order.OrderDate.ToShortDateString()}";
         tbComments.Text = _order.Comment;
         EditPriceLabels(_order);

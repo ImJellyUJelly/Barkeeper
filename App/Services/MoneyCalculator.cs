@@ -37,9 +37,9 @@ namespace App.Services
             return Math.Round(totalPrice / numberOfCustomers, 2);
         }
 
-        public decimal PricePerOrderDetail(OrderDetail detail, bool isMember)
+        public decimal PricePerOrderDetail(OrderDetail detail, bool isEvent)
         {
-            return isMember ? detail.Product.EventPrice : detail.Product.Price;
+            return isEvent ? detail.Product.EventPrice : detail.Product.Price;
         }
 
         public decimal GetRemainderAfterPayment(Order order, decimal amount)

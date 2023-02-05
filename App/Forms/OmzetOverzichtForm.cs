@@ -1,6 +1,7 @@
 ﻿using App.Extensions;
 using App.Models;
 using App.Services;
+using System.Text;
 
 namespace App.Forms
 {
@@ -132,40 +133,38 @@ namespace App.Forms
             }
         }
 
-        private void UpdateListView(Order order, ListView listView)
+        private void btDownloadRevenue_Click(object sender, EventArgs e)
         {
-            ListViewItem lvi = new ListViewItem(order.Price.ToString("C"));
-            lvi.SubItems.Add(order.Comment);
-            lvi.SubItems.Add($"{order.OrderDate.ToShortDateString()}");
-            lvi.SubItems.Add($"{order.OrderDate.ToShortTimeString()}");
-            lvi.Tag = order;
-            listView.Items.Add(lvi);
-        }
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV file (*.csv)|*.csv| All Files (*.*)|*.*";
+            saveFileDialog.DefaultExt = "csv";
+            saveFileDialog.FileName = $"Omzet_{DateTime.Now.ToShortDateString()}";
+            saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-        private void btExportToFile_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "CSV file (*.csv)|*.csv";
-            dialog.ShowDialog();
+            var result = saveFileDialog.ShowDialog();
+            if (result is DialogResult.Cancel) { return; }
 
-            var revenues = service.GetRevenuesForFileExport();
+            string separator = ";";
+            var output = new StringBuilder();
+            string[] headings = { "ID", "Bedrag", "Verkoop datum", "Betaal methode" };
+            output.AppendLine(string.Join(separator, headings));
 
-            var result = dialog.FileName;
+            var revenues = service.GetRevenues();
+
+            foreach (var revenue in revenues)
+            {
+                output.AppendLine($"{revenue.Id};{revenue.Amount};{revenue.SaleDate};{revenue.PayMethod}");
+            }
+
+            string fileName = saveFileDialog.FileName;
+
             try
             {
-                using (var file = File.Create(result))
-                using (var writer = new StreamWriter(file))
-                {
-                    foreach (var revenue in revenues)
-                    {
-                        writer.WriteLine(revenue.Amount);
-                    }
-                }
+                File.WriteAllText($"{fileName}.csv", output.ToString());
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show("Er is een error opgetreden!" + Environment.NewLine + Environment.NewLine + ex.Message);
-                Console.WriteLine(ex.Message);
             }
         }
     }

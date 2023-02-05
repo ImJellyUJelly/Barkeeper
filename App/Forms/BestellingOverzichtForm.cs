@@ -46,7 +46,7 @@ public partial class BestellingOverzichtForm : Form
             var item = new ListViewItem();
             item.Tag = order;
             item.Text = order.Id.ToString();
-            item.SubItems.Add(order.Customer?.Name);
+            item.SubItems.Add(order.GetName());
             item.SubItems.Add($"{order.OrderDate.ToString("dd/MM/yyyy")} - {order.OrderDate.ToShortTimeString()}");
             item.SubItems.Add(GetTextFromBool(order.IsPaid));
             item.SubItems.Add(GetTextFromBool(order.IsFinished));

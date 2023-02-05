@@ -34,6 +34,7 @@ public class OrderService : IOrderService
         foreach (var order in orders)
         {
             order.Customer = null;
+            order.CustomerName = customerName;
         }
     }
 
@@ -68,7 +69,7 @@ public class OrderService : IOrderService
 
     public List<Order> GetOrders()
     {
-        return _orderRepository.GetOrders().OrderBy(order => order.Customer?.Name).ToList();
+        return _orderRepository.GetOrders().OrderBy(order => order.GetName()).ToList();
     }
 
     public List<Order> GetUnFinishedAndUnPaidOrders()
@@ -101,7 +102,7 @@ public class OrderService : IOrderService
             mergedOrder.SplitPrice = _moneyCalculator.SplitPriceForMergedOrder(orderList);
             foreach (var order in orderList)
             {
-                order.Comment += $"Bestelling is samengevoegd in de bestelling van {mergedOrder.Customer?.Name} met ID: {mergedOrder.Id}.\n";
+                order.Comment += $"Bestelling is samengevoegd in de bestelling van {mergedOrder.GetName()} met ID: {mergedOrder.Id}.\n";
                 order.IsFinished = true;
                 UpdateOrder(order);
             }
@@ -124,7 +125,7 @@ public class OrderService : IOrderService
                 };
             }
 
-            newOrder.Comment += $"Dit is een gesplitste bestelling van {order.Customer?.Name}.\n";
+            newOrder.Comment += $"Dit is een gesplitste bestelling van {order.GetName()}.\n";
             newOrder.ParentOrder = order;
             CreateOrder(newOrder);
         }
@@ -148,6 +149,7 @@ public class OrderService : IOrderService
 
         order.PaidAmount += amount;
         order.Price = _moneyCalculator.PricePerOrder(order);
+        order.PayMethod = payMethod;
 
         UpdateOrder(order);
 

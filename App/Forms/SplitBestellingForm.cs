@@ -31,7 +31,7 @@ public partial class SplitBestellingForm : Form
     private void InitializeForm()
     {
         lbId.Text = _order.Id.ToString();
-        lbCustomerName.Text = _order.Customer.Name;
+        lbCustomerName.Text = _order.GetName();
         lbOrderDate.Text = $"{_order.OrderDate.ToShortTimeString()} - {_order.OrderDate.ToShortDateString()}";
         lbPrice.Text = $"€ {_order.Price + _order.SplitPrice}";
         cbIsFinished.Checked = _order.IsFinished;

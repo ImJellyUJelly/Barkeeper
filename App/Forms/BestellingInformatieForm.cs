@@ -30,7 +30,7 @@ namespace App.Forms
             cbIsFinished.Enabled = _canEdit;
             cbIsPaid.Enabled = _canEdit;
 
-            tbName.Text = Order.Customer?.Name;
+            tbName.Text = Order.GetName();
             lbOrderDate.Text = $"{Order.OrderDate.ToShortDateString()} - {Order.OrderDate.ToShortTimeString()}";
             cbIsFinished.Checked = Order.IsFinished;
             cbIsPaid.Checked = Order.IsPaid;

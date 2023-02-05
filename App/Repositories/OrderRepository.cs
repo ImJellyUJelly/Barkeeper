@@ -30,11 +30,22 @@ public class OrderRepository : IOrderRepository
 
     public Order GetOrderByName(string customerName)
     {
-        return _dbContext.Orders
+        var order =_dbContext.Orders
             .Where(order => order.IsPaid == false)
             .Include(order => order.Customer)
             .Include(order => order.OrderDetails)
             .FirstOrDefault(order => order.Customer.Name == customerName);
+
+        if (order is null)
+        {
+            order = _dbContext.Orders
+            .Where(order => order.IsPaid == false)
+            .Include(order => order.Customer)
+            .Include(order => order.OrderDetails)
+            .FirstOrDefault(order => order.CustomerName == customerName);
+        }
+
+        return order;
     }
 
     public List<Order> GetOrders()

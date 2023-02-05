@@ -7,13 +7,6 @@ namespace App.Forms;
 public partial class KassaOverzichtForm : Form
 {
     private CultureInfo _cultureInfo;
-    private Order? _selectedOrder;
-
-    private readonly IOrderService _orderService;
-    private readonly IProductService _productService;
-    private readonly ICustomerService _customerService;
-    private readonly IMoneyCalculator _moneyCalculator;
-    private readonly IRevenueService _revenueService;
 
     public KassaOverzichtForm(IOrderService orderService,
         IProductService productService,
@@ -22,11 +15,12 @@ public partial class KassaOverzichtForm : Form
         IRevenueService revenueService,
         ISessionService sessionService)
     {
-        _orderService = orderService;
-        _productService = productService;
-        _customerService = customerService;
-        _moneyCalculator = moneyCalculator;
-        _revenueService = revenueService;
+        OrderService = orderService;
+        ProductService = productService;
+        CustomerService = customerService;
+        MoneyCalculator = moneyCalculator;
+        RevenueService = revenueService;
+        _cultureInfo = CultureInfo.GetCultureInfo("nl-NL");
         SessionService = sessionService;
 
         CurrentSession = SessionService.GetCurrentSession();
@@ -36,14 +30,20 @@ public partial class KassaOverzichtForm : Form
         ToggleOrderInfo();
     }
 
+    private IOrderService OrderService { get; }
+    private IProductService ProductService { get; }
+    private ICustomerService CustomerService { get; }
+    private IMoneyCalculator MoneyCalculator { get; }
+    private IRevenueService RevenueService { get; }
     private ISessionService SessionService { get; }
+
     private Session CurrentSession { get; set; }
+    private Order? SelectedOrder { get; set; }
 
     private void InitializeGeneralInformation()
     {
-        _cultureInfo = CultureInfo.GetCultureInfo("nl-NL");
-        lbDate.Text = $"{_cultureInfo.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek)} {DateTime.Now.ToString("dd/MM/yyyy")}";
-        _selectedOrder = null;
+        lbDate.Text = $"{_cultureInfo.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek)} {DateTime.Now:dd/MM/yyyy}";
+        SelectedOrder = null;
         btDeleteProduct.Visible = false;
         btPay.Enabled = false;
 
@@ -55,15 +55,15 @@ public partial class KassaOverzichtForm : Form
     {
         cbCustomerName.Items.Clear();
         cbCustomerName.Items.Add("Open bestellingen:");
-        var orders = _orderService.GetUnFinishedAndUnPaidOrders().OrderBy(order => order.Customer.Name);
+        var orders = OrderService.GetUnFinishedAndUnPaidOrders().OrderBy(order => order.GetName());
         foreach (Order order in orders)
         {
-            cbCustomerName.Items.Add(order.Customer?.Name);
+            cbCustomerName.Items.Add(order.GetName());
         }
 
         cbCustomerName.Items.Add("----------------");
         cbCustomerName.Items.Add("Klanten:");
-        var customers = _customerService.GetCustomers().OrderBy(customer => customer.Name);
+        var customers = CustomerService.GetCustomers().OrderBy(customer => customer.Name);
         foreach (Customer customer in customers)
         {
             cbCustomerName.Items.Add(customer);
@@ -75,12 +75,12 @@ public partial class KassaOverzichtForm : Form
     private void RefreshProductsInOrder()
     {
         lvProducts.Items.Clear();
-        if (_selectedOrder == null)
+        if (SelectedOrder == null)
         {
             return;
         }
 
-        foreach (OrderDetail detail in _selectedOrder.OrderDetails)
+        foreach (OrderDetail detail in SelectedOrder.OrderDetails)
         {
             var item = new ListViewItem();
             item.Tag = detail;
@@ -90,13 +90,13 @@ public partial class KassaOverzichtForm : Form
             lvProducts.Items.Add(item);
         }
 
-        CalculateTotalPrice(_selectedOrder);
+        CalculateTotalPrice(SelectedOrder);
     }
 
     private void CalculateTotalPrice(Order? order)
     {
         decimal totalPrice = 0.00M;
-        if (order == null)
+        if (order is null)
         {
             foreach (ListViewItem item in lvProducts.Items)
             {
@@ -106,8 +106,7 @@ public partial class KassaOverzichtForm : Form
         }
         else
         {
-            totalPrice = _moneyCalculator.PricePerOrder(order);
-            totalPrice += order.SplitPrice;
+            totalPrice = MoneyCalculator.PricePerOrder(order);
         }
 
         lbOrderPrice.Text = $"€ {totalPrice}";
@@ -121,16 +120,16 @@ public partial class KassaOverzichtForm : Form
             return;
         }
 
-        if (_selectedOrder is not null)
+        if (SelectedOrder is not null)
         {
-            _orderService.AddProductToOrder(_selectedOrder, product);
+            OrderService.AddProductToOrder(SelectedOrder, product);
             ToggleOrderInfo();
             RefreshProductsInOrder();
             return;
         }
 
-        OrderDetail detail = new () { Order = _selectedOrder, Product = product };
-        detail.Price = _moneyCalculator.PricePerOrderDetail(detail, CurrentSession.IsEvent);
+        OrderDetail detail = new () { Order = SelectedOrder, Product = product };
+        detail.Price = MoneyCalculator.PricePerOrderDetail(detail, CurrentSession.IsEvent);
         var item = new ListViewItem();
         item.Tag = detail;
         item.Text = product.Name;
@@ -143,7 +142,7 @@ public partial class KassaOverzichtForm : Form
     private void ToggleOrderInfo()
     {
         bool toggle = false;
-        if (_selectedOrder == null)
+        if (SelectedOrder == null)
         {
             lbName.Text = "";
             lbOrderDate.Text = "";
@@ -151,9 +150,9 @@ public partial class KassaOverzichtForm : Form
         }
         else
         {
-            lbName.Text = _selectedOrder.Customer.Name;
-            lbOrderDate.Text = $"{_selectedOrder.OrderDate.ToShortDateString()} - {_selectedOrder.OrderDate.ToShortTimeString()}";
-            CalculateTotalPrice(_selectedOrder);
+            lbName.Text = SelectedOrder.GetName();
+            lbOrderDate.Text = $"{SelectedOrder.OrderDate.ToShortDateString()} - {SelectedOrder.OrderDate.ToShortTimeString()}";
+            CalculateTotalPrice(SelectedOrder);
             toggle = true;
         }
 
@@ -165,29 +164,29 @@ public partial class KassaOverzichtForm : Form
         OrderDetail detail = (OrderDetail)lvProducts.SelectedItems[0].Tag;
         if (detail == null) { return; }
 
-        if (_selectedOrder == null)
+        if (SelectedOrder == null)
         {
             lvProducts.Items.Remove(lvProducts.SelectedItems[0]);
             return;
         }
 
-        _orderService.DeleteProductFromOrder(_selectedOrder, detail);
+        OrderService.DeleteProductFromOrder(SelectedOrder, detail);
         RefreshProductsInOrder();
     }
 
     private void btSelectCustomer_Click(object sender, EventArgs e)
     {
         string customerName = cbCustomerName.Text.Trim();
-        Customer customer = _customerService.FindCustomer(customerName);
+        Customer customer = CustomerService.FindCustomer(customerName);
 
         if (IsCustomerNameNotValid(customerName))
         {
-            _selectedOrder = null;
+            SelectedOrder = null;
             RefreshCustomerComboBox();
             return;
         }
 
-        if (customerName == "" && _selectedOrder == null)
+        if (customerName == "" && SelectedOrder == null)
         {
             if (lvProducts.Items.Count > 0)
             {
@@ -202,16 +201,16 @@ public partial class KassaOverzichtForm : Form
             }
         }
         // When an order is selected, but it must be unselected.
-        else if (customerName == "" && _selectedOrder != null)
+        else if (customerName == "" && SelectedOrder != null)
         {
-            _selectedOrder = null;
+            SelectedOrder = null;
             RefreshProductsInOrder();
             ToggleOrderInfo();
             return;
         }
-        else if (customerName != "" && _selectedOrder == null)
+        else if (customerName != "" && SelectedOrder == null)
         {
-            Order order = _orderService.GetOrderByCustomerName(customerName);
+            Order order = OrderService.GetOrderByCustomerName(customerName);
             bool isMember = customer != null ? customer.IsMember : false;
             if (order == null)
             {
@@ -229,7 +228,7 @@ public partial class KassaOverzichtForm : Form
                     }
                 }
 
-                order = new Order() { Customer = _customerService.FindOrCreateCustomer(customerName) };
+                order = new Order() { Customer = CustomerService.FindOrCreateCustomer(customerName) };
                 foreach (ListViewItem item in lvProducts.Items)
                 {
                     var detail = (OrderDetail)item.Tag;
@@ -239,23 +238,23 @@ public partial class KassaOverzichtForm : Form
                     order.OrderDetails.Add(detail);
                 }
 
-                _orderService.CreateOrder(order);
-                _selectedOrder = order;
+                OrderService.CreateOrder(order);
+                SelectedOrder = order;
             }
             else
             {
-                _selectedOrder = order;
+                SelectedOrder = order;
                 foreach (ListViewItem item in lvProducts.Items)
                 {
                     var detail = (OrderDetail)item.Tag;
-                    _orderService.AddProductToOrder(_selectedOrder, detail.Product);
+                    OrderService.AddProductToOrder(SelectedOrder, detail.Product);
                 }
             }
         }
-        else if (customerName != "" && _selectedOrder != null)
+        else if (customerName != "" && SelectedOrder != null)
         {
-            Order order = _orderService.GetOrderByCustomerName(customerName);
-            _selectedOrder = order;
+            Order order = OrderService.GetOrderByCustomerName(customerName);
+            SelectedOrder = order;
         }
 
         RefreshCustomerComboBox();
@@ -290,7 +289,7 @@ public partial class KassaOverzichtForm : Form
         int b = 0;
         int factor = 0;
         int j = 1;
-        foreach (var product in _productService.GetProducts())
+        foreach (var product in ProductService.GetProducts())
         {
             if (product.IsActive)
             {
@@ -366,10 +365,10 @@ public partial class KassaOverzichtForm : Form
 
     private void bestellingOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var orderForm = new BestellingOverzichtForm(_orderService, _customerService, _moneyCalculator, _revenueService, SessionService);
+        var orderForm = new BestellingOverzichtForm(OrderService, CustomerService, MoneyCalculator, RevenueService, SessionService);
         orderForm.ShowDialog();
 
-        _selectedOrder = null;
+        SelectedOrder = null;
         ToggleOrderInfo();
         RefreshProductsInOrder();
         RefreshCustomerComboBox();
@@ -385,22 +384,22 @@ public partial class KassaOverzichtForm : Form
 
     private void btPay_Click(object sender, EventArgs e)
     {
-        if (_selectedOrder == null)
+        if (SelectedOrder == null)
         {
             return;
         }
-        if (_selectedOrder.Price > 0.00M)
+        if (SelectedOrder.Price > 0.00M)
         {
 
-            var form = new AfrekenForm(_orderService, _moneyCalculator, _revenueService, _selectedOrder);
+            var form = new AfrekenForm(OrderService, MoneyCalculator, RevenueService, SelectedOrder);
             form.ShowDialog();
         }
         else
         {
-            _orderService.PayOrder(_selectedOrder, 0.00M, PayMethod.None);
+            OrderService.PayOrder(SelectedOrder, 0.00M, PayMethod.None);
         }
 
-        _selectedOrder = null;
+        SelectedOrder = null;
         ToggleOrderInfo();
         RefreshProductsInOrder();
         RefreshCustomerComboBox();
@@ -408,7 +407,7 @@ public partial class KassaOverzichtForm : Form
 
     private void TSMICustomers_Click(object sender, EventArgs e)
     {
-        var form = new CustomerForm(_customerService);
+        var form = new CustomerForm(CustomerService);
         form.ShowDialog();
 
         RefreshCustomerComboBox();
@@ -416,14 +415,14 @@ public partial class KassaOverzichtForm : Form
 
     private void overzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var form = new ProductOverzichtForm(_productService);
+        var form = new ProductOverzichtForm(ProductService);
         form.ShowDialog();
         InitializeProductButtons();
     }
 
     private void omzetOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var form = new OmzetOverzichtForm(_revenueService);
+        var form = new OmzetOverzichtForm(RevenueService);
         form.ShowDialog();
     }
 
