@@ -36,6 +36,7 @@
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             this.groupBox1.Controls.Add(this.lvProducts);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(528, 682);
+            this.groupBox1.Size = new System.Drawing.Size(598, 682);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Producten";
@@ -69,12 +70,13 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4,
-            this.columnHeader5});
+            this.columnHeader5,
+            this.columnHeader6});
             this.lvProducts.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lvProducts.FullRowSelect = true;
             this.lvProducts.Location = new System.Drawing.Point(6, 97);
             this.lvProducts.Name = "lvProducts";
-            this.lvProducts.Size = new System.Drawing.Size(516, 575);
+            this.lvProducts.Size = new System.Drawing.Size(586, 575);
             this.lvProducts.TabIndex = 0;
             this.lvProducts.UseCompatibleStateImageBehavior = false;
             this.lvProducts.View = System.Windows.Forms.View.Details;
@@ -104,13 +106,19 @@
             this.columnHeader5.Text = "Categorie";
             this.columnHeader5.Width = 110;
             // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Is actief";
+            this.columnHeader6.Width = 70;
+            // 
             // ProductOverzichtForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(548, 706);
+            this.ClientSize = new System.Drawing.Size(622, 706);
             this.Controls.Add(this.groupBox1);
             this.Name = "ProductOverzichtForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Producten overzicht";
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -127,5 +135,6 @@
         private ColumnHeader columnHeader4;
         private ColumnHeader columnHeader5;
         private Button btNewProduct;
+        private ColumnHeader columnHeader6;
     }
 }

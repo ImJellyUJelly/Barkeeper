@@ -17,6 +17,7 @@ public class BarkeeperContext : DbContext
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Revenue> Revenues { get; set; }
     public DbSet<Session> Sessions { get; set; }
+    public DbSet<GeneralOptions> GeneralOptions { get; set; }
 
     //public BarkeeperContext() : base("Barkeeper_Development_MySql")
     //{
@@ -51,6 +52,8 @@ public class BarkeeperContext : DbContext
         modelBuilder.Entity<Session>().HasKey(session => session.Id);
         modelBuilder.Entity<Session>().Property(session => session.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         modelBuilder.Entity<Session>().Property(session => session.EndDate).IsOptional();
+
+        modelBuilder.Entity<GeneralOptions>().HasKey(option => option.Id);
     }
 
     /// <summary>

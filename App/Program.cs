@@ -41,6 +41,7 @@ internal static class Program
         services.AddScoped<ProductOverzichtForm>();
         services.AddScoped<SplitBestellingForm>();
         services.AddScoped<TeruggaveForm>();
+        services.AddScoped<OptiesForm>();
 
         // Database
         services.AddScoped<BarkeeperContext>();
@@ -52,6 +53,7 @@ internal static class Program
         services.AddScoped<IRevenueRepository, RevenueRepository>();
         services.AddScoped<ISessionRepository, SessionRepository>();
         services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+        services.AddScoped<IGeneralOptionsRepository, GeneralOptionsRepository>();
 
         // Services
         services.AddScoped<IOrderService, OrderService>();
@@ -61,5 +63,6 @@ internal static class Program
         services.AddScoped<IMoneyCalculator, MoneyCalculator>();
         services.AddScoped<IRevenueService, RevenueService>();
         services.AddScoped<ISessionService, SessionService>();
+        services.AddScoped<IGeneralOptionsService, GeneralOptionsService>();
     }
 }

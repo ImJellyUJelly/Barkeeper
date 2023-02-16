@@ -7,6 +7,7 @@ namespace App.Forms;
 public partial class KassaOverzichtForm : Form
 {
     private CultureInfo _cultureInfo;
+    private int _productButtonSize = 85;
 
     public KassaOverzichtForm(IOrderService orderService,
         IProductService productService,
@@ -14,7 +15,8 @@ public partial class KassaOverzichtForm : Form
         IMoneyCalculator moneyCalculator,
         IRevenueService revenueService,
         ISessionService sessionService,
-        IServiceProvider serviceProvider)
+        IServiceProvider serviceProvider,
+        IGeneralOptionsService generalOptionsService)
     {
         ServiceProvider = serviceProvider;
         OrderService = orderService;
@@ -24,6 +26,7 @@ public partial class KassaOverzichtForm : Form
         RevenueService = revenueService;
         _cultureInfo = CultureInfo.GetCultureInfo("nl-NL");
         SessionService = sessionService;
+        GeneralOptionsService = generalOptionsService;
 
         InitializeComponent();
         InitializeGeneralInformation();
@@ -37,6 +40,7 @@ public partial class KassaOverzichtForm : Form
     private IMoneyCalculator MoneyCalculator { get; }
     private IRevenueService RevenueService { get; }
     private ISessionService SessionService { get; }
+    private IGeneralOptionsService GeneralOptionsService { get; }
 
     private Order? SelectedOrder { get; set; }
     private bool IsEvent { get; set; }
@@ -274,6 +278,8 @@ public partial class KassaOverzichtForm : Form
 
     private void InitializeProductButtons()
     {
+        var productButtonSize = GeneralOptionsService.GetGeneralOptions().ProductButtonSize;
+
         pProducts.Controls.Clear();
         int a = 0;
         int b = 0;
@@ -287,10 +293,11 @@ public partial class KassaOverzichtForm : Form
                 button.Top = 10;
                 button.Left = 10;
                 //button.Size = new Size(116, 85);
-                button.Size = new Size(85, 85);
+                //button.Size = new Size(85, 85);
+                button.Size = new Size(200, 200);
                 button.Text = product.Name;
                 button.Tag = product;
-                button.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point);
+                button.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
                 button.BackColor = ButtonBackColor(product);
                 button.Click += new EventHandler(ProductClick);
 
@@ -427,5 +434,12 @@ public partial class KassaOverzichtForm : Form
         BeheerderForm? form = ServiceProvider.GetService(typeof(BeheerderForm)) as BeheerderForm;
         form.ShowDialog();
         IsEvent = SessionService.GetCurrentSession() is not null ? true : false;
+    }
+
+    private void optiesToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        OptiesForm? form = ServiceProvider.GetService(typeof(OptiesForm)) as OptiesForm;
+        form.ShowDialog();
+        InitializeProductButtons();
     }
 }

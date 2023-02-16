@@ -52,6 +52,7 @@
             this.beheerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.omzetOverzichtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sessieBeheerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cbCustomerName = new System.Windows.Forms.ComboBox();
@@ -270,7 +271,8 @@
             // 
             this.beheerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.omzetOverzichtToolStripMenuItem,
-            this.sessieBeheerToolStripMenuItem});
+            this.sessieBeheerToolStripMenuItem,
+            this.optiesToolStripMenuItem});
             this.beheerToolStripMenuItem.Name = "beheerToolStripMenuItem";
             this.beheerToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.beheerToolStripMenuItem.Text = "Beheer";
@@ -278,16 +280,24 @@
             // omzetOverzichtToolStripMenuItem
             // 
             this.omzetOverzichtToolStripMenuItem.Name = "omzetOverzichtToolStripMenuItem";
-            this.omzetOverzichtToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.omzetOverzichtToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.omzetOverzichtToolStripMenuItem.Text = "Omzet overzicht";
             this.omzetOverzichtToolStripMenuItem.Click += new System.EventHandler(this.omzetOverzichtToolStripMenuItem_Click);
             // 
             // sessieBeheerToolStripMenuItem
             // 
             this.sessieBeheerToolStripMenuItem.Name = "sessieBeheerToolStripMenuItem";
-            this.sessieBeheerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.sessieBeheerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sessieBeheerToolStripMenuItem.Text = "Sessie beheer";
             this.sessieBeheerToolStripMenuItem.Click += new System.EventHandler(this.sessieBeheerToolStripMenuItem_Click);
+            // 
+            // optiesToolStripMenuItem
+            // 
+            this.optiesToolStripMenuItem.Enabled = false;
+            this.optiesToolStripMenuItem.Name = "optiesToolStripMenuItem";
+            this.optiesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.optiesToolStripMenuItem.Text = "Opties";
+            this.optiesToolStripMenuItem.Click += new System.EventHandler(this.optiesToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -396,5 +406,6 @@
         private ToolStripMenuItem beheerToolStripMenuItem;
         private ToolStripMenuItem omzetOverzichtToolStripMenuItem;
         private ToolStripMenuItem sessieBeheerToolStripMenuItem;
+        private ToolStripMenuItem optiesToolStripMenuItem;
     }
 }

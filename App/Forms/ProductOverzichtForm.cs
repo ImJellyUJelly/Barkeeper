@@ -34,6 +34,7 @@ namespace App.Forms
                 item.SubItems.Add($"€ {product.Price}");
                 item.SubItems.Add($"€ {product.EventPrice}");
                 item.SubItems.Add(product.Category.ToString());
+                item.SubItems.Add(product.IsActive ? "Ja" : "Nee");
                 lvProducts.Items.Add(item);
             }
         }
