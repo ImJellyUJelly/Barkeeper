@@ -7,37 +7,73 @@ public partial class AfrekenForm : Form
 {
     private readonly IOrderService _orderService;
     private readonly IMoneyCalculator _moneyCalculator;
-    private readonly Order _order;
+    private readonly IProductService _productService;
 
-    public AfrekenForm(IOrderService orderService, IMoneyCalculator moneyCalculator, IRevenueService revenueService, Order order)
+    public Order Order { get; set; }
+    public List<OrderDetail> OrderDetails { get; set; }
+
+    private decimal Price { get; set; }
+    private decimal Coins { get; set; }
+
+    public AfrekenForm(IOrderService orderService, IMoneyCalculator moneyCalculator, IProductService productService)
     {
         _orderService = orderService;
         _moneyCalculator = moneyCalculator;
-        _order = order;
+        _productService = productService;
 
         InitializeComponent();
+    }
+
+    public AfrekenForm(List<OrderDetail> orderDetails, IOrderService orderService, IMoneyCalculator moneyCalculator, IProductService productService)
+        : this(orderService, moneyCalculator, productService)
+    {
+        OrderDetails = orderDetails;
+        InitialLoad();
+    }
+
+    public AfrekenForm(Order order, IOrderService orderService, IMoneyCalculator moneyCalculator, IProductService productService)
+    : this(orderService, moneyCalculator, productService)
+    {
+        Order = order;
         InitialLoad();
     }
 
     private void InitialLoad()
     {
-        lbCustomerName.Text = _order.GetName();
-        lbOrderDate.Text = $"{_order.OrderDate.ToShortTimeString()} - {_order.OrderDate.ToShortDateString()}";
-        tbComments.Text = _order.Comment;
-        EditPriceLabels(_order);
-        LoadProducts();
+        var coins = _productService.GetProductByName("Munten");
+        if (Order is null)
+        {
+            lbCustomerName.Text = "Directe betaling";
+            lbOrderDate.Text = $"{DateTime.Now.ToShortTimeString()} - {DateTime.Now.ToShortDateString()}";
+            tbComments.Enabled = false;
+            Price = _moneyCalculator.PriceForNoOrder(OrderDetails);
+            Coins = _moneyCalculator.GetCoinsForNoOrder(OrderDetails, coins.Price / 10);
+            EditPriceLabels();
+            LoadProducts(OrderDetails);
+        }
+        else
+        {
+            lbCustomerName.Text = Order.GetName();
+            lbOrderDate.Text = $"{Order.OrderDate.ToShortTimeString()} - {Order.OrderDate.ToShortDateString()}";
+            tbComments.Text = Order.Comment;
+            Price = _moneyCalculator.PricePerOrder(Order);
+            Coins = _moneyCalculator.PricePerOrder(Order) / (coins.Price / 10);
+            EditPriceLabels();
+            LoadProducts(Order.OrderDetails);
+        }
+
     }
 
-    private void EditPriceLabels(Order order)
+    private void EditPriceLabels()
     {
-        lbPrice.Text = $"€ {order.Price}";
-        lbCoins.Text = $"{order.Coins}";
+        lbPrice.Text = $"€ {Price}";
+        lbCoins.Text = $"{Coins}";
     }
 
-    private void LoadProducts()
+    private void LoadProducts(List<OrderDetail> orderDetails)
     {
         lvProducts.Items.Clear();
-        foreach (OrderDetail detail in _order.OrderDetails)
+        foreach (OrderDetail detail in orderDetails)
         {
             var item = new ListViewItem();
             item.Tag = detail.Product;
@@ -73,7 +109,7 @@ public partial class AfrekenForm : Form
         var form = new CashForm();
         form.ShowDialog();
 
-        if(form.IsClosed)
+        if (form.IsClosed)
         {
             return;
         }
@@ -83,7 +119,7 @@ public partial class AfrekenForm : Form
 
     private void btPin_Click(object sender, EventArgs e)
     {
-        var form = new PinForm(_order.Price);
+        var form = new PinForm(Price);
         form.ShowDialog();
 
         if (form.IsClosed)
@@ -96,10 +132,11 @@ public partial class AfrekenForm : Form
 
     private void Pay(decimal amount, PayMethod payMethod)
     {
-        decimal remainder = _orderService.PayOrder(_order, amount, payMethod);
+        decimal remainder = _orderService.PayOrder(Order, amount, payMethod);
+        Price = remainder;
         if (remainder > 0)
         {
-            EditPriceLabels(_order);
+            EditPriceLabels();
             return;
         }
 
@@ -109,13 +146,13 @@ public partial class AfrekenForm : Form
             form.ShowDialog();
         }
 
-        _orderService.FinishOrder(_order);
+        _orderService.FinishOrder(Order);
         Close();
     }
 
     private void btMunten_Click(object sender, EventArgs e)
     {
-        var amount = _order.Price - _order.PaidAmount;
+        var amount = Price - (Order is not null ? Order.PaidAmount : 0);
         Pay(amount, PayMethod.Coins);
     }
 }

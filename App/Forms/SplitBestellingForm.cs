@@ -115,10 +115,10 @@ public partial class SplitBestellingForm : Form
 
     private void SetPriceForNewOrders()
     {
-        decimal price = _moneyCalculator.PricePerSplitOrder(_order, _numberOfNewOrders);
+        decimal Price = _moneyCalculator.PricePerSplitOrder(_order, _numberOfNewOrders);
         foreach (var dict in _toolsNewOrders)
         {
-            dict.Value.Value = price;
+            dict.Value.Value = Price;
         }
     }
 

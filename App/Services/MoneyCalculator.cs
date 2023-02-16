@@ -57,5 +57,24 @@ namespace App.Services
 
             return coins;
         }
+
+        public decimal PriceForNoOrder(List<OrderDetail> orderDetails)
+        {
+            decimal totalPrice = 0.00M;
+            orderDetails.ForEach(od => totalPrice += od.Price);
+            return Math.Round(totalPrice, 2);
+        }
+
+        public decimal GetCoinsForNoOrder(List<OrderDetail> orderDetails, decimal coinPrice)
+        {
+            decimal totalPrice = 0.00M;
+            orderDetails.ForEach(od => totalPrice += od.Price);
+            return Math.Round(totalPrice / coinPrice);
+        }
+
+        public decimal GetRemainderAfterPaymentNoOrder(List<OrderDetail> orderDetails, decimal amount)
+        {
+            return PriceForNoOrder(orderDetails) - amount;
+        }
     }
 }

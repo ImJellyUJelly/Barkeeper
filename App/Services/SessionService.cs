@@ -12,15 +12,16 @@ public class SessionService : ISessionService
         SessionRepository = sessionRepository;
     }
 
-    public void CreateSession(bool isEvent)
+    public void CreateSession()
     {
         var session = GetCurrentSession();
         if (session is null)
         {
+            var today = DateTime.Now;
             session = new Session
             {
-                IsEvent = isEvent,
-                EventDate = DateTime.Now
+                StartDate = today,
+                EndDate = null
             };
         }
 
@@ -29,11 +30,24 @@ public class SessionService : ISessionService
 
     public Session GetCurrentSession()
     {
-        return SessionRepository.GetSessionByDate(DateTime.Now);
+        return SessionRepository.GetCurrentSession(DateTime.Now);
     }
 
     public bool BoughtDuringEvent(DateTime date)
     {
-        return SessionRepository.GetSessionByDate(DateTime.Now).IsEvent;
+        return SessionRepository.GetSessionByDate(DateTime.Now) is not null ? true : false;
+    }
+
+    public void EndSession(Session session)
+    {
+        if (session is null) { return; }
+
+        session.EndDate = DateTime.Now;
+        SessionRepository.UpdateSession(session);
+    }
+
+    public IList<Session> GetSessions(int year)
+    {
+        return SessionRepository.GetSessionsFromYear(year);
     }
 }

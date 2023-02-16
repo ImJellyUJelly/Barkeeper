@@ -37,7 +37,7 @@ namespace App.Forms
         private void btSave_Click(object sender, EventArgs e)
         {
             string name = tbName.Text;
-            decimal price = nudPrice.Value;
+            decimal Price = nudPrice.Value;
             decimal eventPrice = nudLedenPrice.Value;
             ProductCategory category = (ProductCategory)cbCategory.SelectedItem;
             bool isActive = cbActive.Checked;
@@ -64,11 +64,11 @@ namespace App.Forms
                     return;
                 }
 
-                _productService.UpdateProduct(_product, name, price, eventPrice, category, isActive);
+                _productService.UpdateProduct(_product, name, Price, eventPrice, category, isActive);
             }
             else
             {
-                _productService.AddProduct(name, price, eventPrice, category, isActive);
+                _productService.AddProduct(name, Price, eventPrice, category, isActive);
             }
 
             Close();

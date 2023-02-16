@@ -18,14 +18,36 @@ public class SessionRepository : ISessionRepository
         Context.SaveChanges();
     }
 
-    public Session GetSessionByDate(DateTime date)
+    public Session? GetSessionByDate(DateTime date)
     {
-        var session = Context.Sessions
-            .Where(session => session.EventDate.Year == date.Year)
-            .Where(session => session.EventDate.Month == date.Month)
-            .Where(session => session.EventDate.Day == date.Day)
+        return Context.Sessions
+            .Where(session => session.StartDate.Year <= date.Year && ((DateTime)session.EndDate).Year >= date.Year)
+            .Where(session => session.StartDate.Month <= date.Month && ((DateTime)session.EndDate).Month >= date.Month)
+            .Where(session => session.StartDate.Day <= date.Day && ((DateTime)session.EndDate).Day >= date.Day)
             .FirstOrDefault();
+    }
 
-        return session ?? new Session { EventDate = DateTime.Now };
+    public Session? GetCurrentSession(DateTime date)
+    {
+        return Context.Sessions
+            .Where(session => session.StartDate.Year <= date.Year)
+            .Where(session => session.StartDate.Month <= date.Month)
+            .Where(session => session.StartDate.Day <= date.Day)
+            .Where(session => session.EndDate == null)
+            .FirstOrDefault();
+    }
+
+    public void UpdateSession(Session session)
+    {
+        var updatedSession = Context.Sessions.FirstOrDefault(s => s.Id == session.Id);
+        if (updatedSession is null) return;
+
+        updatedSession.EndDate = session.EndDate;
+        Context.SaveChanges();
+    }
+
+    public IList<Session> GetSessionsFromYear(int year)
+    {
+        return Context.Sessions.Where(session => session.StartDate.Year == year).ToList();
     }
 }

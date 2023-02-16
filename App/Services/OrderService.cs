@@ -137,7 +137,7 @@ public class OrderService : IOrderService
 
     public void UpdateOrder(Order order)
     {
-        _orderDetailService.UpdateOrderDetails(order);
+        //_orderDetailService.UpdateOrderDetails(order);
         order.Price = _moneyCalculator.PricePerOrder(order);
         _orderRepository.UpdateOrder(order);
     }
@@ -152,6 +152,25 @@ public class OrderService : IOrderService
         order.PayMethod = payMethod;
 
         UpdateOrder(order);
+
+        if (remainder >= 0)
+        {
+            _revenueService.AddPayment(revenue);
+        }
+        else
+        {
+            amount -= (0 - remainder);
+            revenue.Amount = amount;
+            _revenueService.AddPayment(revenue);
+        }
+
+        return remainder;
+    }
+
+    public decimal PayNoOrder(List<OrderDetail> orderDetails, decimal amount, PayMethod payMethod)
+    {
+        decimal remainder = _moneyCalculator.GetRemainderAfterPaymentNoOrder(orderDetails, amount);
+        var revenue = new Revenue() { Amount = amount, SaleDate = DateTime.Now, PayMethod = payMethod };
 
         if (remainder >= 0)
         {

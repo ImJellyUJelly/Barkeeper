@@ -3,6 +3,7 @@ using App.Repositories;
 using App.Services;
 using Moq;
 using NUnit.Framework;
+using System;
 
 namespace Tests.Services
 {
@@ -21,16 +22,22 @@ namespace Tests.Services
             _moneyCalculator = new MoneyCalculator();
         }
 
-        [TestCase("true", "2.60", "2.60")]
-        [TestCase("false", "2.60", "1.00")]
-        public void AddOrderDetail_ReturnsAnOrderDetail_WithTheCorrectPrice(
-            bool isEvent, decimal eventPrice, decimal expectedPrice)
+        [TestCase("2.60", "2.60", "true")]
+        [TestCase("2.60", "1.00", "false")]
+        public void AddOrderDetail_ReturnsAnOrderDetail_WithTheCorrectPrice(decimal eventPrice, decimal expectedPrice, bool isEvent)
         {
             // Arrange
             var product = new Product { EventPrice = eventPrice, Price = 1.00M };
             var order = new Order();
+            var session = isEvent ? new Session
+            {
+                StartDate = DateTime.Now.AddDays(-1),
+                EndDate = null
+            } : null;
 
-            _sessionServiceMock.Setup(mock => mock.GetCurrentSession()).Returns(new Session { IsEvent = isEvent });
+            _sessionServiceMock.Setup(mock => mock.GetCurrentSession())
+                .Returns(session);
+
 
             var target = new OrderDetailService(_sessionServiceMock.Object, _moneyCalculator, _orderDetailRepositoryMock.Object);
 

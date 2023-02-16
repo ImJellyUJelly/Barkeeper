@@ -26,5 +26,6 @@ public interface IOrderService
     /// <param name="payMethod">The method used to pay.</param>
     /// <returns>Remainder of the order to pay or get back.</returns>
     decimal PayOrder(Order order, decimal amount, PayMethod payMethod);
+    decimal PayNoOrder(List<OrderDetail> orderDetails, decimal amount, PayMethod payMethod);
     void FinishOrder(Order order);
 }

@@ -13,8 +13,10 @@ public partial class KassaOverzichtForm : Form
         ICustomerService customerService,
         IMoneyCalculator moneyCalculator,
         IRevenueService revenueService,
-        ISessionService sessionService)
+        ISessionService sessionService,
+        IServiceProvider serviceProvider)
     {
+        ServiceProvider = serviceProvider;
         OrderService = orderService;
         ProductService = productService;
         CustomerService = customerService;
@@ -23,13 +25,12 @@ public partial class KassaOverzichtForm : Form
         _cultureInfo = CultureInfo.GetCultureInfo("nl-NL");
         SessionService = sessionService;
 
-        CurrentSession = SessionService.GetCurrentSession();
-
         InitializeComponent();
         InitializeGeneralInformation();
         ToggleOrderInfo();
     }
 
+    private IServiceProvider ServiceProvider { get; }
     private IOrderService OrderService { get; }
     private IProductService ProductService { get; }
     private ICustomerService CustomerService { get; }
@@ -37,8 +38,8 @@ public partial class KassaOverzichtForm : Form
     private IRevenueService RevenueService { get; }
     private ISessionService SessionService { get; }
 
-    private Session CurrentSession { get; set; }
     private Order? SelectedOrder { get; set; }
+    private bool IsEvent { get; set; }
 
     private void InitializeGeneralInformation()
     {
@@ -46,6 +47,10 @@ public partial class KassaOverzichtForm : Form
         SelectedOrder = null;
         btDeleteProduct.Visible = false;
         btPay.Enabled = false;
+
+        IsEvent = SessionService.GetCurrentSession() is not null ? true : false;
+
+        ProductService.CoinsMustBePresent();
 
         RefreshCustomerComboBox();
         InitializeProductButtons();
@@ -128,15 +133,17 @@ public partial class KassaOverzichtForm : Form
             return;
         }
 
-        OrderDetail detail = new () { Order = SelectedOrder, Product = product };
-        detail.Price = MoneyCalculator.PricePerOrderDetail(detail, CurrentSession.IsEvent);
+        OrderDetail detail = new () { Order = SelectedOrder, Product = product, TimeAdded = DateTime.Now};
+        detail.Price = MoneyCalculator.PricePerOrderDetail(detail, IsEvent);
         var item = new ListViewItem();
         item.Tag = detail;
         item.Text = product.Name;
         item.SubItems.Add($"€ {detail.Price}");
-        item.SubItems.Add($"{DateTime.Now.ToShortDateString()} - {DateTime.Now.ToShortTimeString()}");
+        item.SubItems.Add($"{detail.TimeAdded.ToShortDateString()} - {detail.TimeAdded.ToShortTimeString()}");
         lvProducts.Items.Add(item);
         CalculateTotalPrice(null);
+
+        btPay.Enabled = true;
     }
 
     private void ToggleOrderInfo()
@@ -177,8 +184,6 @@ public partial class KassaOverzichtForm : Form
     private void btSelectCustomer_Click(object sender, EventArgs e)
     {
         string customerName = cbCustomerName.Text.Trim();
-        Customer customer = CustomerService.FindCustomer(customerName);
-
         if (IsCustomerNameNotValid(customerName))
         {
             SelectedOrder = null;
@@ -211,23 +216,8 @@ public partial class KassaOverzichtForm : Form
         else if (customerName != "" && SelectedOrder == null)
         {
             Order order = OrderService.GetOrderByCustomerName(customerName);
-            bool isMember = customer != null ? customer.IsMember : false;
             if (order == null)
             {
-                if (customer == null)
-                {
-                    DialogResult dialogResult = MessageBox.Show($"Is {customerName} een lid van de club?", "Nieuwe klant", MessageBoxButtons.YesNoCancel);
-                    if (dialogResult == DialogResult.Cancel)
-                    {
-                        cbCustomerName.Text = "";
-                        return;
-                    }
-                    else if (dialogResult == DialogResult.Yes)
-                    {
-                        isMember = true;
-                    }
-                }
-
                 order = new Order() { Customer = CustomerService.FindOrCreateCustomer(customerName) };
                 foreach (ListViewItem item in lvProducts.Items)
                 {
@@ -365,7 +355,7 @@ public partial class KassaOverzichtForm : Form
 
     private void bestellingOverzichtToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var orderForm = new BestellingOverzichtForm(OrderService, CustomerService, MoneyCalculator, RevenueService, SessionService);
+        var orderForm = new BestellingOverzichtForm(OrderService, CustomerService, MoneyCalculator, ProductService, SessionService);
         orderForm.ShowDialog();
 
         SelectedOrder = null;
@@ -384,14 +374,20 @@ public partial class KassaOverzichtForm : Form
 
     private void btPay_Click(object sender, EventArgs e)
     {
-        if (SelectedOrder == null)
+        if (SelectedOrder is null && lvProducts.Items.Count > 0)
         {
-            return;
-        }
-        if (SelectedOrder.Price > 0.00M)
-        {
+            List<OrderDetail> orderDetails = new ();
+            foreach(ListViewItem detail in lvProducts.Items)
+            {
+                orderDetails.Add(detail.Tag as OrderDetail);
+            }
 
-            var form = new AfrekenForm(OrderService, MoneyCalculator, RevenueService, SelectedOrder);
+            var form = new AfrekenForm(orderDetails, OrderService, MoneyCalculator, ProductService);
+            form.ShowDialog();
+        }
+        else if (SelectedOrder.Price > 0.00M)
+        {
+            var form = new AfrekenForm(SelectedOrder, OrderService, MoneyCalculator, ProductService);
             form.ShowDialog();
         }
         else
@@ -428,7 +424,8 @@ public partial class KassaOverzichtForm : Form
 
     private void sessieBeheerToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        var form = new BeheerderForm();
+        BeheerderForm? form = ServiceProvider.GetService(typeof(BeheerderForm)) as BeheerderForm;
         form.ShowDialog();
+        IsEvent = SessionService.GetCurrentSession() is not null ? true : false;
     }
 }

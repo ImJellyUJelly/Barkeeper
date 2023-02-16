@@ -18,18 +18,29 @@ internal static class Program
         var services = new ServiceCollection();
         ConfigureServices(services);
 
-        using (ServiceProvider serviceProvider = services.BuildServiceProvider())
-        {
-            var form = serviceProvider.GetRequiredService<KassaOverzichtForm>();
-
-            Application.Run(form);
-        }
+        using ServiceProvider serviceProvider = services.BuildServiceProvider();
+        var form = serviceProvider.GetRequiredService<KassaOverzichtForm>();
+        Application.Run(form);
     }
 
     static void ConfigureServices(ServiceCollection services)
     {
         // Forms
         services.AddScoped<KassaOverzichtForm>();
+        services.AddScoped<AfrekenForm>();
+        services.AddScoped<BeheerderForm>();
+        services.AddScoped<BestellingenSamenvoegenForm>();
+        services.AddScoped<BestellingInformatieForm>();
+        services.AddScoped<BestellingOverzichtForm>();
+        services.AddScoped<CashForm>();
+        services.AddScoped<CustomerForm>();
+        services.AddScoped<KlantDetailForm>();
+        services.AddScoped<OmzetOverzichtForm>();
+        services.AddScoped<PinForm>();
+        services.AddScoped<ProductDetailForm>();
+        services.AddScoped<ProductOverzichtForm>();
+        services.AddScoped<SplitBestellingForm>();
+        services.AddScoped<TeruggaveForm>();
 
         // Database
         services.AddScoped<BarkeeperContext>();

@@ -11,6 +11,7 @@
         Snacks,
         Broodjes,
         Chips,
-        Snoep
+        Snoep,
+        Overige
     }
 }

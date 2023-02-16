@@ -142,10 +142,10 @@ namespace Tests.Services
         [TestCase("3.99", "2.75", "1.24")]
         [TestCase("2.75", "4.00", "-1.25")]
         [TestCase("10", "10.50", "-0.50")]
-        public void PayOrder_ReturnsRemainder(decimal price, decimal amount, decimal expectedRemainder)
+        public void PayOrder_ReturnsRemainder(decimal Price, decimal amount, decimal expectedRemainder)
         {
             // Arrange
-            Order order = new Order { Price = price };
+            Order order = new Order { Price = Price };
 
             _orderRepositoryMock.Setup(mock => mock.CreateOrder(It.IsAny<Order>())).Returns(order);
             _orderDetailService.Setup(mock => mock.UpdateOrderDetails(It.IsAny<Order>()));

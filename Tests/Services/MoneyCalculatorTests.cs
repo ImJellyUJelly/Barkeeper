@@ -13,10 +13,10 @@ namespace Tests.Services
         [TestCase("10.00", "4", "2.50")]
         [TestCase("9.00", "4", "2.25")]
         [TestCase("10.99", "5", "2.20")]
-        public void PriceForSplitOrders_ReturnsTheRightAmountPerCustomers(decimal price, int customers, decimal expectedResult)
+        public void PriceForSplitOrders_ReturnsTheRightAmountPerCustomers(decimal Price, int customers, decimal expectedResult)
         {
             // Arrange
-            var order = new Order() { Price = price };
+            var order = new Order() { Price = Price };
             var target = new MoneyCalculator();
 
             // Act
@@ -29,13 +29,13 @@ namespace Tests.Services
         [TestCase("1.00", "1.00", "2.00")]
         [TestCase("1.33", "1.20", "2.53")]
         [TestCase("1.333", "1.333", "2.67")]
-        public void PriceForMerdedOrder(decimal price1, decimal price2, decimal expectedResult)
+        public void PriceForMerdedOrder(decimal Price1, decimal Price2, decimal expectedResult)
         {
             // Arrange
             var orders = new List<Order>() 
             { 
-                new Order() { Price = price1 }, 
-                new Order() { Price = price2 } 
+                new Order() { Price = Price1 }, 
+                new Order() { Price = Price2 } 
             };
 
             var target = new MoneyCalculator();
@@ -51,13 +51,13 @@ namespace Tests.Services
         [TestCase("1.33", "2.66")]
         [TestCase("1.333", "2.67")]
         [TestCase("1.99", "3.98")]
-        public void PricePerOrder(decimal price, decimal expectedResult)
+        public void PricePerOrder(decimal Price, decimal expectedResult)
         {
             // Arrange
             var orderDetails = new List<OrderDetail>
             {
-                new OrderDetail() { Price = price },
-                new OrderDetail() { Price = price }
+                new OrderDetail() { Price = Price },
+                new OrderDetail() { Price = Price }
             };
 
             var order = new Order() { OrderDetails = orderDetails };
